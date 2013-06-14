@@ -12,6 +12,9 @@ Public Class movieGUI
 
         ' Read the filePath fron the Settings object
         tbFilePath.Text = My.Settings.filePath
+
+        ' Display the filename in the Title Bar
+        Me.Text = "We are working with " & My.Settings.fileName
     End Sub
     Private Sub btSearch_Click(sender As Object, e As EventArgs) Handles btSearch.Click
         Dim strMovieName As String

@@ -1,5 +1,6 @@
 ﻿Imports System.Xml
 Imports System.Text
+Imports System.Xml.XPath.Extensions
 Imports System.IO
 
 Public Class Movie
@@ -9,45 +10,61 @@ Public Class Movie
     'from a supplied string of xsml text, return a list of movie titles 
     '
     ' PRE: Valid XML string
-    ' POST: 
+    ' POST: List of possible movie titles
 
-    Public Function showPossibles(xmltext)
+    Public Function showPossibles(xmlText As String)
 
-        Dim myMovies As XElement = XElement.Parse(xmltext)
-
-        Dim titles = <t><%= From title In myMovies...<ImdbEntity>
-                             Select title.Elements.First.Value
-                        %></t>
-
-
-
-        Dim temp As StringBuilder = New StringBuilder(titles.ToString)
+        If (xmltext.Length = 0) Then
+            MsgBox("Supplied xmltext is null")
+            Return Nothing
+        End If
+        Dim output As StringBuilder = New StringBuilder()
+        Using xr As XmlReader = XmlReader.Create(New StringReader(xmlText))
 
 
+            ' Parse the file and display each of the nodes.
+
+            xr.ReadToFollowing("Description")
+
+            xr.ReadElementContentAsString()
+            If Not (xr.IsEmptyElement) Then
+                output.AppendLine(xr.Value)
+            End If
 
 
-        Return temp.ToString
+        End Using
+        Return output.ToString
 
-        ''   Dim output As StringBuilder = New StringBuilder()
 
-        'Using reader As XmlReader = XmlReader.Create(New StringReader(xmltext))
-        '    While reader.Read()
-        '        If reader.IsEmptyElement Then
-        '            output.AppendLine(reader.Value & " is an exmply element - how sad" & vbCrLf)
-        '        End If
 
-        '        reader.ReadToFollowing("Description")
 
-        '        Dim genre As String = reader.Value
-        '        output.AppendLine("The genre value: " + genre)
 
-        '        '  reader.ReadToFollowing("Description")
-        '        ' output.AppendLine("Content of the title element: " + reader.ReadElementContentAsString())
-        '    End While
 
-        'End Using
 
-        'Return output.ToString()
+
+        'Dim myMovies As XElement = XElement.Parse(xmlText)
+        ''   Dim res = myMovies.Elements("ImdbEntity")
+        'Dim list2 As IEnumerable(Of XElement) = myMovies.XPathSelectElements("//ImdbEntity [2]")
+        '' Dim titles = <t><%= From title In myMovies.Elements _
+        ''                       Select title.Elements("ImdbEntity").FirstOrDefault
+        ''                 %></t>
+
+
+        'Dim take As String = ""
+
+        ''Dim temp As StringBuilder = New StringBuilder(titles.ToString)
+        'Dim temp As String = ""
+        'For Each i In list2
+        '    MsgBox(i)
+        '    temp = temp & i.Value
+        'Next
+        'Dim p As String = ""
+        '' For Each hap In res
+        ''p = p + hap.ToString
+        ''  Next hap
+
+        'Return temp.ToString
+
 
     End Function
 
