@@ -1,6 +1,7 @@
 ﻿Imports System.Xml
 Imports System.Text
 Imports System.Xml.XPath.Extensions
+Imports System.Text.RegularExpressions
 Imports System.IO
 
 Public Class Movie
@@ -18,21 +19,29 @@ Public Class Movie
             MsgBox("Supplied xmltext is null")
             Return Nothing
         End If
-        Dim output As StringBuilder = New StringBuilder()
-        Using xr As XmlReader = XmlReader.Create(New StringReader(xmlText))
+        '    Dim doc = _
+        '             <ImdbEntity id="tt1190080">2012
+        '		<Description>2009/I,     
+        '			<a href='/name/nm0000386/'>Roland Emmerich
+        '			</a>
+        '                </Description>
+        '           </ImdbEntity>
 
 
-            ' Parse the file and display each of the nodes.
+        Dim output As String = ""
 
-            xr.ReadToFollowing("Description")
+        Dim doc = XDocument.Parse(xmlText).<IMDbResults>.<ResultSet>
 
-            xr.ReadElementContentAsString()
-            If Not (xr.IsEmptyElement) Then
-                output.AppendLine(xr.Value)
-            End If
+        '  MsgBox(doc.Nodes.ToString)
+        'string content      
+      
+        For Each s In doc.Nodes().OfType(Of XText)()
+
+            output += s.ToString
+        Next
 
 
-        End Using
+        '   output = "Name of root element is " & root.Name.ToString
         Return output.ToString
 
 
@@ -71,5 +80,14 @@ Public Class Movie
     Private Function phoneTypes() As Object
         Throw New NotImplementedException
     End Function
-
+    Private Function CleanInput(strIn As String) As String
+        ' Replace invalid characters with empty strings. 
+        Try
+            Return Regex.Replace(strIn, "[^\w\.@<>-]\ ", "")
+            ' If we timeout when replacing invalid characters,  
+            ' we should return String.Empty. 
+        Catch e As RegexMatchTimeoutException
+            Return String.Empty
+        End Try
+    End Function
 End Class
