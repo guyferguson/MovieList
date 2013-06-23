@@ -24,12 +24,12 @@ Partial Class movieGUI
     Private Sub InitializeComponent()
         Me.tbMovieName = New System.Windows.Forms.TextBox()
         Me.btSearch = New System.Windows.Forms.Button()
-        Me.tbResult = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.tbOriginal = New System.Windows.Forms.TextBox()
         Me.tbFilePath = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.fbFilePath = New System.Windows.Forms.FolderBrowserDialog()
+        Me.wbOutput = New System.Windows.Forms.WebBrowser()
         Me.SuspendLayout()
         '
         'tbMovieName
@@ -47,14 +47,6 @@ Partial Class movieGUI
         Me.btSearch.TabIndex = 1
         Me.btSearch.Text = "Search"
         Me.btSearch.UseVisualStyleBackColor = True
-        '
-        'tbResult
-        '
-        Me.tbResult.Location = New System.Drawing.Point(528, 231)
-        Me.tbResult.Multiline = True
-        Me.tbResult.Name = "tbResult"
-        Me.tbResult.Size = New System.Drawing.Size(439, 176)
-        Me.tbResult.TabIndex = 2
         '
         'Label1
         '
@@ -93,30 +85,38 @@ Partial Class movieGUI
         '
         Me.fbFilePath.SelectedPath = "my.settings.filePath"
         '
-        'Form1
+        'wbOutput
+        '
+        Me.wbOutput.Location = New System.Drawing.Point(499, 231)
+        Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.wbOutput.Name = "wbOutput"
+        Me.wbOutput.Size = New System.Drawing.Size(458, 185)
+        Me.wbOutput.TabIndex = 7
+        '
+        'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.Controls.Add(Me.wbOutput)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tbFilePath)
         Me.Controls.Add(Me.tbOriginal)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.tbResult)
         Me.Controls.Add(Me.btSearch)
         Me.Controls.Add(Me.tbMovieName)
-        Me.Name = "Form1"
+        Me.Name = "movieGUI"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents tbMovieName As System.Windows.Forms.TextBox
     Friend WithEvents btSearch As System.Windows.Forms.Button
-    Friend WithEvents tbResult As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents tbOriginal As System.Windows.Forms.TextBox
     Friend WithEvents tbFilePath As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents fbFilePath As System.Windows.Forms.FolderBrowserDialog
+    Friend WithEvents wbOutput As System.Windows.Forms.WebBrowser
 
 End Class

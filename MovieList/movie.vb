@@ -32,13 +32,14 @@ Public Class Movie
 
         Dim doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
 
-        'MsgBox(doc.Nodes.ToString)
-        'string content      
+            
       
         For Each s In doc.Nodes().OfType(Of XText)()
 
-            output += "Potential title: " & s.ToString & vbCrLf
-            '  MsgBox(s.ToString)
+            Dim att As XAttribute = s.Parent.Attribute("id")
+
+            output += "<br><b><a href='http://www.imdb.com/title/" & att.Value.ToString & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
+            MsgBox(output)
         Next
 
 

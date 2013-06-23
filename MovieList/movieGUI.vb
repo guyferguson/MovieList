@@ -23,7 +23,7 @@ Public Class movieGUI
         Dim result As String = webClient.DownloadString("http://www.imdb.com/xml/find?xml=1&nr=1&tt=on&q=" & strMovieName)
         Dim mv As New Movie
         tbOriginal.Text = result
-        tbResult.Text = mv.showPossibles(result)
+        wbOutput.DocumentText = mv.showPossibles(result)
     End Sub
 
 
