@@ -30,14 +30,15 @@ Public Class Movie
 
         Dim output As String = ""
 
-        Dim doc = XDocument.Parse(xmlText).<IMDbResults>.<ResultSet>
+        Dim doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
 
-        '  MsgBox(doc.Nodes.ToString)
+        'MsgBox(doc.Nodes.ToString)
         'string content      
       
         For Each s In doc.Nodes().OfType(Of XText)()
 
-            output += s.ToString
+            output += "Potential title: " & s.ToString & vbCrLf
+            '  MsgBox(s.ToString)
         Next
 
 
