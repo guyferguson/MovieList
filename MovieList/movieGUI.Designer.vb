@@ -87,10 +87,10 @@ Partial Class movieGUI
         '
         'wbOutput
         '
-        Me.wbOutput.Location = New System.Drawing.Point(499, 231)
+        Me.wbOutput.Location = New System.Drawing.Point(499, 68)
         Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
         Me.wbOutput.Name = "wbOutput"
-        Me.wbOutput.Size = New System.Drawing.Size(458, 185)
+        Me.wbOutput.Size = New System.Drawing.Size(458, 348)
         Me.wbOutput.TabIndex = 7
         '
         'movieGUI

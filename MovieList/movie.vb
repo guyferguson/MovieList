@@ -19,64 +19,30 @@ Public Class Movie
             MsgBox("Supplied xmltext is null")
             Return Nothing
         End If
-        '    Dim doc = _
-        '             <ImdbEntity id="tt1190080">2012
-        '		<Description>2009/I,     
-        '			<a href='/name/nm0000386/'>Roland Emmerich
-        '			</a>
-        '                </Description>
-        '           </ImdbEntity>
 
-
-        Dim output As String = ""
-
+        ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
         Dim doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
 
-            
-      
+        Return findXtests(doc)
+
+
+    End Function
+    Private Function findXtests(doc As IEnumerable(Of System.Xml.Linq.XElement))
+        Dim output As String = ""
+        Dim cntres As Integer = 0
+
+        'Loop through the xml node and find XTexts
+
         For Each s In doc.Nodes().OfType(Of XText)()
 
             Dim att As XAttribute = s.Parent.Attribute("id")
 
             output += "<br><b><a href='http://www.imdb.com/title/" & att.Value.ToString & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
-            MsgBox(output)
+            cntres += 1
         Next
 
-
-        '   output = "Name of root element is " & root.Name.ToString
-        Return output.ToString
-
-
-
-
-
-
-
-
-        'Dim myMovies As XElement = XElement.Parse(xmlText)
-        ''   Dim res = myMovies.Elements("ImdbEntity")
-        'Dim list2 As IEnumerable(Of XElement) = myMovies.XPathSelectElements("//ImdbEntity [2]")
-        '' Dim titles = <t><%= From title In myMovies.Elements _
-        ''                       Select title.Elements("ImdbEntity").FirstOrDefault
-        ''                 %></t>
-
-
-        'Dim take As String = ""
-
-        ''Dim temp As StringBuilder = New StringBuilder(titles.ToString)
-        'Dim temp As String = ""
-        'For Each i In list2
-        '    MsgBox(i)
-        '    temp = temp & i.Value
-        'Next
-        'Dim p As String = ""
-        '' For Each hap In res
-        ''p = p + hap.ToString
-        ''  Next hap
-
-        'Return temp.ToString
-
-
+        ' Add a prefix of count of results, and return string
+        Return "<p>Results :" & cntres & "</p>" & output.ToString
     End Function
 
     Private Function phoneTypes() As Object
