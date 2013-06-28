@@ -25,11 +25,22 @@ Partial Class movieGUI
         Me.tbMovieName = New System.Windows.Forms.TextBox()
         Me.btSearch = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.tbOriginal = New System.Windows.Forms.TextBox()
         Me.tbFilePath = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.fbFilePath = New System.Windows.Forms.FolderBrowserDialog()
         Me.wbOutput = New System.Windows.Forms.WebBrowser()
+        Me.tbImdbid = New System.Windows.Forms.TextBox()
+        Me.lbImdbid = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.tbYear = New System.Windows.Forms.TextBox()
+        Me.tbTitle = New System.Windows.Forms.TextBox()
+        Me.tbRuntime = New System.Windows.Forms.TextBox()
+        Me.tbGenre = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.tbDirector = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'tbMovieName
@@ -56,14 +67,6 @@ Partial Class movieGUI
         Me.Label1.Size = New System.Drawing.Size(92, 13)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Enter movie name"
-        '
-        'tbOriginal
-        '
-        Me.tbOriginal.Location = New System.Drawing.Point(54, 231)
-        Me.tbOriginal.Multiline = True
-        Me.tbOriginal.Name = "tbOriginal"
-        Me.tbOriginal.Size = New System.Drawing.Size(439, 176)
-        Me.tbOriginal.TabIndex = 4
         '
         'tbFilePath
         '
@@ -93,15 +96,122 @@ Partial Class movieGUI
         Me.wbOutput.Size = New System.Drawing.Size(458, 348)
         Me.wbOutput.TabIndex = 7
         '
+        'tbImdbid
+        '
+        Me.tbImdbid.Location = New System.Drawing.Point(62, 10)
+        Me.tbImdbid.Name = "tbImdbid"
+        Me.tbImdbid.Size = New System.Drawing.Size(100, 20)
+        Me.tbImdbid.TabIndex = 8
+        '
+        'lbImdbid
+        '
+        Me.lbImdbid.AutoSize = True
+        Me.lbImdbid.Location = New System.Drawing.Point(12, 13)
+        Me.lbImdbid.Name = "lbImdbid"
+        Me.lbImdbid.Size = New System.Drawing.Size(48, 13)
+        Me.lbImdbid.TabIndex = 9
+        Me.lbImdbid.Text = "IMDB ID"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(12, 35)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(27, 13)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "Title"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(12, 61)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(29, 13)
+        Me.Label4.TabIndex = 11
+        Me.Label4.Text = "Year"
+        '
+        'tbYear
+        '
+        Me.tbYear.Location = New System.Drawing.Point(62, 61)
+        Me.tbYear.Name = "tbYear"
+        Me.tbYear.Size = New System.Drawing.Size(100, 20)
+        Me.tbYear.TabIndex = 12
+        '
+        'tbTitle
+        '
+        Me.tbTitle.Location = New System.Drawing.Point(62, 35)
+        Me.tbTitle.Name = "tbTitle"
+        Me.tbTitle.Size = New System.Drawing.Size(100, 20)
+        Me.tbTitle.TabIndex = 13
+        '
+        'tbRuntime
+        '
+        Me.tbRuntime.Location = New System.Drawing.Point(62, 120)
+        Me.tbRuntime.Name = "tbRuntime"
+        Me.tbRuntime.Size = New System.Drawing.Size(100, 20)
+        Me.tbRuntime.TabIndex = 14
+        '
+        'tbGenre
+        '
+        Me.tbGenre.Location = New System.Drawing.Point(62, 87)
+        Me.tbGenre.Name = "tbGenre"
+        Me.tbGenre.Size = New System.Drawing.Size(100, 20)
+        Me.tbGenre.TabIndex = 15
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(12, 123)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(46, 13)
+        Me.Label5.TabIndex = 16
+        Me.Label5.Text = "Runtime"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(12, 90)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(36, 13)
+        Me.Label6.TabIndex = 17
+        Me.Label6.Text = "Genre"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(12, 149)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(44, 13)
+        Me.Label7.TabIndex = 19
+        Me.Label7.Text = "Director"
+        '
+        'tbDirector
+        '
+        Me.tbDirector.Location = New System.Drawing.Point(62, 146)
+        Me.tbDirector.Name = "tbDirector"
+        Me.tbDirector.Size = New System.Drawing.Size(100, 20)
+        Me.tbDirector.TabIndex = 18
+        '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.tbDirector)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.tbGenre)
+        Me.Controls.Add(Me.tbRuntime)
+        Me.Controls.Add(Me.tbTitle)
+        Me.Controls.Add(Me.tbYear)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.lbImdbid)
+        Me.Controls.Add(Me.tbImdbid)
         Me.Controls.Add(Me.wbOutput)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tbFilePath)
-        Me.Controls.Add(Me.tbOriginal)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btSearch)
         Me.Controls.Add(Me.tbMovieName)
@@ -113,10 +223,21 @@ Partial Class movieGUI
     Friend WithEvents tbMovieName As System.Windows.Forms.TextBox
     Friend WithEvents btSearch As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents tbOriginal As System.Windows.Forms.TextBox
     Friend WithEvents tbFilePath As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents fbFilePath As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents wbOutput As System.Windows.Forms.WebBrowser
+    Friend WithEvents tbImdbid As System.Windows.Forms.TextBox
+    Friend WithEvents lbImdbid As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents tbYear As System.Windows.Forms.TextBox
+    Friend WithEvents tbTitle As System.Windows.Forms.TextBox
+    Friend WithEvents tbRuntime As System.Windows.Forms.TextBox
+    Friend WithEvents tbGenre As System.Windows.Forms.TextBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents tbDirector As System.Windows.Forms.TextBox
 
 End Class

@@ -6,6 +6,8 @@ Imports System.IO
 
 Public Class Movie
 
+    Public Property year()
+
     Private resultSet
 
     'from a supplied string of xsml text, return a list of movie titles 
@@ -24,20 +26,17 @@ Public Class Movie
         Dim doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
 
         Return findXtests(doc)
-
-
     End Function
     Private Function findXtests(doc As IEnumerable(Of System.Xml.Linq.XElement))
         Dim output As String = ""
         Dim cntres As Integer = 0
 
         'Loop through the xml node and find XTexts
-
         For Each s In doc.Nodes().OfType(Of XText)()
 
             Dim att As XAttribute = s.Parent.Attribute("id")
-
-            output += "<br><b><a href='http://www.imdb.com/title/" & att.Value.ToString & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
+            'Redirect the hyperlink to the imdbapi site to retrieve data based upon IMDB tt
+            output += "<br><b><a href='http://www.imdbapi.com/?i=" & att.Value.ToString & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
             cntres += 1
         Next
 
