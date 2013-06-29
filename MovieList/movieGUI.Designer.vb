@@ -29,7 +29,7 @@ Partial Class movieGUI
         Me.Label2 = New System.Windows.Forms.Label()
         Me.fbFilePath = New System.Windows.Forms.FolderBrowserDialog()
         Me.wbOutput = New System.Windows.Forms.WebBrowser()
-        Me.tbImdbid = New System.Windows.Forms.TextBox()
+        Me.tbTtId = New System.Windows.Forms.TextBox()
         Me.lbImdbid = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -41,14 +41,23 @@ Partial Class movieGUI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.tbDirector = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.tbWriter = New System.Windows.Forms.TextBox()
+        Me.pbPoster = New System.Windows.Forms.PictureBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.tbPlot = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.tbImagePath = New System.Windows.Forms.TextBox()
+        CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tbMovieName
         '
-        Me.tbMovieName.Location = New System.Drawing.Point(316, 120)
+        Me.tbMovieName.Location = New System.Drawing.Point(330, 13)
         Me.tbMovieName.Name = "tbMovieName"
-        Me.tbMovieName.Size = New System.Drawing.Size(100, 20)
+        Me.tbMovieName.Size = New System.Drawing.Size(118, 20)
         Me.tbMovieName.TabIndex = 0
+        Me.tbMovieName.Text = "Ninth Configuration"
         '
         'btSearch
         '
@@ -62,7 +71,7 @@ Partial Class movieGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(218, 127)
+        Me.Label1.Location = New System.Drawing.Point(216, 13)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(92, 13)
         Me.Label1.TabIndex = 3
@@ -90,18 +99,18 @@ Partial Class movieGUI
         '
         'wbOutput
         '
-        Me.wbOutput.Location = New System.Drawing.Point(499, 68)
+        Me.wbOutput.Location = New System.Drawing.Point(483, 120)
         Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
         Me.wbOutput.Name = "wbOutput"
-        Me.wbOutput.Size = New System.Drawing.Size(458, 348)
+        Me.wbOutput.Size = New System.Drawing.Size(474, 296)
         Me.wbOutput.TabIndex = 7
         '
-        'tbImdbid
+        'tbTtId
         '
-        Me.tbImdbid.Location = New System.Drawing.Point(62, 10)
-        Me.tbImdbid.Name = "tbImdbid"
-        Me.tbImdbid.Size = New System.Drawing.Size(100, 20)
-        Me.tbImdbid.TabIndex = 8
+        Me.tbTtId.Location = New System.Drawing.Point(62, 10)
+        Me.tbTtId.Name = "tbTtId"
+        Me.tbTtId.Size = New System.Drawing.Size(128, 20)
+        Me.tbTtId.TabIndex = 8
         '
         'lbImdbid
         '
@@ -134,28 +143,28 @@ Partial Class movieGUI
         '
         Me.tbYear.Location = New System.Drawing.Point(62, 61)
         Me.tbYear.Name = "tbYear"
-        Me.tbYear.Size = New System.Drawing.Size(100, 20)
+        Me.tbYear.Size = New System.Drawing.Size(128, 20)
         Me.tbYear.TabIndex = 12
         '
         'tbTitle
         '
         Me.tbTitle.Location = New System.Drawing.Point(62, 35)
         Me.tbTitle.Name = "tbTitle"
-        Me.tbTitle.Size = New System.Drawing.Size(100, 20)
+        Me.tbTitle.Size = New System.Drawing.Size(128, 20)
         Me.tbTitle.TabIndex = 13
         '
         'tbRuntime
         '
         Me.tbRuntime.Location = New System.Drawing.Point(62, 120)
         Me.tbRuntime.Name = "tbRuntime"
-        Me.tbRuntime.Size = New System.Drawing.Size(100, 20)
+        Me.tbRuntime.Size = New System.Drawing.Size(128, 20)
         Me.tbRuntime.TabIndex = 14
         '
         'tbGenre
         '
         Me.tbGenre.Location = New System.Drawing.Point(62, 87)
         Me.tbGenre.Name = "tbGenre"
-        Me.tbGenre.Size = New System.Drawing.Size(100, 20)
+        Me.tbGenre.Size = New System.Drawing.Size(128, 20)
         Me.tbGenre.TabIndex = 15
         '
         'Label5
@@ -189,14 +198,78 @@ Partial Class movieGUI
         '
         Me.tbDirector.Location = New System.Drawing.Point(62, 146)
         Me.tbDirector.Name = "tbDirector"
-        Me.tbDirector.Size = New System.Drawing.Size(100, 20)
+        Me.tbDirector.Size = New System.Drawing.Size(128, 20)
         Me.tbDirector.TabIndex = 18
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(12, 177)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(35, 13)
+        Me.Label8.TabIndex = 21
+        Me.Label8.Text = "Writer"
+        '
+        'tbWriter
+        '
+        Me.tbWriter.Location = New System.Drawing.Point(62, 174)
+        Me.tbWriter.Name = "tbWriter"
+        Me.tbWriter.Size = New System.Drawing.Size(128, 20)
+        Me.tbWriter.TabIndex = 20
+        '
+        'pbPoster
+        '
+        Me.pbPoster.Location = New System.Drawing.Point(62, 222)
+        Me.pbPoster.Name = "pbPoster"
+        Me.pbPoster.Size = New System.Drawing.Size(175, 202)
+        Me.pbPoster.TabIndex = 22
+        Me.pbPoster.TabStop = False
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(6, 222)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(37, 13)
+        Me.Label9.TabIndex = 23
+        Me.Label9.Text = "Poster"
+        '
+        'tbPlot
+        '
+        Me.tbPlot.Location = New System.Drawing.Point(271, 222)
+        Me.tbPlot.Multiline = True
+        Me.tbPlot.Name = "tbPlot"
+        Me.tbPlot.Size = New System.Drawing.Size(177, 156)
+        Me.tbPlot.TabIndex = 24
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(686, 68)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(88, 13)
+        Me.Label10.TabIndex = 26
+        Me.Label10.Text = "Path to image file"
+        '
+        'tbImagePath
+        '
+        Me.tbImagePath.Location = New System.Drawing.Point(689, 83)
+        Me.tbImagePath.Name = "tbImagePath"
+        Me.tbImagePath.Size = New System.Drawing.Size(252, 20)
+        Me.tbImagePath.TabIndex = 25
         '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.Controls.Add(Me.Label10)
+        Me.Controls.Add(Me.tbImagePath)
+        Me.Controls.Add(Me.tbPlot)
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.pbPoster)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.tbWriter)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.tbDirector)
         Me.Controls.Add(Me.Label6)
@@ -208,7 +281,7 @@ Partial Class movieGUI
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.lbImdbid)
-        Me.Controls.Add(Me.tbImdbid)
+        Me.Controls.Add(Me.tbTtId)
         Me.Controls.Add(Me.wbOutput)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tbFilePath)
@@ -216,6 +289,7 @@ Partial Class movieGUI
         Me.Controls.Add(Me.btSearch)
         Me.Controls.Add(Me.tbMovieName)
         Me.Name = "movieGUI"
+        CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -227,7 +301,7 @@ Partial Class movieGUI
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents fbFilePath As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents wbOutput As System.Windows.Forms.WebBrowser
-    Friend WithEvents tbImdbid As System.Windows.Forms.TextBox
+    Friend WithEvents tbTtId As System.Windows.Forms.TextBox
     Friend WithEvents lbImdbid As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
@@ -239,5 +313,12 @@ Partial Class movieGUI
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents tbDirector As System.Windows.Forms.TextBox
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents tbWriter As System.Windows.Forms.TextBox
+    Friend WithEvents pbPoster As System.Windows.Forms.PictureBox
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents tbPlot As System.Windows.Forms.TextBox
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents tbImagePath As System.Windows.Forms.TextBox
 
 End Class

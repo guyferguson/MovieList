@@ -6,7 +6,6 @@ Imports System.IO
 
 Public Class Movie
 
-    Public Property year()
 
     Private resultSet
 
