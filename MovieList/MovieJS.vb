@@ -53,6 +53,15 @@
         End Set
     End Property
     Private m_writer As String
+    Public Property actors() As String
+        Get
+            Return m_actors
+        End Get
+        Set(value As String)
+            m_actors = value
+        End Set
+    End Property
+    Private m_actors As String
     Public Property plot() As String
         Get
             Return m_plot

@@ -40,19 +40,21 @@ Partial Class movieGUI
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.tbDirector = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.tbWriter = New System.Windows.Forms.TextBox()
+        Me.tbDirector1 = New System.Windows.Forms.TextBox()
+        Me.lbWriters = New System.Windows.Forms.Label()
         Me.pbPoster = New System.Windows.Forms.PictureBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.tbPlot = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.tbImagePath = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.lbActors = New System.Windows.Forms.Label()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tbMovieName
         '
+        Me.tbMovieName.BackColor = System.Drawing.Color.Gold
         Me.tbMovieName.Location = New System.Drawing.Point(330, 13)
         Me.tbMovieName.Name = "tbMovieName"
         Me.tbMovieName.Size = New System.Drawing.Size(118, 20)
@@ -61,7 +63,7 @@ Partial Class movieGUI
         '
         'btSearch
         '
-        Me.btSearch.Location = New System.Drawing.Point(330, 171)
+        Me.btSearch.Location = New System.Drawing.Point(330, 43)
         Me.btSearch.Name = "btSearch"
         Me.btSearch.Size = New System.Drawing.Size(75, 23)
         Me.btSearch.TabIndex = 1
@@ -99,10 +101,10 @@ Partial Class movieGUI
         '
         'wbOutput
         '
-        Me.wbOutput.Location = New System.Drawing.Point(483, 120)
+        Me.wbOutput.Location = New System.Drawing.Point(483, 214)
         Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
         Me.wbOutput.Name = "wbOutput"
-        Me.wbOutput.Size = New System.Drawing.Size(474, 296)
+        Me.wbOutput.Size = New System.Drawing.Size(474, 202)
         Me.wbOutput.TabIndex = 7
         '
         'tbTtId
@@ -194,28 +196,21 @@ Partial Class movieGUI
         Me.Label7.TabIndex = 19
         Me.Label7.Text = "Director"
         '
-        'tbDirector
+        'tbDirector1
         '
-        Me.tbDirector.Location = New System.Drawing.Point(62, 146)
-        Me.tbDirector.Name = "tbDirector"
-        Me.tbDirector.Size = New System.Drawing.Size(128, 20)
-        Me.tbDirector.TabIndex = 18
+        Me.tbDirector1.Location = New System.Drawing.Point(62, 146)
+        Me.tbDirector1.Name = "tbDirector1"
+        Me.tbDirector1.Size = New System.Drawing.Size(128, 20)
+        Me.tbDirector1.TabIndex = 18
         '
-        'Label8
+        'lbWriters
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(12, 177)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(35, 13)
-        Me.Label8.TabIndex = 21
-        Me.Label8.Text = "Writer"
-        '
-        'tbWriter
-        '
-        Me.tbWriter.Location = New System.Drawing.Point(62, 174)
-        Me.tbWriter.Name = "tbWriter"
-        Me.tbWriter.Size = New System.Drawing.Size(128, 20)
-        Me.tbWriter.TabIndex = 20
+        Me.lbWriters.AutoSize = True
+        Me.lbWriters.Location = New System.Drawing.Point(227, 86)
+        Me.lbWriters.Name = "lbWriters"
+        Me.lbWriters.Size = New System.Drawing.Size(35, 13)
+        Me.lbWriters.TabIndex = 21
+        Me.lbWriters.Text = "Writer"
         '
         'pbPoster
         '
@@ -258,20 +253,40 @@ Partial Class movieGUI
         Me.tbImagePath.Size = New System.Drawing.Size(252, 20)
         Me.tbImagePath.TabIndex = 25
         '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.Chocolate
+        Me.Button1.Location = New System.Drawing.Point(523, 22)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(122, 44)
+        Me.Button1.TabIndex = 27
+        Me.Button1.Text = "Write to file"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'lbActors
+        '
+        Me.lbActors.AutoSize = True
+        Me.lbActors.Location = New System.Drawing.Point(424, 89)
+        Me.lbActors.Name = "lbActors"
+        Me.lbActors.Size = New System.Drawing.Size(32, 13)
+        Me.lbActors.TabIndex = 29
+        Me.lbActors.Text = "Actor"
+        '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.Controls.Add(Me.lbActors)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.tbImagePath)
         Me.Controls.Add(Me.tbPlot)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.pbPoster)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.tbWriter)
+        Me.Controls.Add(Me.lbWriters)
         Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.tbDirector)
+        Me.Controls.Add(Me.tbDirector1)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.tbGenre)
@@ -312,13 +327,14 @@ Partial Class movieGUI
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents tbDirector As System.Windows.Forms.TextBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents tbWriter As System.Windows.Forms.TextBox
+    Friend WithEvents tbDirector1 As System.Windows.Forms.TextBox
+    Friend WithEvents lbWriters As System.Windows.Forms.Label
     Friend WithEvents pbPoster As System.Windows.Forms.PictureBox
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents tbPlot As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents tbImagePath As System.Windows.Forms.TextBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents lbActors As System.Windows.Forms.Label
 
 End Class

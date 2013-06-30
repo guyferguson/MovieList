@@ -26,6 +26,17 @@ Public Class movieGUI
     End Sub
     Public Sub btSearch_Click(sender As Object, e As EventArgs) Handles btSearch.Click
 
+        ' NEED TO DO - clear out dynamic control text
+        'For Each ctrl In Me.Controls
+        '    If (TypeOf ctrl Is TextBox) Then
+        '        If (ctrl.text() = "tbMovieName") Then
+        '            Exit For
+        '        End If
+
+        '        ctrl.text = ""
+        '    End If
+        'Next
+
         Dim strMovieName As String
         strMovieName = tbMovieName.Text
         Dim webClient As New System.Net.WebClient
@@ -77,13 +88,15 @@ Public Class movieGUI
         tbYear.Text = newmv.year
         tbGenre.Text = newmv.genre
         tbRuntime.Text = newmv.runtime
-        tbDirector.Text = newmv.director
-        tbWriter.Text = newmv.writer
-        tbDirector.Text = newmv.director
+        tbDirector1.Text = newmv.director
+        splitWriters(newmv)
+        tbDirector1.Text = newmv.director
+
+        ' Handle multiple actors - always keep the array together but split for diaply purposes
+        splitActors(newmv)
         tbPlot.Text = newmv.plot
         'Handle the movie poster -check there is one first
         If Not (newmv.poster = "N/A") Then
-
             pbPoster.Image = New System.Drawing.Bitmap(New IO.MemoryStream(New System.Net.WebClient().DownloadData(newmv.poster)))
             Dim resized As Image = ResizeImage(pbPoster.Image, New Size(pbPoster.Width, pbPoster.Height))
             pbPoster.Image = resized
@@ -119,4 +132,77 @@ Public Class movieGUI
         Return newImage
     End Function
 
+
+    ' A sub to split the multiple actors into individual names
+    ' and put them in text boxes, without affecting the original value
+    '
+    ' PRE: A non-null string containing at least one actor name
+    '
+
+    Private Sub splitActors(mv As MovieJS)
+
+        Dim charCnt As Integer = mv.actors.Split(",").Count
+        Dim i As Integer
+        'Just list first 8 actors if there are many...
+        If charCnt > 8 Then
+            charCnt = 8
+        End If
+        For i = 1 To charCnt
+            Dim cntrName As String = "tbActor" & i
+            Dim newctl As New System.Windows.Forms.TextBox
+
+
+
+            newctl.Location = New System.Drawing.Point(474, 61 + (25 * i))
+            newctl.Name = cntrName
+            newctl.Size = New System.Drawing.Size(95, 20)
+            newctl.TabIndex = 9 + i
+            ' Break up the comma separated names and strip leading and trailing spaces
+            newctl.Text = mv.actors.Split(",")(i - 1).Trim(" ")
+            Me.Controls.Add(newctl)
+        Next
+
+      
+    End Sub
+
+
+    ' A sub to split the multiple actors into individual names
+    ' and put them in text boxes, without affecting the original value
+    '
+    ' Checks for instances where same writer has several credits (e.g. novel and screenplay)
+    ' and only reports one instance of that name
+    '
+
+    Private Sub splitWriters(mv As MovieJS)
+
+        Dim charCnt As Integer = mv.writer.Split(",").Count
+        Dim tmpWriters() As String = {"", "", "", "", "", ""}
+        Dim i As Integer
+        'Just list first 8 Writers if there are many...
+        If charCnt > 8 Then
+            charCnt = 8
+        End If
+        For i = 1 To charCnt
+            Dim cntrName As String = "tbWriter" & i
+            Dim newctl As New System.Windows.Forms.TextBox
+            If tmpWriters.Contains(mv.writer.Split(",")(i - 1).Trim(" ")) Then
+                Exit For
+            End If
+            tmpWriters(i - 1) = mv.writer.Split(",")(i - 1).Trim(" ")
+
+
+            newctl.Location = New System.Drawing.Point(277, 61 + (25 * i))
+            newctl.Name = cntrName
+            newctl.Size = New System.Drawing.Size(95, 20)
+            newctl.TabIndex = 9 + i
+            ' Break up the comma separated names and strip leading and trailing spaces
+            newctl.Text = mv.writer.Split(",")(i - 1).Trim(" ")
+            Me.Controls.Add(newctl)
+
+        Next
+
+        If i > 2 Then
+            lbWriters.Text = "Writers"
+        End If
+    End Sub
 End Class
