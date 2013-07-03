@@ -26,16 +26,8 @@ Public Class movieGUI
     End Sub
     Public Sub btSearch_Click(sender As Object, e As EventArgs) Handles btSearch.Click
 
-        ' NEED TO DO - clear out dynamic control text
-        'For Each ctrl In Me.Controls
-        '    If (TypeOf ctrl Is TextBox) Then
-        '        If (ctrl.text() = "tbMovieName") Then
-        '            Exit For
-        '        End If
-
-        '        ctrl.text = ""
-        '    End If
-        'Next
+        'Clear out current GUI
+        resetGUI()
 
         Dim strMovieName As String
         strMovieName = tbMovieName.Text
@@ -161,7 +153,9 @@ Public Class movieGUI
             newctl.Text = mv.actors.Split(",")(i - 1).Trim(" ")
             Me.Controls.Add(newctl)
         Next
-
+        If i > 2 Then
+            lbActors.Text = "Actors"
+        End If
       
     End Sub
 
@@ -193,6 +187,7 @@ Public Class movieGUI
 
             newctl.Location = New System.Drawing.Point(277, 61 + (25 * i))
             newctl.Name = cntrName
+            Me.Controls.Add(newctl)
             newctl.Size = New System.Drawing.Size(95, 20)
             newctl.TabIndex = 9 + i
             ' Break up the comma separated names and strip leading and trailing spaces
@@ -204,5 +199,49 @@ Public Class movieGUI
         If i > 2 Then
             lbWriters.Text = "Writers"
         End If
+    End Sub
+
+    '
+    ' A sub to loop through controls and clean them up, and remove any dynamically added
+    ' controls such as textboxes...
+    '
+    Private Sub resetGUI()
+
+        For Each ctrl As Control In Me.Controls
+            '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
+            If (TypeOf ctrl Is TextBox) Then
+                If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
+                    ctrl.Text = ""
+                End If
+                If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
+                    Me.Controls.Remove(ctrl)
+
+                End If
+            End If
+        Next
+        For Each ctrl As Control In Me.Controls
+            '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
+            If (TypeOf ctrl Is TextBox) Then
+                If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
+                    ctrl.Text = ""
+                End If
+                If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
+                    Me.Controls.Remove(ctrl)
+
+                End If
+            End If
+        Next
+        For Each ctrl As Control In Me.Controls
+            '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
+            If (TypeOf ctrl Is TextBox) Then
+                If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
+                    ctrl.Text = ""
+                End If
+                If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
+                    Me.Controls.Remove(ctrl)
+
+                End If
+            End If
+        Next
     End Sub
 End Class

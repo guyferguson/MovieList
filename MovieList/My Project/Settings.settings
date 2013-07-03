@@ -8,5 +8,8 @@
     <Setting Name="fileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">movies.xml</Value>
     </Setting>
+    <Setting Name="imagePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\FLEXNAS\Guy\dev\xml\movies\images</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
