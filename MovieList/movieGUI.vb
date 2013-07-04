@@ -6,8 +6,6 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.IO
 
-
-
 Public Class movieGUI
 
     Dim mv As New Movie
@@ -20,6 +18,10 @@ Public Class movieGUI
 
         ' Read the filePath fron the Settings object
         tbFilePath.Text = My.Settings.filePath
+        tbImagePath.Text = My.Settings.imagePath
+
+        ' Select the first item in the filetype list
+        cbFiletype.SelectedIndex = 0
 
         ' Display the filename in the Title Bar
         Me.Text = "We are working with " & My.Settings.fileName
@@ -28,7 +30,7 @@ Public Class movieGUI
 
         'Clear out current GUI
         resetGUI()
-
+        wbOutput.Visible = True
         Dim strMovieName As String
         strMovieName = tbMovieName.Text
         Dim webClient As New System.Net.WebClient
@@ -54,17 +56,9 @@ Public Class movieGUI
                 newmv.ttId = (wbOutput.Url.Query.Split("=")(1))
                 ' Then populate GUI
                 populateGUI(newmv)
+                wbOutput.Visible = False
             End If
         End If
-
-    End Sub
-
-    Private Sub wbOutput_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles wbOutput.Navigating
-        '  If we are on the page of links then cancel navigation.
-        If Not (IsNothing(wbOutput.Document)) Then
-
-        End If
-
 
     End Sub
 
@@ -75,8 +69,10 @@ Public Class movieGUI
 
     End Function
     Private Sub populateGUI(newmv As MovieJS)
+        ' This function makes several calls to other functions taht assist in data cleansing
+        ' for final presentation
         tbTtId.Text = newmv.ttId
-        tbTitle.Text = newmv.title
+        tbTitle.Text = prefixSuffix(newmv)
         tbYear.Text = newmv.year
         tbGenre.Text = newmv.genre
         tbRuntime.Text = newmv.runtime
@@ -96,8 +92,19 @@ Public Class movieGUI
         End If
     End Sub
 
-    'Code to resize an image 
+    Private Function prefixSuffix(newmv As MovieJS)
+        ' If the movie title starts with'The, moves this to the end after a comma.
 
+        If (newmv.title.Trim.StartsWith("The ")) Then
+            newmv.title = newmv.title.Substring(4) & ", The"
+        End If
+        Return newmv.title
+    End Function
+    Private Function timeToMins(newmv As MovieJS)
+        ' Function to convert the IMDB string, e.g. '1h 39m' into minutes, e.g. 99
+
+    End Function
+    'Code to resize an image 
     Private Function ResizeImage(ByVal image As Image, _
   ByVal size As Size, Optional ByVal preserveAspectRatio As Boolean = True) As Image
         Dim newWidth As Integer
@@ -141,22 +148,24 @@ Public Class movieGUI
         End If
         For i = 1 To charCnt
             Dim cntrName As String = "tbActor" & i
-            Dim newctl As New System.Windows.Forms.TextBox
+            Dim newActor As New System.Windows.Forms.TextBox
+            '   Dim newctl As New System.Windows.Forms.TextBox
 
 
 
-            newctl.Location = New System.Drawing.Point(474, 61 + (25 * i))
-            newctl.Name = cntrName
-            newctl.Size = New System.Drawing.Size(95, 20)
-            newctl.TabIndex = 9 + i
+            newActor.Location = New System.Drawing.Point(474, 61 + (25 * i))
+            newActor.Name = cntrName
+            newActor.Size = New System.Drawing.Size(95, 20)
+            newActor.TabIndex = 9 + i
             ' Break up the comma separated names and strip leading and trailing spaces
-            newctl.Text = mv.actors.Split(",")(i - 1).Trim(" ")
-            Me.Controls.Add(newctl)
+            newActor.Text = mv.actors.Split(",")(i - 1).Trim(" ")
+            Me.Controls.Add(newActor)
+
         Next
         If i > 2 Then
             lbActors.Text = "Actors"
         End If
-      
+
     End Sub
 
 
@@ -187,13 +196,11 @@ Public Class movieGUI
 
             newctl.Location = New System.Drawing.Point(277, 61 + (25 * i))
             newctl.Name = cntrName
-            Me.Controls.Add(newctl)
-            newctl.Size = New System.Drawing.Size(95, 20)
+            newctl.Size = New System.Drawing.Size(115, 20)
             newctl.TabIndex = 9 + i
             ' Break up the comma separated names and strip leading and trailing spaces
             newctl.Text = mv.writer.Split(",")(i - 1).Trim(" ")
             Me.Controls.Add(newctl)
-
         Next
 
         If i > 2 Then
@@ -204,6 +211,8 @@ Public Class movieGUI
     '
     ' A sub to loop through controls and clean them up, and remove any dynamically added
     ' controls such as textboxes...
+    ' Crazy but the only way I've been able to get it to clear all dynamically added boxes is to loop through the same 
+    ' collection three times
     '
     Private Sub resetGUI()
 
@@ -218,6 +227,7 @@ Public Class movieGUI
 
                 End If
             End If
+
         Next
         For Each ctrl As Control In Me.Controls
             '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
@@ -230,6 +240,7 @@ Public Class movieGUI
 
                 End If
             End If
+
         Next
         For Each ctrl As Control In Me.Controls
             '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
@@ -242,6 +253,11 @@ Public Class movieGUI
 
                 End If
             End If
+
         Next
+        ' Reset the label text
+
+        lbActors.Text = "Actor"
+        lbWriters.Text = "Writer"
     End Sub
 End Class
