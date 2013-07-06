@@ -44,7 +44,6 @@
         End Set
     End Property
     Private m_director As String
-    Public Property writer() As String
         Get
             Return m_writer
         End Get
@@ -89,5 +88,40 @@
         End Set
     End Property
     Private m_ttId As String
-
+    Public Property type() As String
+        Get
+            Return m_type
+        End Get
+        Set(value As String)
+            m_type = value
+        End Set
+    End Property
+    Private m_type As String
+    Public Property timesWatched() As String
+        Get
+            Return m_timesWatched
+        End Get
+        Set(value As String)
+            m_timesWatched = value
+        End Set
+    End Property
+    Private m_timesWatched As String
+    Public Property discName() As String
+        Get
+            Return m_discName
+        End Get
+        Set(value As String)
+            m_discName = value
+        End Set
+    End Property
+    Private m_discName As String
+    Public Property subtitles() As String
+        Get
+            Return m_subtitles
+        End Get
+        Set(value As String)
+            m_subtitles = value
+        End Set
+    End Property
+    Private m_subtitles As String
 End Class

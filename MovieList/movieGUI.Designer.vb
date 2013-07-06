@@ -58,6 +58,8 @@ Partial Class movieGUI
         Me.tbDiscName = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.cbWatched = New System.Windows.Forms.ComboBox()
+        Me.cbType = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -362,11 +364,32 @@ Partial Class movieGUI
         Me.cbWatched.Size = New System.Drawing.Size(39, 21)
         Me.cbWatched.TabIndex = 42
         '
+        'cbType
+        '
+        Me.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbType.FormattingEnabled = True
+        Me.cbType.Items.AddRange(New Object() {"MOVIE", "TV"})
+        Me.cbType.Location = New System.Drawing.Point(409, 178)
+        Me.cbType.Name = "cbType"
+        Me.cbType.Size = New System.Drawing.Size(92, 21)
+        Me.cbType.TabIndex = 44
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(366, 184)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(31, 13)
+        Me.Label14.TabIndex = 43
+        Me.Label14.Text = "Type"
+        '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.Controls.Add(Me.cbType)
+        Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.cbWatched)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label12)
@@ -444,5 +467,7 @@ Partial Class movieGUI
     Friend WithEvents tbDiscName As System.Windows.Forms.TextBox
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents cbWatched As System.Windows.Forms.ComboBox
+    Friend WithEvents cbType As System.Windows.Forms.ComboBox
+    Friend WithEvents Label14 As System.Windows.Forms.Label
 
 End Class

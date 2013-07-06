@@ -75,7 +75,7 @@ Public Class movieGUI
         tbTitle.Text = prefixSuffix(newmv)
         tbYear.Text = newmv.year
         tbGenre.Text = newmv.genre
-        tbRuntime.Text = newmv.runtime
+        tbRuntime.Text = timeToMins(newmv)
         tbDirector1.Text = newmv.director
         splitWriters(newmv)
         tbDirector1.Text = newmv.director
@@ -83,7 +83,7 @@ Public Class movieGUI
         ' Handle multiple actors - always keep the array together but split for diaply purposes
         splitActors(newmv)
         tbPlot.Text = newmv.plot
-        'Handle the movie poster -check there is one first
+        'Handle the movie poster - check there is one first
         If Not (newmv.poster = "N/A") Then
             pbPoster.Image = New System.Drawing.Bitmap(New IO.MemoryStream(New System.Net.WebClient().DownloadData(newmv.poster)))
             Dim resized As Image = ResizeImage(pbPoster.Image, New Size(pbPoster.Width, pbPoster.Height))
@@ -93,7 +93,7 @@ Public Class movieGUI
     End Sub
 
     Private Function prefixSuffix(newmv As MovieJS)
-        ' If the movie title starts with'The, moves this to the end after a comma.
+        ' If the movie title starts with'The', moves it to the end after a comma.
 
         If (newmv.title.Trim.StartsWith("The ")) Then
             newmv.title = newmv.title.Substring(4) & ", The"
@@ -102,7 +102,18 @@ Public Class movieGUI
     End Function
     Private Function timeToMins(newmv As MovieJS)
         ' Function to convert the IMDB string, e.g. '1h 39m' into minutes, e.g. 99
+        Dim hours As Integer
+        Dim min As Integer
+        If newmv.runtime.Contains("h") Then
 
+            hours = newmv.runtime.Split("h")(0)
+            Dim minAt As Integer = newmv.runtime.IndexOf("m")
+            min = CInt(Mid(newmv.runtime, minAt - 2, 2))
+        Else
+            hours = 0
+            min = CInt((newmv.runtime.Split(" "c)(0)))
+        End If
+        Return (hours * 60) + min
     End Function
     'Code to resize an image 
     Private Function ResizeImage(ByVal image As Image, _
