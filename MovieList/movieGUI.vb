@@ -20,6 +20,10 @@ Public Class movieGUI
         tbFilePath.Text = My.Settings.filePath
         tbImagePath.Text = My.Settings.imagePath
 
+        'Set last watched to today's date
+        dtLastWatched.Value = Today
+
+
         ' Select the first item in the filetype list
         cbFiletype.SelectedIndex = 0
 

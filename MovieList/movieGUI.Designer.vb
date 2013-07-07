@@ -60,6 +60,8 @@ Partial Class movieGUI
         Me.cbWatched = New System.Windows.Forms.ComboBox()
         Me.cbType = New System.Windows.Forms.ComboBox()
         Me.Label14 = New System.Windows.Forms.Label()
+        Me.dtLastWatched = New System.Windows.Forms.DateTimePicker()
+        Me.Label15 = New System.Windows.Forms.Label()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -112,10 +114,10 @@ Partial Class movieGUI
         '
         'wbOutput
         '
-        Me.wbOutput.Location = New System.Drawing.Point(483, 214)
+        Me.wbOutput.Location = New System.Drawing.Point(613, 121)
         Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
         Me.wbOutput.Name = "wbOutput"
-        Me.wbOutput.Size = New System.Drawing.Size(474, 202)
+        Me.wbOutput.Size = New System.Drawing.Size(344, 275)
         Me.wbOutput.TabIndex = 7
         '
         'tbTtId
@@ -369,25 +371,43 @@ Partial Class movieGUI
         Me.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbType.FormattingEnabled = True
         Me.cbType.Items.AddRange(New Object() {"MOVIE", "TV"})
-        Me.cbType.Location = New System.Drawing.Point(409, 178)
+        Me.cbType.Location = New System.Drawing.Point(388, 176)
         Me.cbType.Name = "cbType"
-        Me.cbType.Size = New System.Drawing.Size(92, 21)
+        Me.cbType.Size = New System.Drawing.Size(60, 21)
         Me.cbType.TabIndex = 44
         '
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(366, 184)
+        Me.Label14.Location = New System.Drawing.Point(360, 181)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(31, 13)
         Me.Label14.TabIndex = 43
         Me.Label14.Text = "Type"
+        '
+        'dtLastWatched
+        '
+        Me.dtLastWatched.Location = New System.Drawing.Point(640, 418)
+        Me.dtLastWatched.Name = "dtLastWatched"
+        Me.dtLastWatched.Size = New System.Drawing.Size(131, 20)
+        Me.dtLastWatched.TabIndex = 45
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(509, 422)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(74, 13)
+        Me.Label15.TabIndex = 46
+        Me.Label15.Text = "Last Watched"
         '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.dtLastWatched)
         Me.Controls.Add(Me.cbType)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.cbWatched)
@@ -469,5 +489,7 @@ Partial Class movieGUI
     Friend WithEvents cbWatched As System.Windows.Forms.ComboBox
     Friend WithEvents cbType As System.Windows.Forms.ComboBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents dtLastWatched As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Label15 As System.Windows.Forms.Label
 
 End Class

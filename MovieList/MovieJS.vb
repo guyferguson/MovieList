@@ -44,6 +44,7 @@
         End Set
     End Property
     Private m_director As String
+    Public Property writer() As String
         Get
             Return m_writer
         End Get
