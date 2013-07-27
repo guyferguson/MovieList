@@ -78,6 +78,7 @@ Public Class movieGUI
         tbTtId.Text = newmv.ttId
         tbTitle.Text = prefixSuffix(newmv)
         tbYear.Text = newmv.year
+        ' TO DO - COnvert IMDB Genres to mine. And do we allow multiple genres?
         tbGenre.Text = newmv.genre
         tbRuntime.Text = timeToMins(newmv)
         tbDirector1.Text = newmv.director
