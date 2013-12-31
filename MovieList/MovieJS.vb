@@ -125,4 +125,7 @@
         End Set
     End Property
     Private m_subtitles As String
+    Overrides Function ToString() As String
+        Return ("Name: " & title)
+    End Function
 End Class

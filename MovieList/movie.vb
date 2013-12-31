@@ -43,9 +43,6 @@ Public Class Movie
         Return "<p>Results :" & cntres & "</p>" & output.ToString
     End Function
 
-    Private Function phoneTypes() As Object
-        Throw New NotImplementedException
-    End Function
     Private Function CleanInput(strIn As String) As String
         ' Replace invalid characters with empty strings. 
         Try

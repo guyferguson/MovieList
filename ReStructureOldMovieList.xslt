@@ -1,19 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl"
 >
     <xsl:output method="xml" indent="yes"/>
-
-    <xsl:template match="@* | node()">
-      
-        <xsl:apply-templates select="@* | node()"/>
-     
-    </xsl:template>
-
+  <xsl:template match="/">
+    <CATALOG>
+    <xsl:apply-templates select="CATALOG"/>
+  </CATALOG>
+  </xsl:template>
+  
+  <xsl:template match="CATALOG">
+      <xsl:apply-templates select="MOVIE"/>
+  </xsl:template>
+    
   <xsl:template match="MOVIE">
     <MEDIA>
-      <xsl:apply-templates select="@* | node()"/>
-    </MEDIA>
+      <xsl:apply-templates select="TITLE"/>
+      <xsl:apply-templates select="WRITERS"/>
+      <xsl:apply-templates select="STATS"/>
+   </MEDIA>
   </xsl:template>
     
   <xsl:template match="TITLE">
@@ -30,6 +34,27 @@
       <TYPE>
         <xsl:value-of select="../STATS/@VIDEO"></xsl:value-of>
       </TYPE>
+        <YEAR>
+          <xsl:value-of select="../STATS/@YEAR"/>
+        </YEAR>
+        <RUNTIME>
+          <xsl:value-of select="../STATS/@LENGTH"/>
+        </RUNTIME>
+        <GENRES>
+          <GENRE>
+            <xsl:value-of select="../STATS/@GENRE"/>
+          </GENRE>
+        </GENRES>
+        <xsl:if test="../STATS/@VIDEO='TV'">
+          <SERIES>
+            <SEASON>
+              <EPISODES></EPISODES>
+            </SEASON>
+          </SERIES>
+        </xsl:if>
+        <PLOT>
+          <xsl:value-of select="../SYNOPSIS"/>
+        </PLOT>
     </TITLE>
   </xsl:template>
 
@@ -39,13 +64,7 @@
           <xsl:copy-of select="../DIRECTOR"/>
          </DIRECTORS>
       <WRITERS>
-
-       
-          <WRITER> <ROLE>
-            <xsl:copy-of select="*"/>
-         </ROLE>  </WRITER>
-       
-        
+                 <xsl:apply-templates select="WRITER"/>
       </WRITERS>
       <ACTORS>
           <xsl:copy-of select="../ACTORS/*"/>
@@ -53,32 +72,22 @@
     </CREATORS>
   </xsl:template>
 
+  <xsl:template match="WRITER">
+    <WRITER>
+      <xsl:value-of select ="."/>
+      <ROLE/>
+    </WRITER>
+  </xsl:template>
+  
+  
   <xsl:template match="STATS">
-    <DATA>
-      <UNIQUE>
-        <YEAR>
-          <xsl:value-of select="@YEAR"/>
-        </YEAR>
-        <RUNTIME>1502
-          <xsl:value-of select="@LENGTH"/>          
-        </RUNTIME>
-        <GENRES>
-          <GENRE>
-            <xsl:value-of select="@GENRE"/>
-          </GENRE>
-        </GENRES>
-        <xsl:if test="./@VIDEO='TV'">
-          <SERIES>
-            <SEASON>
-              <EPISODES></EPISODES>
-            </SEASON>
-          </SERIES>
-        </xsl:if>
-      </UNIQUE>
-      <PERSONAL>
+    <COPY>
         <IDENTIFIER>
           <xsl:value-of select="@MEDIANAME"/>
         </IDENTIFIER>
+        <COPYTYPE>
+          <xsl:value-of select="@TYPE"/>
+        </COPYTYPE>
         <FILESIZE>
           <xsl:value-of select="@FILESIZE"/>
         </FILESIZE>
@@ -112,11 +121,13 @@
         <DATEADDED>
           <xsl:value-of select="@DTEADDED"/>
         </DATEADDED>
+      <DATEENTERED>
+        <xsl:value-of select="@DATEENTERED"/>
+      </DATEENTERED>
         <SUBTITLES>
           <xsl:value-of select="@SUBTITLES"/>
         </SUBTITLES>
-      </PERSONAL>
-    </DATA>
+      </COPY>
     
   </xsl:template>
   

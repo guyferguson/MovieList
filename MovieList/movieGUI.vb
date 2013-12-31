@@ -9,8 +9,14 @@ Imports System.IO
 Public Class movieGUI
 
     Dim mv As New Movie
+    Dim newmv As MovieJS
+    Dim doc As XDocument
+
+    ' An integer to count how many actors in an instance
+    Dim ActCnt As Integer
+    Dim WritCnt As Integer
+
     Public Sub New()
-        '     Dim g As Serialization.
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -23,12 +29,17 @@ Public Class movieGUI
         'Set last watched to today's date
         dtLastWatched.Value = Today
 
-
-        ' Select the first item in the filetype list
+        ' Select the first item in the several dropdown lists
         cbFiletype.SelectedIndex = 0
+        cbType.SelectedIndex = 0
+        cbWatched.SelectedIndex = 0
 
         ' Display the filename in the Title Bar
         Me.Text = "We are working with " & My.Settings.fileName
+
+        ' Load the existing xml file to speed up later usage of it.  Originally it loaded at each 'Write' button-push
+        doc = XDocument.Load(tbFilePath.Text & "\" & My.Settings.fileName)
+
     End Sub
     Public Sub btSearch_Click(sender As Object, e As EventArgs) Handles btSearch.Click
 
@@ -38,9 +49,10 @@ Public Class movieGUI
         Dim strMovieName As String
         strMovieName = tbMovieName.Text
         Dim webClient As New System.Net.WebClient
+
+        ' This web query returns a valid xml string, but for display purposes we just treat it as a string
         Dim result As String = webClient.DownloadString("http://www.imdb.com/xml/find?xml=1&nr=1&tt=on&q=" & strMovieName)
 
-        '  tbOriginal.Text = result
         wbOutput.DocumentText = mv.showPossibles(result)
     End Sub
 
@@ -52,11 +64,11 @@ Public Class movieGUI
 
 
     Private Sub wbOutput_Navigated(sender As Object, e As WebBrowserNavigatedEventArgs) Handles wbOutput.Navigated
-        If Not (IsNothing(wbOutput.DocumentText)) Then
 
+        If Not (IsNothing(wbOutput.DocumentText)) Then
             ' A very hackish and childish way of determing if we have arrived at a JSON string 
             If (wbOutput.DocumentText.ToCharArray()(0) = "{") Then
-                Dim newmv As MovieJS = readJson(wbOutput.DocumentText)
+                newmv = readJson(wbOutput.DocumentText)
                 newmv.ttId = (wbOutput.Url.Query.Split("=")(1))
                 ' Then populate GUI
                 populateGUI(newmv)
@@ -67,13 +79,11 @@ Public Class movieGUI
     End Sub
 
     Function readJson(ob As String)
-        ' Msgbox to check we're looking at JSON here...
-        ' MsgBox(ob)
         Return JsonConvert.DeserializeObject(Of MovieJS)(ob)
 
     End Function
     Private Sub populateGUI(newmv As MovieJS)
-        ' This function makes several calls to other functions taht assist in data cleansing
+        ' This function makes several calls to other functions that assist in data cleansing
         ' for final presentation
         tbTtId.Text = newmv.ttId
         tbTitle.Text = prefixSuffix(newmv)
@@ -109,6 +119,12 @@ Public Class movieGUI
         ' Function to convert the IMDB string, e.g. '1h 39m' into minutes, e.g. 99
         Dim hours As Integer
         Dim min As Integer
+
+        ' Check that a time has been returned - IMDB can hold NULL or N/A
+        If Not newmv.runtime.Contains("m") Then
+            Return "N/A"
+        End If
+
         If newmv.runtime.Contains("h") Then
 
             hours = newmv.runtime.Split("h")(0)
@@ -120,7 +136,7 @@ Public Class movieGUI
         End If
         Return (hours * 60) + min
     End Function
-    'Code to resize an image 
+    ' Resize an image 
     Private Function ResizeImage(ByVal image As Image, _
   ByVal size As Size, Optional ByVal preserveAspectRatio As Boolean = True) As Image
         Dim newWidth As Integer
@@ -156,19 +172,15 @@ Public Class movieGUI
 
     Private Sub splitActors(mv As MovieJS)
 
-        Dim charCnt As Integer = mv.actors.Split(",").Count
+        ActCnt = mv.actors.Split(",").Count
         Dim i As Integer
         'Just list first 8 actors if there are many...
-        If charCnt > 8 Then
-            charCnt = 8
+        If ActCnt > 8 Then
+            ActCnt = 8
         End If
-        For i = 1 To charCnt
+        For i = 1 To ActCnt
             Dim cntrName As String = "tbActor" & i
             Dim newActor As New System.Windows.Forms.TextBox
-            '   Dim newctl As New System.Windows.Forms.TextBox
-
-
-
             newActor.Location = New System.Drawing.Point(474, 61 + (25 * i))
             newActor.Name = cntrName
             newActor.Size = New System.Drawing.Size(95, 20)
@@ -194,14 +206,14 @@ Public Class movieGUI
 
     Private Sub splitWriters(mv As MovieJS)
 
-        Dim charCnt As Integer = mv.writer.Split(",").Count
+        WritCnt = mv.writer.Split(",").Count
         Dim tmpWriters() As String = {"", "", "", "", "", ""}
         Dim i As Integer
         'Just list first 8 Writers if there are many...
-        If charCnt > 8 Then
-            charCnt = 8
+        If WritCnt > 8 Then
+            WritCnt = 8
         End If
-        For i = 1 To charCnt
+        For i = 1 To WritCnt
             Dim cntrName As String = "tbWriter" & i
             Dim newctl As New System.Windows.Forms.TextBox
             If tmpWriters.Contains(mv.writer.Split(",")(i - 1).Trim(" ")) Then
@@ -243,10 +255,9 @@ Public Class movieGUI
 
                 End If
             End If
-
+            pbPoster.Image = Nothing
         Next
         For Each ctrl As Control In Me.Controls
-            '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
             If (TypeOf ctrl Is TextBox) Then
                 If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
                     ctrl.Text = ""
@@ -256,10 +267,10 @@ Public Class movieGUI
 
                 End If
             End If
+            pbPoster.Image = Nothing
 
         Next
         For Each ctrl As Control In Me.Controls
-            '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
             If (TypeOf ctrl Is TextBox) Then
                 If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
                     ctrl.Text = ""
@@ -269,11 +280,82 @@ Public Class movieGUI
 
                 End If
             End If
+            pbPoster.Image = Nothing
 
         Next
+
         ' Reset the label text
-
         lbActors.Text = "Actor"
         lbWriters.Text = "Writer"
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btWriteXML.Click
+        'Add text to xml file from path. Determine if it's an update or new addition
+
+        ' Check first if file contains this movie
+        ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
+
+        '  Dim doc As XDocument = XDocument.Load(tbFilePath.Text & "\" & My.Settings.fileName)
+
+        'Dim movies = From m In doc.Elements Select m.<MOVIE>
+
+        For Each el In doc.<CATALOG>...<MOVIE>...<TITLE>
+            If (String.Compare(el.@IMDBR, tbTtId.Text) = 0) Then
+                '  MsgBox("Already exists as " & el.@NAME)
+                compare(el.Parent, newmv)
+                '   tbTest.Text = el.Parent.ToString & newmv.ToString
+
+            End If
+            '   Console.WriteLine(el.@IMDBR & "doesn't match " & tbTtId.Text.ToString & " compare = " & String.Compare(el.@IMDBR.ToString, tbTtId.Text.ToString) & " equals? " & String.Equals(el.ToString, tbTtId.Text.ToString) & " lengtsh = " & Len(el.ToString) & " and " & Len(tbTtId.Text.ToString))
+
+
+            'For Each l In movies.First
+
+
+        Next
+
+        Dim xmlToAdd As XElement = <MEDIA><TITLE><COUNTRY>AUS<NAME></NAME></COUNTRY></TITLE></MEDIA>
+        xmlToAdd.Add(New XElement("NAME", tbTitle.Text))
+
+        'Handle Writers
+        Dim xmlWrit As New XElement("WRITERS")
+
+        For i = 1 To WritCnt
+
+            If (Me.Controls("tbWriter" & i).Enabled) Then
+                xmlWrit.Add(New XElement("WRITER", Me.Controls("tbWriter" & i).Text))
+            End If
+
+        Next
+
+        xmlToAdd.Add(xmlWrit)
+
+
+        'Handle Actors
+        Dim xmlAct As New XElement("ACTORS")
+
+        For i = 1 To ActCnt
+            If (Me.Controls("tbActor" & i).Text <> "") Then
+                xmlAct.Add(New XElement("ACTOR", Me.Controls("tbActor" & i).Text))
+            End If
+
+        Next
+
+        xmlToAdd.Add(xmlAct)
+
+
+        MsgBox(xmlToAdd.ToString)
+        'Need to offer 'Overwrite, add'
+    End Sub
+
+    Private Sub reWrite()
+        ' Dim nf As New XDocument(New XDeclaration("1.0","utf-8","yes"),
+        
+    End Sub
+
+    ' Compares xmlNode from file to current movie
+    Private Sub compare(xn As XElement, mv As MovieJS)
+        '  tbTest.Text = mv.
+        ' if (mv.title = xn.
     End Sub
 End Class

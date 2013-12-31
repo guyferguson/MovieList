@@ -47,7 +47,7 @@ Partial Class movieGUI
         Me.tbPlot = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.tbImagePath = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btWriteXML = New System.Windows.Forms.Button()
         Me.lbActors = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.tbFilesize = New System.Windows.Forms.TextBox()
@@ -62,21 +62,35 @@ Partial Class movieGUI
         Me.Label14 = New System.Windows.Forms.Label()
         Me.dtLastWatched = New System.Windows.Forms.DateTimePicker()
         Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.tbDimX = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.tbDimY = New System.Windows.Forms.TextBox()
+        Me.tbVBitrate = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.tbABitrate = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.tbQf = New System.Windows.Forms.TextBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.cbSource = New System.Windows.Forms.ComboBox()
+        Me.cbWatchedEver = New System.Windows.Forms.CheckBox()
+        Me.tbTest = New System.Windows.Forms.TextBox()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tbMovieName
         '
         Me.tbMovieName.BackColor = System.Drawing.Color.Gold
-        Me.tbMovieName.Location = New System.Drawing.Point(330, 13)
+        Me.tbMovieName.Location = New System.Drawing.Point(219, 35)
         Me.tbMovieName.Name = "tbMovieName"
-        Me.tbMovieName.Size = New System.Drawing.Size(118, 20)
+        Me.tbMovieName.Size = New System.Drawing.Size(156, 20)
         Me.tbMovieName.TabIndex = 0
-        Me.tbMovieName.Text = "Ninth Configuration"
+        Me.tbMovieName.Text = "Ghost World"
         '
         'btSearch
         '
-        Me.btSearch.Location = New System.Drawing.Point(330, 43)
+        Me.btSearch.Location = New System.Drawing.Point(388, 34)
         Me.btSearch.Name = "btSearch"
         Me.btSearch.Size = New System.Drawing.Size(75, 23)
         Me.btSearch.TabIndex = 1
@@ -196,9 +210,9 @@ Partial Class movieGUI
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(12, 94)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(36, 13)
+        Me.Label6.Size = New System.Drawing.Size(47, 13)
         Me.Label6.TabIndex = 17
-        Me.Label6.Text = "Genre"
+        Me.Label6.Text = "Genre(s)"
         '
         'Label7
         '
@@ -266,15 +280,15 @@ Partial Class movieGUI
         Me.tbImagePath.Size = New System.Drawing.Size(252, 20)
         Me.tbImagePath.TabIndex = 25
         '
-        'Button1
+        'btWriteXML
         '
-        Me.Button1.BackColor = System.Drawing.Color.Chocolate
-        Me.Button1.Location = New System.Drawing.Point(523, 22)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(122, 44)
-        Me.Button1.TabIndex = 27
-        Me.Button1.Text = "Write to file"
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.btWriteXML.BackColor = System.Drawing.Color.Chocolate
+        Me.btWriteXML.Location = New System.Drawing.Point(523, 22)
+        Me.btWriteXML.Name = "btWriteXML"
+        Me.btWriteXML.Size = New System.Drawing.Size(122, 44)
+        Me.btWriteXML.TabIndex = 27
+        Me.btWriteXML.Text = "Write to file"
+        Me.btWriteXML.UseVisualStyleBackColor = False
         '
         'lbActors
         '
@@ -298,7 +312,7 @@ Partial Class movieGUI
         '
         Me.tbFilesize.Location = New System.Drawing.Point(328, 396)
         Me.tbFilesize.Name = "tbFilesize"
-        Me.tbFilesize.Size = New System.Drawing.Size(128, 20)
+        Me.tbFilesize.Size = New System.Drawing.Size(63, 20)
         Me.tbFilesize.TabIndex = 30
         '
         'Label11
@@ -314,10 +328,10 @@ Partial Class movieGUI
         '
         Me.cbFiletype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbFiletype.FormattingEnabled = True
-        Me.cbFiletype.Items.AddRange(New Object() {"AVI", "BIN", "DIVX", "MKV", "MP4", "XVID"})
+        Me.cbFiletype.Items.AddRange(New Object() {"AVI", "BIN", "DIVX", "DVD", "MKV", "MP4", "XVID"})
         Me.cbFiletype.Location = New System.Drawing.Point(327, 422)
         Me.cbFiletype.Name = "cbFiletype"
-        Me.cbFiletype.Size = New System.Drawing.Size(129, 21)
+        Me.cbFiletype.Size = New System.Drawing.Size(64, 21)
         Me.cbFiletype.TabIndex = 35
         '
         'cbSubtitles
@@ -342,7 +356,7 @@ Partial Class movieGUI
         '
         'tbDiscName
         '
-        Me.tbDiscName.Location = New System.Drawing.Point(147, 173)
+        Me.tbDiscName.Location = New System.Drawing.Point(147, 174)
         Me.tbDiscName.Name = "tbDiscName"
         Me.tbDiscName.Size = New System.Drawing.Size(43, 20)
         Me.tbDiscName.TabIndex = 38
@@ -358,6 +372,7 @@ Partial Class movieGUI
         '
         'cbWatched
         '
+        Me.cbWatched.DisplayMember = "0"
         Me.cbWatched.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbWatched.FormattingEnabled = True
         Me.cbWatched.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "SAD"})
@@ -387,7 +402,7 @@ Partial Class movieGUI
         '
         'dtLastWatched
         '
-        Me.dtLastWatched.Location = New System.Drawing.Point(640, 418)
+        Me.dtLastWatched.Location = New System.Drawing.Point(589, 416)
         Me.dtLastWatched.Name = "dtLastWatched"
         Me.dtLastWatched.Size = New System.Drawing.Size(131, 20)
         Me.dtLastWatched.TabIndex = 45
@@ -401,11 +416,142 @@ Partial Class movieGUI
         Me.Label15.TabIndex = 46
         Me.Label15.Text = "Last Watched"
         '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(468, 246)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(35, 13)
+        Me.Label16.TabIndex = 48
+        Me.Label16.Text = "Dim Y"
+        '
+        'tbDimX
+        '
+        Me.tbDimX.Location = New System.Drawing.Point(523, 215)
+        Me.tbDimX.Name = "tbDimX"
+        Me.tbDimX.Size = New System.Drawing.Size(43, 20)
+        Me.tbDimX.TabIndex = 47
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(468, 218)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(35, 13)
+        Me.Label17.TabIndex = 50
+        Me.Label17.Text = "Dim X"
+        '
+        'tbDimY
+        '
+        Me.tbDimY.Location = New System.Drawing.Point(523, 243)
+        Me.tbDimY.Name = "tbDimY"
+        Me.tbDimY.Size = New System.Drawing.Size(43, 20)
+        Me.tbDimY.TabIndex = 49
+        '
+        'tbVBitrate
+        '
+        Me.tbVBitrate.Location = New System.Drawing.Point(523, 271)
+        Me.tbVBitrate.Name = "tbVBitrate"
+        Me.tbVBitrate.Size = New System.Drawing.Size(43, 20)
+        Me.tbVBitrate.TabIndex = 52
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(468, 274)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(47, 13)
+        Me.Label18.TabIndex = 51
+        Me.Label18.Text = "V Bitrate"
+        '
+        'tbABitrate
+        '
+        Me.tbABitrate.Location = New System.Drawing.Point(523, 297)
+        Me.tbABitrate.Name = "tbABitrate"
+        Me.tbABitrate.Size = New System.Drawing.Size(43, 20)
+        Me.tbABitrate.TabIndex = 54
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(468, 300)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(47, 13)
+        Me.Label19.TabIndex = 53
+        Me.Label19.Text = "A Bitrate"
+        '
+        'tbQf
+        '
+        Me.tbQf.Location = New System.Drawing.Point(523, 326)
+        Me.tbQf.Name = "tbQf"
+        Me.tbQf.Size = New System.Drawing.Size(43, 20)
+        Me.tbQf.TabIndex = 56
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(468, 329)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(18, 13)
+        Me.Label20.TabIndex = 55
+        Me.Label20.Text = "Qf"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(468, 358)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(41, 13)
+        Me.Label21.TabIndex = 57
+        Me.Label21.Text = "Source"
+        '
+        'cbSource
+        '
+        Me.cbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbSource.FormattingEnabled = True
+        Me.cbSource.Items.AddRange(New Object() {"CAM", "DVDRIP", "R5", "TELESYNC"})
+        Me.cbSource.Location = New System.Drawing.Point(523, 355)
+        Me.cbSource.Name = "cbSource"
+        Me.cbSource.Size = New System.Drawing.Size(60, 21)
+        Me.cbSource.TabIndex = 58
+        '
+        'cbWatchedEver
+        '
+        Me.cbWatchedEver.AutoSize = True
+        Me.cbWatchedEver.Location = New System.Drawing.Point(427, 399)
+        Me.cbWatchedEver.Name = "cbWatchedEver"
+        Me.cbWatchedEver.Size = New System.Drawing.Size(76, 17)
+        Me.cbWatchedEver.TabIndex = 59
+        Me.cbWatchedEver.Text = "Watched?"
+        Me.cbWatchedEver.UseVisualStyleBackColor = True
+        '
+        'tbTest
+        '
+        Me.tbTest.Location = New System.Drawing.Point(952, 164)
+        Me.tbTest.Multiline = True
+        Me.tbTest.Name = "tbTest"
+        Me.tbTest.Size = New System.Drawing.Size(209, 260)
+        Me.tbTest.TabIndex = 60
+        '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(969, 446)
+        Me.ClientSize = New System.Drawing.Size(1173, 446)
+        Me.Controls.Add(Me.tbTest)
+        Me.Controls.Add(Me.cbWatchedEver)
+        Me.Controls.Add(Me.cbSource)
+        Me.Controls.Add(Me.Label21)
+        Me.Controls.Add(Me.tbQf)
+        Me.Controls.Add(Me.Label20)
+        Me.Controls.Add(Me.tbABitrate)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.tbVBitrate)
+        Me.Controls.Add(Me.Label18)
+        Me.Controls.Add(Me.Label17)
+        Me.Controls.Add(Me.tbDimY)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.tbDimX)
         Me.Controls.Add(Me.Label15)
         Me.Controls.Add(Me.dtLastWatched)
         Me.Controls.Add(Me.cbType)
@@ -420,7 +566,7 @@ Partial Class movieGUI
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.tbFilesize)
         Me.Controls.Add(Me.lbActors)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btWriteXML)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.tbImagePath)
         Me.Controls.Add(Me.tbPlot)
@@ -476,7 +622,7 @@ Partial Class movieGUI
     Friend WithEvents tbPlot As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents tbImagePath As System.Windows.Forms.TextBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btWriteXML As System.Windows.Forms.Button
     Friend WithEvents lbActors As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents tbFilesize As System.Windows.Forms.TextBox
@@ -491,5 +637,19 @@ Partial Class movieGUI
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents dtLastWatched As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents tbDimX As System.Windows.Forms.TextBox
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents tbDimY As System.Windows.Forms.TextBox
+    Friend WithEvents tbVBitrate As System.Windows.Forms.TextBox
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents tbABitrate As System.Windows.Forms.TextBox
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents tbQf As System.Windows.Forms.TextBox
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents cbSource As System.Windows.Forms.ComboBox
+    Friend WithEvents cbWatchedEver As System.Windows.Forms.CheckBox
+    Friend WithEvents tbTest As System.Windows.Forms.TextBox
 
 End Class
