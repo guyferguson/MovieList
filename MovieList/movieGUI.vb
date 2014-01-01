@@ -307,9 +307,6 @@ Public Class movieGUI
         ' Check first if file contains this movie
         ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
 
-        '  Dim doc As XDocument = XDocument.Load(tbFilePath.Text & "\" & My.Settings.fileName)
-
-        'Dim movies = From m In doc.Elements Select m.<MOVIE>
 
         For Each el In doc.<CATALOG>...<MOVIE>...<TITLE>
             If (String.Compare(el.@IMDBR, tbTtId.Text) = 0) Then
@@ -319,12 +316,9 @@ Public Class movieGUI
 
             End If
             '   Console.WriteLine(el.@IMDBR & "doesn't match " & tbTtId.Text.ToString & " compare = " & String.Compare(el.@IMDBR.ToString, tbTtId.Text.ToString) & " equals? " & String.Equals(el.ToString, tbTtId.Text.ToString) & " lengtsh = " & Len(el.ToString) & " and " & Len(tbTtId.Text.ToString))
-
-
-            'For Each l In movies.First
-
-
         Next
+
+        ' Create new node of new media
 
         Dim xmlToAdd As New XElement("MEDIA")
         Dim xmlTitle As New XElement("TITLE")
@@ -333,7 +327,7 @@ Public Class movieGUI
         'Handle Genres
         Dim xmlGenres As New XElement("GENRES")
         For i = 1 To tbGenre.Text.Split(",").Count
-            xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(",")(i - 1)))
+            xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(",")(i - 1).Replace(" ", "").ToUpper))
         Next
         xmlTitle.Add(xmlGenres)
         xmlTitle.Add(New XElement("PLOT", tbPlot.Text))
@@ -354,9 +348,6 @@ Public Class movieGUI
 
         Next
 
-        '  xmlToAdd.Add(xmlWrit)
-
-
         'Handle Actors
         Dim xmlAct As New XElement("ACTORS")
 
@@ -366,8 +357,15 @@ Public Class movieGUI
             End If
 
         Next
+        ' Clean image name
+        Dim imgFile As String
+        imgFile = tbTitle.Text.ToLower.Replace(" ", "")
+        imgFile = imgFile.Replace(":", "")
+        imgFile = imgFile.Replace("/", "")
+        imgFile = imgFile.Replace("\", "")
+        imgFile += ".jpg"
 
-        ' xmlToAdd.Add(xmlAct)
+
         Dim xmlCopy As New XElement("COPY")
         xmlCopy.Add(New XElement("IDENTIFIER", tbDiscName.Text))
         xmlCopy.Add(New XElement("COPYTYPE", cbSource.SelectedItem))
@@ -380,7 +378,7 @@ Public Class movieGUI
         xmlCopy.Add(New XElement("QF", tbQf.Text))
         xmlCopy.Add(New XElement("LASTWATCHED", dtLastWatched.Value.ToString("dd/MM/yyyy")))
         xmlCopy.Add(New XElement("WATCHEDCOUNT", cbWatched.SelectedItem))
-        xmlCopy.Add(New XElement("IMAGEFILENAME", tbTitle.Text.ToLower.Replace(" ", "")))
+        xmlCopy.Add(New XElement("IMAGEFILENAME", imgFile))
         xmlCopy.Add(New XElement("DATEADDED"))
         xmlCopy.Add(New XElement("DATEENTERED", Now().ToString))
         If cbSubtitles.Checked Then
@@ -392,6 +390,10 @@ Public Class movieGUI
         xmlToAdd.Add(xmlCopy)
 
         MsgBox(xmlToAdd.ToString)
+        doc.Element("CATALOG").Add(New XElement(xmlToAdd))
+        doc.Save(tbFilePath.Text & "\" & My.Settings.fileName)
+        Debug.Print(doc.ToString)
+        pbPoster.Image.Save(My.Settings.imagePath & "\" & imgFile)
         'Need to offer 'Overwrite, add'
     End Sub
 
