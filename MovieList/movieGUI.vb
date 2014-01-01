@@ -10,6 +10,8 @@ Public Class movieGUI
 
     Dim mv As New Movie
     Dim newmv As MovieJS
+
+    ' An XML memory  object to hold the  xml file that we want to write eventually.
     Dim doc As XDocument
 
     ' An integer to count how many actors in an instance
@@ -70,6 +72,8 @@ Public Class movieGUI
             If (wbOutput.DocumentText.ToCharArray()(0) = "{") Then
                 newmv = readJson(wbOutput.DocumentText)
                 newmv.ttId = (wbOutput.Url.Query.Split("=")(1))
+                ' Display the returned string for DEBUG porpoises
+                ' MsgBox(wbOutput.DocumentText)
                 ' Then populate GUI
                 populateGUI(newmv)
                 wbOutput.Visible = False
@@ -91,11 +95,18 @@ Public Class movieGUI
         ' TO DO - COnvert IMDB Genres to mine. And do we allow multiple genres?
         tbGenre.Text = newmv.genre
         tbRuntime.Text = timeToMins(newmv)
-        tbDirector1.Text = newmv.director
+        ' tbDirector1.Text = newmv.director
         splitWriters(newmv)
         tbDirector1.Text = newmv.director
 
-        ' Handle multiple actors - always keep the array together but split for diaply purposes
+        ' Handle type of media (Movie or TV)
+        If (newmv.type = "movie") Then
+            cbType.SelectedIndex = 0
+        ElseIf (newmv.type = "series") Then
+            cbType.SelectedIndex = 1
+        End If
+
+        ' Handle multiple actors - always keep the array together but split for display purposes
         splitActors(newmv)
         tbPlot.Text = newmv.plot
         'Handle the movie poster - check there is one first
@@ -217,6 +228,7 @@ Public Class movieGUI
             Dim cntrName As String = "tbWriter" & i
             Dim newctl As New System.Windows.Forms.TextBox
             If tmpWriters.Contains(mv.writer.Split(",")(i - 1).Trim(" ")) Then
+                WritCnt -= 1
                 Exit For
             End If
             tmpWriters(i - 1) = mv.writer.Split(",")(i - 1).Trim(" ")
@@ -314,8 +326,22 @@ Public Class movieGUI
 
         Next
 
-        Dim xmlToAdd As XElement = <MEDIA><TITLE><COUNTRY>AUS<NAME></NAME></COUNTRY></TITLE></MEDIA>
-        xmlToAdd.Add(New XElement("NAME", tbTitle.Text))
+        Dim xmlToAdd As New XElement("MEDIA")
+        Dim xmlTitle As New XElement("TITLE")
+        xmlTitle.Add(New XElement("COUNTRY", New XText("AUS"), New XElement("NAME", tbTitle.Text)), New XElement("IMDBR", tbTtId.Text), New XElement("TYPE", cbType.SelectedItem), New XElement("YEAR", tbYear.Text), New XElement("RUNTIME", tbRuntime.Text))
+
+        'Handle Genres
+        Dim xmlGenres As New XElement("GENRES")
+        For i = 1 To tbGenre.Text.Split(",").Count
+            xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(",")(i - 1)))
+        Next
+        xmlTitle.Add(xmlGenres)
+        xmlTitle.Add(New XElement("PLOT", tbPlot.Text))
+
+        xmlToAdd.Add(xmlTitle)
+        ' Handle Directors
+        Dim xmlDir As New XElement("DIRECTORS")
+        xmlDir.Add(New XElement("DIRECTOR", tbDirector1.Text))
 
         'Handle Writers
         Dim xmlWrit As New XElement("WRITERS")
@@ -328,7 +354,7 @@ Public Class movieGUI
 
         Next
 
-        xmlToAdd.Add(xmlWrit)
+        '  xmlToAdd.Add(xmlWrit)
 
 
         'Handle Actors
@@ -341,8 +367,29 @@ Public Class movieGUI
 
         Next
 
-        xmlToAdd.Add(xmlAct)
-
+        ' xmlToAdd.Add(xmlAct)
+        Dim xmlCopy As New XElement("COPY")
+        xmlCopy.Add(New XElement("IDENTIFIER", tbDiscName.Text))
+        xmlCopy.Add(New XElement("COPYTYPE", cbSource.SelectedItem))
+        xmlCopy.Add(New XElement("FILESIZE", tbFilesize.Text))
+        xmlCopy.Add(New XElement("FILETYPE", cbFiletype.SelectedItem))
+        xmlCopy.Add(New XElement("DIMX", tbDimX.Text))
+        xmlCopy.Add(New XElement("DIMY", tbDimY.Text))
+        xmlCopy.Add(New XElement("VBITRATE", tbVBitrate.Text))
+        xmlCopy.Add(New XElement("ABITRATE", tbABitrate.Text))
+        xmlCopy.Add(New XElement("QF", tbQf.Text))
+        xmlCopy.Add(New XElement("LASTWATCHED", dtLastWatched.Value.ToString("dd/MM/yyyy")))
+        xmlCopy.Add(New XElement("WATCHEDCOUNT", cbWatched.SelectedItem))
+        xmlCopy.Add(New XElement("IMAGEFILENAME", tbTitle.Text.ToLower.Replace(" ", "")))
+        xmlCopy.Add(New XElement("DATEADDED"))
+        xmlCopy.Add(New XElement("DATEENTERED", Now().ToString))
+        If cbSubtitles.Checked Then
+            xmlCopy.Add(New XElement("SUBTITLES", "Y"))
+        Else
+            xmlCopy.Add(New XElement("SUBTITLES", "N"))
+        End If
+        xmlToAdd.Add(New XElement("CREATORS", xmlDir, xmlWrit, xmlAct))
+        xmlToAdd.Add(xmlCopy)
 
         MsgBox(xmlToAdd.ToString)
         'Need to offer 'Overwrite, add'

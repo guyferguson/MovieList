@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 Imports System.Text
-Imports System.Xml.XPath.Extensions
+'Imports System.Xml.XPath.Extensions
 Imports System.Text.RegularExpressions
 Imports System.IO
 
@@ -24,9 +24,9 @@ Public Class Movie
         ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
         Dim doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
 
-        Return findXtests(doc)
+        Return findXtexts(doc)
     End Function
-    Private Function findXtests(doc As IEnumerable(Of System.Xml.Linq.XElement))
+    Private Function findXtexts(doc As IEnumerable(Of System.Xml.Linq.XElement))
         Dim output As String = ""
         Dim cntres As Integer = 0
 

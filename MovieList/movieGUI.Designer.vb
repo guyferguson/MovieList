@@ -512,7 +512,7 @@ Partial Class movieGUI
         Me.cbSource.Items.AddRange(New Object() {"CAM", "DVDRIP", "R5", "TELESYNC"})
         Me.cbSource.Location = New System.Drawing.Point(523, 355)
         Me.cbSource.Name = "cbSource"
-        Me.cbSource.Size = New System.Drawing.Size(60, 21)
+        Me.cbSource.Size = New System.Drawing.Size(84, 21)
         Me.cbSource.TabIndex = 58
         '
         'cbWatchedEver
