@@ -362,8 +362,9 @@ Public Class movieGUI
         imgFile = tbTitle.Text.ToLower.Replace(" ", "")
         imgFile = imgFile.Replace(":", "")
         imgFile = imgFile.Replace("/", "")
+        imgFile = imgFile.Replace("'", "")
         imgFile = imgFile.Replace("\", "")
-        imgFile += ".jpg"
+
 
 
         Dim xmlCopy As New XElement("COPY")
@@ -393,7 +394,7 @@ Public Class movieGUI
         doc.Element("CATALOG").Add(New XElement(xmlToAdd))
         doc.Save(tbFilePath.Text & "\" & My.Settings.fileName)
         Debug.Print(doc.ToString)
-        pbPoster.Image.Save(My.Settings.imagePath & "\" & imgFile)
+        pbPoster.Image.Save(My.Settings.imagePath & "\" & imgFile, System.Drawing.Imaging.ImageFormat.Jpeg)
         'Need to offer 'Overwrite, add'
     End Sub
 
