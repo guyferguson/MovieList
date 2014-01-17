@@ -76,13 +76,16 @@ Partial Class movieGUI
         Me.cbSource = New System.Windows.Forms.ComboBox()
         Me.cbWatchedEver = New System.Windows.Forms.CheckBox()
         Me.tbTest = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.GridView1 = New System.Windows.Forms.DataGridView()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tbMovieName
         '
         Me.tbMovieName.BackColor = System.Drawing.Color.Gold
-        Me.tbMovieName.Location = New System.Drawing.Point(219, 35)
+        Me.tbMovieName.Location = New System.Drawing.Point(214, 35)
         Me.tbMovieName.Name = "tbMovieName"
         Me.tbMovieName.Size = New System.Drawing.Size(156, 20)
         Me.tbMovieName.TabIndex = 0
@@ -233,7 +236,7 @@ Partial Class movieGUI
         'lbWriters
         '
         Me.lbWriters.AutoSize = True
-        Me.lbWriters.Location = New System.Drawing.Point(227, 86)
+        Me.lbWriters.Location = New System.Drawing.Point(212, 86)
         Me.lbWriters.Name = "lbWriters"
         Me.lbWriters.Size = New System.Drawing.Size(35, 13)
         Me.lbWriters.TabIndex = 21
@@ -293,7 +296,7 @@ Partial Class movieGUI
         'lbActors
         '
         Me.lbActors.AutoSize = True
-        Me.lbActors.Location = New System.Drawing.Point(424, 89)
+        Me.lbActors.Location = New System.Drawing.Point(434, 89)
         Me.lbActors.Name = "lbActors"
         Me.lbActors.Size = New System.Drawing.Size(32, 13)
         Me.lbActors.TabIndex = 29
@@ -533,11 +536,30 @@ Partial Class movieGUI
         Me.tbTest.Size = New System.Drawing.Size(209, 260)
         Me.tbTest.TabIndex = 60
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(983, 57)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 61
+        Me.Button1.Text = "Bind"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'GridView1
+        '
+        Me.GridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GridView1.Location = New System.Drawing.Point(1192, 85)
+        Me.GridView1.Name = "GridView1"
+        Me.GridView1.Size = New System.Drawing.Size(240, 150)
+        Me.GridView1.TabIndex = 62
+        '
         'movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1173, 446)
+        Me.ClientSize = New System.Drawing.Size(1444, 446)
+        Me.Controls.Add(Me.GridView1)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.tbTest)
         Me.Controls.Add(Me.cbWatchedEver)
         Me.Controls.Add(Me.cbSource)
@@ -593,6 +615,7 @@ Partial Class movieGUI
         Me.Controls.Add(Me.tbMovieName)
         Me.Name = "movieGUI"
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -651,5 +674,7 @@ Partial Class movieGUI
     Friend WithEvents cbSource As System.Windows.Forms.ComboBox
     Friend WithEvents cbWatchedEver As System.Windows.Forms.CheckBox
     Friend WithEvents tbTest As System.Windows.Forms.TextBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents GridView1 As System.Windows.Forms.DataGridView
 
 End Class

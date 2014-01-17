@@ -17,6 +17,16 @@
         End Set
     End Property
     Private m_year As String
+
+    Public Property update() As Boolean
+        Get
+            Return m_update
+        End Get
+        Set(value As Boolean)
+            m_update = value
+        End Set
+    End Property
+    Private m_update As Boolean
     Public Property runtime() As String
         Get
             Return m_runtime
