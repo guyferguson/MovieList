@@ -464,7 +464,7 @@ Public Class movieGUI
         ' if (mv.title = xn.
     End Sub
 
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs)
         Dim filePath As String = tbFilePath.Text & "\" & My.Settings.fileName
         Dim xDoc As New XDocument
         xDoc = XDocument.Load(filePath)
