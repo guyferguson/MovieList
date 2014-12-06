@@ -6,10 +6,13 @@
       <Value Profile="(Default)">\\FLEXNAS\Guy\dev\xml\movies</Value>
     </Setting>
     <Setting Name="fileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">movies.xml</Value>
+      <Value Profile="(Default)">MovieListv2.xml</Value>
     </Setting>
     <Setting Name="imagePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\FLEXNAS\Guy\dev\xml\movies\images</Value>
+      <Value Profile="(Default)">E:\sites\junkie\xml\movie_images</Value>
+    </Setting>
+    <Setting Name="movieSiteUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.imdb.com</Value>
     </Setting>
   </Settings>
 </SettingsFile>

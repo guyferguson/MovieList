@@ -27,8 +27,19 @@ Public Class movieGUI
 
         ' Read the filePath fron the Settings object
         tbFilePath.Text = My.Settings.filePath
+        Dim fi As New DirectoryInfo(tbFilePath.Text)
         tbImagePath.Text = My.Settings.imagePath
+        Dim ip As New DirectoryInfo(tbImagePath.Text)
 
+        ' Determine if these paths are available - if not, exit, advising user how to fix
+        If Not (fi.Exists) Then
+            MsgBox(fi.ToString & " is not accessible - please update the app.config file, or make this path accessible")
+            End
+        End If
+        If Not (ip.Exists) Then
+            MsgBox(ip.ToString & " is not accessible - please update the app.config file, or make this path accessible")
+            End
+        End If
         'Set last watched to today's date
         dtLastWatched.Value = Today
 
@@ -226,7 +237,6 @@ Public Class movieGUI
             ' Break up the comma separated names and strip leading and trailing spaces
             newActor.Text = mv.actors.Split(",")(i - 1).Trim(" ")
             Me.Controls.Add(newActor)
-
         Next
         If i > 2 Then
             lbActors.Text = "Actors"
@@ -352,100 +362,104 @@ Public Class movieGUI
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btWriteXML.Click
         'Add text to xml file from path. Determine if it's an update or new addition
-        If Not (newmv.update) Then
-            ' Create new node of new media
-
-            Dim xmlToAdd As New XElement("MEDIA")
-            Dim xmlTitle As New XElement("TITLE")
-            xmlTitle.Add(New XElement("COUNTRY", New XText("AUS"), New XElement("NAME", tbTitle.Text)), New XElement("IMDBR", tbTtId.Text), New XElement("TYPE", cbType.SelectedItem), New XElement("YEAR", tbYear.Text), New XElement("RUNTIME", tbRuntime.Text))
-
-            'Handle Genres
-            Dim xmlGenres As New XElement("GENRES")
-            For i = 1 To tbGenre.Text.Split(",").Count
-                xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(",")(i - 1).Replace(" ", "").ToUpper))
-            Next
-            xmlTitle.Add(xmlGenres)
-            xmlTitle.Add(New XElement("PLOT", tbPlot.Text))
-
-            xmlToAdd.Add(xmlTitle)
-            ' Handle Directors
-            Dim xmlDir As New XElement("DIRECTORS")
-            xmlDir.Add(New XElement("DIRECTOR", tbDirector1.Text))
-
-            'Handle Writers
-            Dim xmlWrit As New XElement("WRITERS")
-
-            For i = 1 To WritCnt
-                ' See if there are any roles recorded
-                If (Me.Controls("tbWriter" & i & "_" & i) IsNot Nothing) Then
-                    xmlWrit.Add(New XElement("WRITER", New XElement("ROLE", Me.Controls("tbWriter" & i & "_" & i).Text), Me.Controls("tbWriter" & i).Text))
-                ElseIf (Me.Controls("tbWriter" & i).Enabled) Then
-                    xmlWrit.Add(New XElement("WRITER", Me.Controls("tbWriter" & i).Text))
-                End If
-
-            Next
-
-            'Handle Actors
-            Dim xmlAct As New XElement("ACTORS")
-
-            For i = 1 To ActCnt
-                If (Me.Controls("tbActor" & i).Text <> "") Then
-                    xmlAct.Add(New XElement("ACTOR", Me.Controls("tbActor" & i).Text))
-                End If
-
-            Next
-            ' Clean image name
-            Dim imgFile As String
-
-            If (pbPoster.Image IsNot Nothing) Then
-                imgFile = tbTitle.Text.ToLower.Replace(" ", "")
-
-                imgFile = imgFile.Replace(":", "")
-                imgFile = imgFile.Replace("/", "")
-                imgFile = imgFile.Replace("'", "")
-                imgFile = imgFile.Replace("\", "")
-                imgFile = imgFile.Replace(",", "")
-                imgFile = imgFile.Replace(".", "")
-                imgFile = imgFile.Replace("&", "")
-            Else
-                imgFile = "Unavailable"
-            End If
-
-            Dim xmlCopy As New XElement("COPY")
-            xmlCopy.Add(New XElement("IDENTIFIER", tbDiscName.Text))
-            xmlCopy.Add(New XElement("COPYTYPE", cbSource.SelectedItem))
-            xmlCopy.Add(New XElement("FILESIZE", tbFilesize.Text))
-            xmlCopy.Add(New XElement("FILETYPE", cbFiletype.SelectedItem))
-            xmlCopy.Add(New XElement("DIMX", tbDimX.Text))
-            xmlCopy.Add(New XElement("DIMY", tbDimY.Text))
-            xmlCopy.Add(New XElement("VBITRATE", tbVBitrate.Text))
-            xmlCopy.Add(New XElement("ABITRATE", tbABitrate.Text))
-            xmlCopy.Add(New XElement("QF", tbQf.Text))
-            xmlCopy.Add(New XElement("LASTWATCHED", dtLastWatched.Value.ToString("dd/MM/yyyy")))
-            xmlCopy.Add(New XElement("WATCHEDCOUNT", cbWatched.SelectedItem))
-            xmlCopy.Add(New XElement("IMAGEFILENAME", imgFile))
-            xmlCopy.Add(New XElement("DATEADDED"))
-            xmlCopy.Add(New XElement("DATEENTERED", Now().ToString))
-            If cbSubtitles.Checked Then
-                xmlCopy.Add(New XElement("SUBTITLES", "Y"))
-            Else
-                xmlCopy.Add(New XElement("SUBTITLES", "N"))
-            End If
-            xmlToAdd.Add(New XElement("CREATORS", xmlDir, xmlWrit, xmlAct))
-            xmlToAdd.Add(xmlCopy)
-
-            MsgBox(xmlToAdd.ToString)
-            doc.Element("CATALOG").Add(New XElement(xmlToAdd))
-            doc.Save(tbFilePath.Text & "\" & My.Settings.fileName)
-            'Debug.Print(doc.ToString)
-
-            ' Check that poster has an image
-            If (pbPoster.Image IsNot Nothing) Then
-                pbPoster.Image.Save(My.Settings.imagePath & "\" & imgFile & ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg)
-            End If
-        Else
-            'update record
+        '  If Not (newmv.update) Then
+        ' Create new node of new media
+        If (tbTitle.Text = "") Then
+            MsgBox("Cannot add media with no title")
+            Exit Sub
         End If
+        Dim xmlToAdd As New XElement("MEDIA")
+        Dim xmlTitle As New XElement("TITLE")
+        xmlTitle.Add(New XElement("COUNTRY", New XText("AUS"), New XElement("NAME", tbTitle.Text)), New XElement("IMDBR", tbTtId.Text), New XElement("TYPE", cbType.SelectedItem), New XElement("YEAR", tbYear.Text), New XElement("RUNTIME", tbRuntime.Text))
+
+        'Handle Genres
+        Dim xmlGenres As New XElement("GENRES")
+        For i = 1 To tbGenre.Text.Split(",").Count
+            xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(",")(i - 1).Replace(" ", "").ToUpper))
+        Next
+        xmlTitle.Add(xmlGenres)
+        xmlTitle.Add(New XElement("PLOT", tbPlot.Text))
+
+        xmlToAdd.Add(xmlTitle)
+        ' Handle Directors
+        Dim xmlDir As New XElement("DIRECTORS")
+        xmlDir.Add(New XElement("DIRECTOR", tbDirector1.Text))
+
+        'Handle Writers
+        Dim xmlWrit As New XElement("WRITERS")
+
+        For i = 1 To WritCnt
+            ' See if there are any roles recorded
+            If (Me.Controls("tbWriter" & i & "_" & i) IsNot Nothing) Then
+                xmlWrit.Add(New XElement("WRITER", New XElement("ROLE", Me.Controls("tbWriter" & i & "_" & i).Text), Me.Controls("tbWriter" & i).Text))
+            ElseIf (Me.Controls("tbWriter" & i).Enabled) Then
+                xmlWrit.Add(New XElement("WRITER", Me.Controls("tbWriter" & i).Text))
+            End If
+
+        Next
+
+        'Handle Actors
+        Dim xmlAct As New XElement("ACTORS")
+
+        For i = 1 To ActCnt
+            If (Me.Controls("tbActor" & i).Text <> "") Then
+                xmlAct.Add(New XElement("ACTOR", Me.Controls("tbActor" & i).Text))
+            End If
+
+        Next
+        ' Clean image name
+        Dim imgFile As String
+
+        If (pbPoster.Image IsNot Nothing) Then
+            imgFile = tbTitle.Text.ToLower.Replace(" ", "")
+            imgFile = imgFile.Replace("?", "")
+            imgFile = imgFile.Replace(":", "")
+            imgFile = imgFile.Replace("/", "")
+            imgFile = imgFile.Replace("'", "")
+            imgFile = imgFile.Replace("\", "")
+            imgFile = imgFile.Replace(",", "")
+            imgFile = imgFile.Replace(".", "")
+            imgFile = imgFile.Replace("&", "")
+        Else
+            imgFile = "Unavailable"
+        End If
+
+        Dim xmlCopy As New XElement("COPY")
+        xmlCopy.Add(New XElement("IDENTIFIER", tbDiscName.Text))
+        xmlCopy.Add(New XElement("COPYTYPE", cbSource.SelectedItem))
+        xmlCopy.Add(New XElement("FILESIZE", tbFilesize.Text))
+        xmlCopy.Add(New XElement("FILETYPE", cbFiletype.SelectedItem))
+        xmlCopy.Add(New XElement("DIMX", tbDimX.Text))
+        xmlCopy.Add(New XElement("DIMY", tbDimY.Text))
+        xmlCopy.Add(New XElement("VBITRATE", tbVBitrate.Text))
+        xmlCopy.Add(New XElement("ABITRATE", tbABitrate.Text))
+        xmlCopy.Add(New XElement("QF", tbQf.Text))
+        xmlCopy.Add(New XElement("LASTWATCHED", dtLastWatched.Value.ToString("dd/MM/yyyy")))
+        xmlCopy.Add(New XElement("WATCHEDCOUNT", cbWatched.SelectedItem))
+        xmlCopy.Add(New XElement("IMAGEFILENAME", imgFile))
+        xmlCopy.Add(New XElement("DATEADDED"))
+        xmlCopy.Add(New XElement("DATEENTERED", Now().ToString))
+        If cbSubtitles.Checked Then
+            xmlCopy.Add(New XElement("SUBTITLES", "Y"))
+        Else
+            xmlCopy.Add(New XElement("SUBTITLES", "N"))
+        End If
+        xmlToAdd.Add(New XElement("CREATORS", xmlDir, xmlWrit, xmlAct))
+        xmlToAdd.Add(xmlCopy)
+
+        ' MsgBox(xmlToAdd.ToString)
+        btWriteXML.BackColor = Color.AliceBlue
+        doc.Element("CATALOG").Add(New XElement(xmlToAdd))
+        doc.Save(tbFilePath.Text & "\" & My.Settings.fileName)
+        'Debug.Print(doc.ToString)
+
+        ' Check that poster has an image
+        If (pbPoster.Image IsNot Nothing) Then
+            pbPoster.Image.Save(tbImagePath.Text & "\" & imgFile & ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg)
+        End If
+        '   Else
+        'update record
+        '   End If
 
     End Sub
 
@@ -511,4 +525,18 @@ Public Class movieGUI
 
 
     End Sub
+
+
+
+    Private Sub tbMovieName_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles tbMovieName.KeyPress
+
+        If (Convert.ToInt32(e.KeyChar) = 13) Then
+            btSearch_Click(sender, e)
+
+            '  Button1_Click_1(sender, e)
+            ' tbMovieName.Text = "You Entered: " + tbMovieName.Text
+        End If
+    End Sub
+
+
 End Class

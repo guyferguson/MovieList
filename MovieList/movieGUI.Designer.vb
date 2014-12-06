@@ -82,7 +82,7 @@ Partial Class movieGUI
         'tbMovieName
         '
         Me.tbMovieName.BackColor = System.Drawing.Color.Gold
-        Me.tbMovieName.Location = New System.Drawing.Point(214, 35)
+        Me.tbMovieName.Location = New System.Drawing.Point(263, 33)
         Me.tbMovieName.Name = "tbMovieName"
         Me.tbMovieName.Size = New System.Drawing.Size(156, 20)
         Me.tbMovieName.TabIndex = 0
@@ -90,7 +90,7 @@ Partial Class movieGUI
         '
         'btSearch
         '
-        Me.btSearch.Location = New System.Drawing.Point(388, 34)
+        Me.btSearch.Location = New System.Drawing.Point(427, 34)
         Me.btSearch.Name = "btSearch"
         Me.btSearch.Size = New System.Drawing.Size(75, 23)
         Me.btSearch.TabIndex = 1
@@ -128,7 +128,7 @@ Partial Class movieGUI
         '
         'wbOutput
         '
-        Me.wbOutput.Location = New System.Drawing.Point(613, 121)
+        Me.wbOutput.Location = New System.Drawing.Point(613, 193)
         Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
         Me.wbOutput.Name = "wbOutput"
         Me.wbOutput.Size = New System.Drawing.Size(344, 275)
@@ -179,7 +179,7 @@ Partial Class movieGUI
         '
         Me.tbTitle.Location = New System.Drawing.Point(62, 37)
         Me.tbTitle.Name = "tbTitle"
-        Me.tbTitle.Size = New System.Drawing.Size(128, 20)
+        Me.tbTitle.Size = New System.Drawing.Size(185, 20)
         Me.tbTitle.TabIndex = 13
         '
         'tbRuntime
@@ -241,7 +241,7 @@ Partial Class movieGUI
         '
         'pbPoster
         '
-        Me.pbPoster.Location = New System.Drawing.Point(62, 222)
+        Me.pbPoster.Location = New System.Drawing.Point(62, 294)
         Me.pbPoster.Name = "pbPoster"
         Me.pbPoster.Size = New System.Drawing.Size(175, 202)
         Me.pbPoster.TabIndex = 22
@@ -250,7 +250,7 @@ Partial Class movieGUI
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(6, 222)
+        Me.Label9.Location = New System.Drawing.Point(6, 294)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(37, 13)
         Me.Label9.TabIndex = 23
@@ -258,7 +258,7 @@ Partial Class movieGUI
         '
         'tbPlot
         '
-        Me.tbPlot.Location = New System.Drawing.Point(271, 222)
+        Me.tbPlot.Location = New System.Drawing.Point(271, 294)
         Me.tbPlot.Multiline = True
         Me.tbPlot.Name = "tbPlot"
         Me.tbPlot.Size = New System.Drawing.Size(177, 156)
@@ -302,7 +302,7 @@ Partial Class movieGUI
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(260, 399)
+        Me.Label8.Location = New System.Drawing.Point(260, 471)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(66, 13)
         Me.Label8.TabIndex = 31
@@ -310,7 +310,7 @@ Partial Class movieGUI
         '
         'tbFilesize
         '
-        Me.tbFilesize.Location = New System.Drawing.Point(328, 396)
+        Me.tbFilesize.Location = New System.Drawing.Point(328, 468)
         Me.tbFilesize.Name = "tbFilesize"
         Me.tbFilesize.Size = New System.Drawing.Size(63, 20)
         Me.tbFilesize.TabIndex = 30
@@ -318,7 +318,7 @@ Partial Class movieGUI
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(260, 425)
+        Me.Label11.Location = New System.Drawing.Point(260, 497)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(47, 13)
         Me.Label11.TabIndex = 33
@@ -329,7 +329,7 @@ Partial Class movieGUI
         Me.cbFiletype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbFiletype.FormattingEnabled = True
         Me.cbFiletype.Items.AddRange(New Object() {"AVI", "BIN", "DIVX", "DVD", "MKV", "MP4", "XVID"})
-        Me.cbFiletype.Location = New System.Drawing.Point(327, 422)
+        Me.cbFiletype.Location = New System.Drawing.Point(327, 494)
         Me.cbFiletype.Name = "cbFiletype"
         Me.cbFiletype.Size = New System.Drawing.Size(64, 21)
         Me.cbFiletype.TabIndex = 35
@@ -338,7 +338,7 @@ Partial Class movieGUI
         '
         Me.cbSubtitles.AutoSize = True
         Me.cbSubtitles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cbSubtitles.Location = New System.Drawing.Point(15, 180)
+        Me.cbSubtitles.Location = New System.Drawing.Point(15, 252)
         Me.cbSubtitles.Name = "cbSubtitles"
         Me.cbSubtitles.Size = New System.Drawing.Size(66, 17)
         Me.cbSubtitles.TabIndex = 37
@@ -348,7 +348,7 @@ Partial Class movieGUI
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(84, 180)
+        Me.Label12.Location = New System.Drawing.Point(84, 252)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(57, 13)
         Me.Label12.TabIndex = 39
@@ -356,7 +356,7 @@ Partial Class movieGUI
         '
         'tbDiscName
         '
-        Me.tbDiscName.Location = New System.Drawing.Point(147, 174)
+        Me.tbDiscName.Location = New System.Drawing.Point(147, 246)
         Me.tbDiscName.Name = "tbDiscName"
         Me.tbDiscName.Size = New System.Drawing.Size(43, 20)
         Me.tbDiscName.TabIndex = 38
@@ -364,7 +364,7 @@ Partial Class movieGUI
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(216, 181)
+        Me.Label13.Location = New System.Drawing.Point(216, 253)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(82, 13)
         Me.Label13.TabIndex = 41
@@ -376,7 +376,7 @@ Partial Class movieGUI
         Me.cbWatched.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbWatched.FormattingEnabled = True
         Me.cbWatched.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "SAD"})
-        Me.cbWatched.Location = New System.Drawing.Point(304, 176)
+        Me.cbWatched.Location = New System.Drawing.Point(304, 248)
         Me.cbWatched.Name = "cbWatched"
         Me.cbWatched.Size = New System.Drawing.Size(39, 21)
         Me.cbWatched.TabIndex = 42
@@ -386,7 +386,7 @@ Partial Class movieGUI
         Me.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbType.FormattingEnabled = True
         Me.cbType.Items.AddRange(New Object() {"MOVIE", "TV"})
-        Me.cbType.Location = New System.Drawing.Point(388, 176)
+        Me.cbType.Location = New System.Drawing.Point(388, 248)
         Me.cbType.Name = "cbType"
         Me.cbType.Size = New System.Drawing.Size(60, 21)
         Me.cbType.TabIndex = 44
@@ -394,7 +394,7 @@ Partial Class movieGUI
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(360, 181)
+        Me.Label14.Location = New System.Drawing.Point(360, 253)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(31, 13)
         Me.Label14.TabIndex = 43
@@ -402,7 +402,7 @@ Partial Class movieGUI
         '
         'dtLastWatched
         '
-        Me.dtLastWatched.Location = New System.Drawing.Point(589, 416)
+        Me.dtLastWatched.Location = New System.Drawing.Point(589, 488)
         Me.dtLastWatched.Name = "dtLastWatched"
         Me.dtLastWatched.Size = New System.Drawing.Size(131, 20)
         Me.dtLastWatched.TabIndex = 45
@@ -410,7 +410,7 @@ Partial Class movieGUI
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(509, 422)
+        Me.Label15.Location = New System.Drawing.Point(509, 494)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(74, 13)
         Me.Label15.TabIndex = 46
@@ -419,7 +419,7 @@ Partial Class movieGUI
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(468, 246)
+        Me.Label16.Location = New System.Drawing.Point(468, 318)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(35, 13)
         Me.Label16.TabIndex = 48
@@ -427,7 +427,7 @@ Partial Class movieGUI
         '
         'tbDimX
         '
-        Me.tbDimX.Location = New System.Drawing.Point(523, 215)
+        Me.tbDimX.Location = New System.Drawing.Point(523, 287)
         Me.tbDimX.Name = "tbDimX"
         Me.tbDimX.Size = New System.Drawing.Size(43, 20)
         Me.tbDimX.TabIndex = 47
@@ -435,7 +435,7 @@ Partial Class movieGUI
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(468, 218)
+        Me.Label17.Location = New System.Drawing.Point(468, 290)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(35, 13)
         Me.Label17.TabIndex = 50
@@ -443,14 +443,14 @@ Partial Class movieGUI
         '
         'tbDimY
         '
-        Me.tbDimY.Location = New System.Drawing.Point(523, 243)
+        Me.tbDimY.Location = New System.Drawing.Point(523, 315)
         Me.tbDimY.Name = "tbDimY"
         Me.tbDimY.Size = New System.Drawing.Size(43, 20)
         Me.tbDimY.TabIndex = 49
         '
         'tbVBitrate
         '
-        Me.tbVBitrate.Location = New System.Drawing.Point(523, 271)
+        Me.tbVBitrate.Location = New System.Drawing.Point(523, 343)
         Me.tbVBitrate.Name = "tbVBitrate"
         Me.tbVBitrate.Size = New System.Drawing.Size(43, 20)
         Me.tbVBitrate.TabIndex = 52
@@ -458,7 +458,7 @@ Partial Class movieGUI
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(468, 274)
+        Me.Label18.Location = New System.Drawing.Point(468, 346)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(47, 13)
         Me.Label18.TabIndex = 51
@@ -466,7 +466,7 @@ Partial Class movieGUI
         '
         'tbABitrate
         '
-        Me.tbABitrate.Location = New System.Drawing.Point(523, 297)
+        Me.tbABitrate.Location = New System.Drawing.Point(523, 369)
         Me.tbABitrate.Name = "tbABitrate"
         Me.tbABitrate.Size = New System.Drawing.Size(43, 20)
         Me.tbABitrate.TabIndex = 54
@@ -474,7 +474,7 @@ Partial Class movieGUI
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(468, 300)
+        Me.Label19.Location = New System.Drawing.Point(468, 372)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(47, 13)
         Me.Label19.TabIndex = 53
@@ -482,7 +482,7 @@ Partial Class movieGUI
         '
         'tbQf
         '
-        Me.tbQf.Location = New System.Drawing.Point(523, 326)
+        Me.tbQf.Location = New System.Drawing.Point(523, 398)
         Me.tbQf.Name = "tbQf"
         Me.tbQf.Size = New System.Drawing.Size(43, 20)
         Me.tbQf.TabIndex = 56
@@ -490,7 +490,7 @@ Partial Class movieGUI
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(468, 329)
+        Me.Label20.Location = New System.Drawing.Point(468, 401)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(18, 13)
         Me.Label20.TabIndex = 55
@@ -499,7 +499,7 @@ Partial Class movieGUI
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(468, 358)
+        Me.Label21.Location = New System.Drawing.Point(468, 430)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(41, 13)
         Me.Label21.TabIndex = 57
@@ -509,8 +509,8 @@ Partial Class movieGUI
         '
         Me.cbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbSource.FormattingEnabled = True
-        Me.cbSource.Items.AddRange(New Object() {"CAM", "DVDRIP", "R5", "TELESYNC"})
-        Me.cbSource.Location = New System.Drawing.Point(523, 355)
+        Me.cbSource.Items.AddRange(New Object() {"BLU-RAY", "CAM", "DVDRIP", "R5", "TELESYNC"})
+        Me.cbSource.Location = New System.Drawing.Point(523, 427)
         Me.cbSource.Name = "cbSource"
         Me.cbSource.Size = New System.Drawing.Size(84, 21)
         Me.cbSource.TabIndex = 58
@@ -518,7 +518,7 @@ Partial Class movieGUI
         'cbWatchedEver
         '
         Me.cbWatchedEver.AutoSize = True
-        Me.cbWatchedEver.Location = New System.Drawing.Point(427, 399)
+        Me.cbWatchedEver.Location = New System.Drawing.Point(427, 471)
         Me.cbWatchedEver.Name = "cbWatchedEver"
         Me.cbWatchedEver.Size = New System.Drawing.Size(76, 17)
         Me.cbWatchedEver.TabIndex = 59
@@ -527,7 +527,7 @@ Partial Class movieGUI
         '
         'tbTest
         '
-        Me.tbTest.Location = New System.Drawing.Point(952, 164)
+        Me.tbTest.Location = New System.Drawing.Point(952, 236)
         Me.tbTest.Multiline = True
         Me.tbTest.Name = "tbTest"
         Me.tbTest.Size = New System.Drawing.Size(209, 260)
@@ -537,7 +537,7 @@ Partial Class movieGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1173, 446)
+        Me.ClientSize = New System.Drawing.Size(1173, 521)
         Me.Controls.Add(Me.tbTest)
         Me.Controls.Add(Me.cbWatchedEver)
         Me.Controls.Add(Me.cbSource)
