@@ -1,0 +1,22 @@
+﻿<Window x:Class="MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+    Title="MainWindow" Height="300" Width="300">
+    <Window.Resources>
+        <Style TargetType="toolkit:DataGridColumnHeader" x:Key="MyHeaderStyle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+
+        <toolkit:DataGrid Name="dg1" ItemsSource="{Binding}"  >
+            <toolkit:DataGrid.Columns>
+                <toolkit:DataGridTextColumn Header="Movie Title" Binding="{Binding Path=TITLE.Value}" HeaderStyle="{StaticResource MyHeaderStyle}" />
+                <toolkit:DataGridTextColumn Header="Year" Binding="{Binding Path=\TITLE\YEAR.Value}" HeaderStyle="{StaticResource MyHeaderStyle}"/>
+                <toolkit:DataGridTextColumn Header="Director" Binding="{Binding Path=\CREATORS\DIRECTORS\DIRECTOR.Value}" HeaderStyle="{StaticResource MyHeaderStyle}" />
+            </toolkit:DataGrid.Columns>
+        </toolkit:DataGrid>
+    </Grid>
+</Window>

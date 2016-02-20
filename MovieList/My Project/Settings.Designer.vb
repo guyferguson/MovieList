@@ -80,18 +80,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("E:\sites\junkie\xml\movie_images")>  _
-        Public Property imagePath() As String
-            Get
-                Return CType(Me("imagePath"),String)
-            End Get
-            Set
-                Me("imagePath") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("http://www.imdb.com")>  _
         Public Property movieSiteUrl() As String
             Get
@@ -99,6 +87,18 @@ Namespace My
             End Get
             Set
                 Me("movieSiteUrl") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("E:\sites\junkie\old_site\xml\movie_images")>  _
+        Public Property imagePath() As String
+            Get
+                Return CType(Me("imagePath"),String)
+            End Get
+            Set
+                Me("imagePath") = value
             End Set
         End Property
     End Class

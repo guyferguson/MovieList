@@ -8,11 +8,11 @@
     <Setting Name="fileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">MovieListv2.xml</Value>
     </Setting>
-    <Setting Name="imagePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">E:\sites\junkie\xml\movie_images</Value>
-    </Setting>
     <Setting Name="movieSiteUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://www.imdb.com</Value>
+    </Setting>
+    <Setting Name="imagePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\sites\junkie\old_site\xml\movie_images</Value>
     </Setting>
   </Settings>
 </SettingsFile>
