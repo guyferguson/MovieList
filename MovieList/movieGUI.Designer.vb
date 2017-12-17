@@ -75,14 +75,26 @@ Partial Class movieGUI
         Me.Label21 = New System.Windows.Forms.Label()
         Me.cbSource = New System.Windows.Forms.ComboBox()
         Me.cbWatchedEver = New System.Windows.Forms.CheckBox()
-        Me.tbTest = New System.Windows.Forms.TextBox()
+        Me.btViewAll = New System.Windows.Forms.Button()
+        Me.tbSeasons = New System.Windows.Forms.TextBox()
+        Me.tbEpsiodes = New System.Windows.Forms.TextBox()
+        Me.lbSeasons = New System.Windows.Forms.Label()
+        Me.lbEpisodes = New System.Windows.Forms.Label()
+        Me.pnlMovies = New System.Windows.Forms.Panel()
+        Me.lbFreeSpace = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
+        Me.btUploadToWeb = New System.Windows.Forms.Button()
+        Me.btClearForm = New System.Windows.Forms.Button()
+        Me.lbVersion = New System.Windows.Forms.Label()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlMovies.SuspendLayout()
         Me.SuspendLayout()
         '
         'tbMovieName
         '
         Me.tbMovieName.BackColor = System.Drawing.Color.Gold
-        Me.tbMovieName.Location = New System.Drawing.Point(263, 33)
+        Me.tbMovieName.Location = New System.Drawing.Point(290, 27)
         Me.tbMovieName.Name = "tbMovieName"
         Me.tbMovieName.Size = New System.Drawing.Size(156, 20)
         Me.tbMovieName.TabIndex = 0
@@ -90,7 +102,7 @@ Partial Class movieGUI
         '
         'btSearch
         '
-        Me.btSearch.Location = New System.Drawing.Point(427, 34)
+        Me.btSearch.Location = New System.Drawing.Point(454, 28)
         Me.btSearch.Name = "btSearch"
         Me.btSearch.Size = New System.Drawing.Size(75, 23)
         Me.btSearch.TabIndex = 1
@@ -100,7 +112,7 @@ Partial Class movieGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(216, 13)
+        Me.Label1.Location = New System.Drawing.Point(243, 7)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(92, 13)
         Me.Label1.TabIndex = 3
@@ -108,7 +120,7 @@ Partial Class movieGUI
         '
         'tbFilePath
         '
-        Me.tbFilePath.Location = New System.Drawing.Point(689, 28)
+        Me.tbFilePath.Location = New System.Drawing.Point(716, 22)
         Me.tbFilePath.Name = "tbFilePath"
         Me.tbFilePath.Size = New System.Drawing.Size(255, 20)
         Me.tbFilePath.TabIndex = 5
@@ -116,7 +128,7 @@ Partial Class movieGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(689, 13)
+        Me.Label2.Location = New System.Drawing.Point(716, 7)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(82, 13)
         Me.Label2.TabIndex = 6
@@ -128,15 +140,18 @@ Partial Class movieGUI
         '
         'wbOutput
         '
-        Me.wbOutput.Location = New System.Drawing.Point(613, 193)
+        Me.wbOutput.AllowWebBrowserDrop = False
+        Me.wbOutput.CausesValidation = False
+        Me.wbOutput.Location = New System.Drawing.Point(604, 228)
         Me.wbOutput.MinimumSize = New System.Drawing.Size(20, 20)
         Me.wbOutput.Name = "wbOutput"
-        Me.wbOutput.Size = New System.Drawing.Size(344, 275)
+        Me.wbOutput.ScriptErrorsSuppressed = True
+        Me.wbOutput.Size = New System.Drawing.Size(298, 275)
         Me.wbOutput.TabIndex = 7
         '
         'tbTtId
         '
-        Me.tbTtId.Location = New System.Drawing.Point(62, 10)
+        Me.tbTtId.Location = New System.Drawing.Point(63, 9)
         Me.tbTtId.Name = "tbTtId"
         Me.tbTtId.Size = New System.Drawing.Size(128, 20)
         Me.tbTtId.TabIndex = 8
@@ -144,7 +159,7 @@ Partial Class movieGUI
         'lbImdbid
         '
         Me.lbImdbid.AutoSize = True
-        Me.lbImdbid.Location = New System.Drawing.Point(12, 13)
+        Me.lbImdbid.Location = New System.Drawing.Point(13, 12)
         Me.lbImdbid.Name = "lbImdbid"
         Me.lbImdbid.Size = New System.Drawing.Size(48, 13)
         Me.lbImdbid.TabIndex = 9
@@ -153,7 +168,7 @@ Partial Class movieGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(12, 40)
+        Me.Label3.Location = New System.Drawing.Point(13, 39)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(27, 13)
         Me.Label3.TabIndex = 10
@@ -162,7 +177,7 @@ Partial Class movieGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(12, 67)
+        Me.Label4.Location = New System.Drawing.Point(13, 66)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(29, 13)
         Me.Label4.TabIndex = 11
@@ -170,28 +185,28 @@ Partial Class movieGUI
         '
         'tbYear
         '
-        Me.tbYear.Location = New System.Drawing.Point(62, 64)
+        Me.tbYear.Location = New System.Drawing.Point(63, 63)
         Me.tbYear.Name = "tbYear"
         Me.tbYear.Size = New System.Drawing.Size(128, 20)
         Me.tbYear.TabIndex = 12
         '
         'tbTitle
         '
-        Me.tbTitle.Location = New System.Drawing.Point(62, 37)
+        Me.tbTitle.Location = New System.Drawing.Point(63, 36)
         Me.tbTitle.Name = "tbTitle"
         Me.tbTitle.Size = New System.Drawing.Size(185, 20)
         Me.tbTitle.TabIndex = 13
         '
         'tbRuntime
         '
-        Me.tbRuntime.Location = New System.Drawing.Point(62, 118)
+        Me.tbRuntime.Location = New System.Drawing.Point(63, 117)
         Me.tbRuntime.Name = "tbRuntime"
         Me.tbRuntime.Size = New System.Drawing.Size(128, 20)
         Me.tbRuntime.TabIndex = 14
         '
         'tbGenre
         '
-        Me.tbGenre.Location = New System.Drawing.Point(62, 91)
+        Me.tbGenre.Location = New System.Drawing.Point(63, 90)
         Me.tbGenre.Name = "tbGenre"
         Me.tbGenre.Size = New System.Drawing.Size(128, 20)
         Me.tbGenre.TabIndex = 15
@@ -199,7 +214,7 @@ Partial Class movieGUI
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(12, 121)
+        Me.Label5.Location = New System.Drawing.Point(13, 120)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(46, 13)
         Me.Label5.TabIndex = 16
@@ -208,7 +223,7 @@ Partial Class movieGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(12, 94)
+        Me.Label6.Location = New System.Drawing.Point(13, 93)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(47, 13)
         Me.Label6.TabIndex = 17
@@ -217,7 +232,7 @@ Partial Class movieGUI
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(12, 148)
+        Me.Label7.Location = New System.Drawing.Point(13, 147)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(44, 13)
         Me.Label7.TabIndex = 19
@@ -225,7 +240,7 @@ Partial Class movieGUI
         '
         'tbDirector1
         '
-        Me.tbDirector1.Location = New System.Drawing.Point(62, 145)
+        Me.tbDirector1.Location = New System.Drawing.Point(63, 144)
         Me.tbDirector1.Name = "tbDirector1"
         Me.tbDirector1.Size = New System.Drawing.Size(128, 20)
         Me.tbDirector1.TabIndex = 18
@@ -233,7 +248,7 @@ Partial Class movieGUI
         'lbWriters
         '
         Me.lbWriters.AutoSize = True
-        Me.lbWriters.Location = New System.Drawing.Point(212, 86)
+        Me.lbWriters.Location = New System.Drawing.Point(213, 93)
         Me.lbWriters.Name = "lbWriters"
         Me.lbWriters.Size = New System.Drawing.Size(35, 13)
         Me.lbWriters.TabIndex = 21
@@ -241,7 +256,7 @@ Partial Class movieGUI
         '
         'pbPoster
         '
-        Me.pbPoster.Location = New System.Drawing.Point(62, 294)
+        Me.pbPoster.Location = New System.Drawing.Point(16, 315)
         Me.pbPoster.Name = "pbPoster"
         Me.pbPoster.Size = New System.Drawing.Size(175, 202)
         Me.pbPoster.TabIndex = 22
@@ -250,7 +265,7 @@ Partial Class movieGUI
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(6, 294)
+        Me.Label9.Location = New System.Drawing.Point(20, 279)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(37, 13)
         Me.Label9.TabIndex = 23
@@ -258,7 +273,7 @@ Partial Class movieGUI
         '
         'tbPlot
         '
-        Me.tbPlot.Location = New System.Drawing.Point(271, 294)
+        Me.tbPlot.Location = New System.Drawing.Point(225, 315)
         Me.tbPlot.Multiline = True
         Me.tbPlot.Name = "tbPlot"
         Me.tbPlot.Size = New System.Drawing.Size(177, 156)
@@ -267,7 +282,7 @@ Partial Class movieGUI
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(686, 68)
+        Me.Label10.Location = New System.Drawing.Point(716, 58)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(88, 13)
         Me.Label10.TabIndex = 26
@@ -275,7 +290,7 @@ Partial Class movieGUI
         '
         'tbImagePath
         '
-        Me.tbImagePath.Location = New System.Drawing.Point(689, 83)
+        Me.tbImagePath.Location = New System.Drawing.Point(719, 73)
         Me.tbImagePath.Name = "tbImagePath"
         Me.tbImagePath.Size = New System.Drawing.Size(252, 20)
         Me.tbImagePath.TabIndex = 25
@@ -283,7 +298,7 @@ Partial Class movieGUI
         'btWriteXML
         '
         Me.btWriteXML.BackColor = System.Drawing.Color.Chocolate
-        Me.btWriteXML.Location = New System.Drawing.Point(523, 22)
+        Me.btWriteXML.Location = New System.Drawing.Point(550, 16)
         Me.btWriteXML.Name = "btWriteXML"
         Me.btWriteXML.Size = New System.Drawing.Size(122, 44)
         Me.btWriteXML.TabIndex = 27
@@ -293,7 +308,7 @@ Partial Class movieGUI
         'lbActors
         '
         Me.lbActors.AutoSize = True
-        Me.lbActors.Location = New System.Drawing.Point(434, 89)
+        Me.lbActors.Location = New System.Drawing.Point(437, 93)
         Me.lbActors.Name = "lbActors"
         Me.lbActors.Size = New System.Drawing.Size(32, 13)
         Me.lbActors.TabIndex = 29
@@ -302,7 +317,7 @@ Partial Class movieGUI
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(260, 471)
+        Me.Label8.Location = New System.Drawing.Point(214, 492)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(66, 13)
         Me.Label8.TabIndex = 31
@@ -310,7 +325,7 @@ Partial Class movieGUI
         '
         'tbFilesize
         '
-        Me.tbFilesize.Location = New System.Drawing.Point(328, 468)
+        Me.tbFilesize.Location = New System.Drawing.Point(282, 489)
         Me.tbFilesize.Name = "tbFilesize"
         Me.tbFilesize.Size = New System.Drawing.Size(63, 20)
         Me.tbFilesize.TabIndex = 30
@@ -318,7 +333,7 @@ Partial Class movieGUI
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(260, 497)
+        Me.Label11.Location = New System.Drawing.Point(214, 518)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(47, 13)
         Me.Label11.TabIndex = 33
@@ -329,7 +344,7 @@ Partial Class movieGUI
         Me.cbFiletype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbFiletype.FormattingEnabled = True
         Me.cbFiletype.Items.AddRange(New Object() {"AVI", "BIN", "DIVX", "DVD", "MKV", "MP4", "XVID"})
-        Me.cbFiletype.Location = New System.Drawing.Point(327, 494)
+        Me.cbFiletype.Location = New System.Drawing.Point(281, 515)
         Me.cbFiletype.Name = "cbFiletype"
         Me.cbFiletype.Size = New System.Drawing.Size(64, 21)
         Me.cbFiletype.TabIndex = 35
@@ -338,7 +353,7 @@ Partial Class movieGUI
         '
         Me.cbSubtitles.AutoSize = True
         Me.cbSubtitles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cbSubtitles.Location = New System.Drawing.Point(15, 252)
+        Me.cbSubtitles.Location = New System.Drawing.Point(13, 210)
         Me.cbSubtitles.Name = "cbSubtitles"
         Me.cbSubtitles.Size = New System.Drawing.Size(66, 17)
         Me.cbSubtitles.TabIndex = 37
@@ -348,7 +363,7 @@ Partial Class movieGUI
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(84, 252)
+        Me.Label12.Location = New System.Drawing.Point(82, 210)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(57, 13)
         Me.Label12.TabIndex = 39
@@ -356,7 +371,7 @@ Partial Class movieGUI
         '
         'tbDiscName
         '
-        Me.tbDiscName.Location = New System.Drawing.Point(147, 246)
+        Me.tbDiscName.Location = New System.Drawing.Point(145, 204)
         Me.tbDiscName.Name = "tbDiscName"
         Me.tbDiscName.Size = New System.Drawing.Size(43, 20)
         Me.tbDiscName.TabIndex = 38
@@ -364,7 +379,7 @@ Partial Class movieGUI
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(216, 253)
+        Me.Label13.Location = New System.Drawing.Point(16, 245)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(82, 13)
         Me.Label13.TabIndex = 41
@@ -376,7 +391,7 @@ Partial Class movieGUI
         Me.cbWatched.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbWatched.FormattingEnabled = True
         Me.cbWatched.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "SAD"})
-        Me.cbWatched.Location = New System.Drawing.Point(304, 248)
+        Me.cbWatched.Location = New System.Drawing.Point(104, 240)
         Me.cbWatched.Name = "cbWatched"
         Me.cbWatched.Size = New System.Drawing.Size(39, 21)
         Me.cbWatched.TabIndex = 42
@@ -386,7 +401,7 @@ Partial Class movieGUI
         Me.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbType.FormattingEnabled = True
         Me.cbType.Items.AddRange(New Object() {"MOVIE", "TV"})
-        Me.cbType.Location = New System.Drawing.Point(388, 248)
+        Me.cbType.Location = New System.Drawing.Point(65, 176)
         Me.cbType.Name = "cbType"
         Me.cbType.Size = New System.Drawing.Size(60, 21)
         Me.cbType.TabIndex = 44
@@ -394,7 +409,7 @@ Partial Class movieGUI
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(360, 253)
+        Me.Label14.Location = New System.Drawing.Point(15, 181)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(31, 13)
         Me.Label14.TabIndex = 43
@@ -402,7 +417,7 @@ Partial Class movieGUI
         '
         'dtLastWatched
         '
-        Me.dtLastWatched.Location = New System.Drawing.Point(589, 488)
+        Me.dtLastWatched.Location = New System.Drawing.Point(454, 512)
         Me.dtLastWatched.Name = "dtLastWatched"
         Me.dtLastWatched.Size = New System.Drawing.Size(131, 20)
         Me.dtLastWatched.TabIndex = 45
@@ -410,7 +425,7 @@ Partial Class movieGUI
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(509, 494)
+        Me.Label15.Location = New System.Drawing.Point(374, 518)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(74, 13)
         Me.Label15.TabIndex = 46
@@ -419,7 +434,7 @@ Partial Class movieGUI
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(468, 318)
+        Me.Label16.Location = New System.Drawing.Point(422, 339)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(35, 13)
         Me.Label16.TabIndex = 48
@@ -427,7 +442,7 @@ Partial Class movieGUI
         '
         'tbDimX
         '
-        Me.tbDimX.Location = New System.Drawing.Point(523, 287)
+        Me.tbDimX.Location = New System.Drawing.Point(477, 308)
         Me.tbDimX.Name = "tbDimX"
         Me.tbDimX.Size = New System.Drawing.Size(43, 20)
         Me.tbDimX.TabIndex = 47
@@ -435,7 +450,7 @@ Partial Class movieGUI
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(468, 290)
+        Me.Label17.Location = New System.Drawing.Point(422, 311)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(35, 13)
         Me.Label17.TabIndex = 50
@@ -443,14 +458,14 @@ Partial Class movieGUI
         '
         'tbDimY
         '
-        Me.tbDimY.Location = New System.Drawing.Point(523, 315)
+        Me.tbDimY.Location = New System.Drawing.Point(477, 336)
         Me.tbDimY.Name = "tbDimY"
         Me.tbDimY.Size = New System.Drawing.Size(43, 20)
         Me.tbDimY.TabIndex = 49
         '
         'tbVBitrate
         '
-        Me.tbVBitrate.Location = New System.Drawing.Point(523, 343)
+        Me.tbVBitrate.Location = New System.Drawing.Point(477, 364)
         Me.tbVBitrate.Name = "tbVBitrate"
         Me.tbVBitrate.Size = New System.Drawing.Size(43, 20)
         Me.tbVBitrate.TabIndex = 52
@@ -458,7 +473,7 @@ Partial Class movieGUI
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(468, 346)
+        Me.Label18.Location = New System.Drawing.Point(422, 367)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(47, 13)
         Me.Label18.TabIndex = 51
@@ -466,7 +481,7 @@ Partial Class movieGUI
         '
         'tbABitrate
         '
-        Me.tbABitrate.Location = New System.Drawing.Point(523, 369)
+        Me.tbABitrate.Location = New System.Drawing.Point(477, 390)
         Me.tbABitrate.Name = "tbABitrate"
         Me.tbABitrate.Size = New System.Drawing.Size(43, 20)
         Me.tbABitrate.TabIndex = 54
@@ -474,7 +489,7 @@ Partial Class movieGUI
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(468, 372)
+        Me.Label19.Location = New System.Drawing.Point(422, 393)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(47, 13)
         Me.Label19.TabIndex = 53
@@ -482,7 +497,7 @@ Partial Class movieGUI
         '
         'tbQf
         '
-        Me.tbQf.Location = New System.Drawing.Point(523, 398)
+        Me.tbQf.Location = New System.Drawing.Point(477, 419)
         Me.tbQf.Name = "tbQf"
         Me.tbQf.Size = New System.Drawing.Size(43, 20)
         Me.tbQf.TabIndex = 56
@@ -490,7 +505,7 @@ Partial Class movieGUI
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(468, 401)
+        Me.Label20.Location = New System.Drawing.Point(422, 422)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(18, 13)
         Me.Label20.TabIndex = 55
@@ -499,7 +514,7 @@ Partial Class movieGUI
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(468, 430)
+        Me.Label21.Location = New System.Drawing.Point(422, 451)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(41, 13)
         Me.Label21.TabIndex = 57
@@ -510,7 +525,7 @@ Partial Class movieGUI
         Me.cbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbSource.FormattingEnabled = True
         Me.cbSource.Items.AddRange(New Object() {"BLU-RAY", "CAM", "DVDRIP", "R5", "TELESYNC"})
-        Me.cbSource.Location = New System.Drawing.Point(523, 427)
+        Me.cbSource.Location = New System.Drawing.Point(477, 448)
         Me.cbSource.Name = "cbSource"
         Me.cbSource.Size = New System.Drawing.Size(84, 21)
         Me.cbSource.TabIndex = 58
@@ -518,81 +533,193 @@ Partial Class movieGUI
         'cbWatchedEver
         '
         Me.cbWatchedEver.AutoSize = True
-        Me.cbWatchedEver.Location = New System.Drawing.Point(427, 471)
+        Me.cbWatchedEver.Location = New System.Drawing.Point(381, 492)
         Me.cbWatchedEver.Name = "cbWatchedEver"
         Me.cbWatchedEver.Size = New System.Drawing.Size(76, 17)
         Me.cbWatchedEver.TabIndex = 59
         Me.cbWatchedEver.Text = "Watched?"
         Me.cbWatchedEver.UseVisualStyleBackColor = True
         '
-        'tbTest
+        'btViewAll
         '
-        Me.tbTest.Location = New System.Drawing.Point(952, 236)
-        Me.tbTest.Multiline = True
-        Me.tbTest.Name = "tbTest"
-        Me.tbTest.Size = New System.Drawing.Size(209, 260)
-        Me.tbTest.TabIndex = 60
+        Me.btViewAll.Location = New System.Drawing.Point(998, 12)
+        Me.btViewAll.Name = "btViewAll"
+        Me.btViewAll.Size = New System.Drawing.Size(114, 38)
+        Me.btViewAll.TabIndex = 61
+        Me.btViewAll.Text = "Edit All"
+        Me.btViewAll.UseVisualStyleBackColor = True
+        '
+        'tbSeasons
+        '
+        Me.tbSeasons.Location = New System.Drawing.Point(855, 111)
+        Me.tbSeasons.Name = "tbSeasons"
+        Me.tbSeasons.Size = New System.Drawing.Size(116, 20)
+        Me.tbSeasons.TabIndex = 62
+        Me.tbSeasons.Visible = False
+        '
+        'tbEpsiodes
+        '
+        Me.tbEpsiodes.Location = New System.Drawing.Point(855, 136)
+        Me.tbEpsiodes.Name = "tbEpsiodes"
+        Me.tbEpsiodes.Size = New System.Drawing.Size(116, 20)
+        Me.tbEpsiodes.TabIndex = 63
+        Me.tbEpsiodes.Visible = False
+        '
+        'lbSeasons
+        '
+        Me.lbSeasons.AutoSize = True
+        Me.lbSeasons.Location = New System.Drawing.Point(786, 119)
+        Me.lbSeasons.Name = "lbSeasons"
+        Me.lbSeasons.Size = New System.Drawing.Size(54, 13)
+        Me.lbSeasons.TabIndex = 64
+        Me.lbSeasons.Text = "Season(s)"
+        Me.lbSeasons.Visible = False
+        '
+        'lbEpisodes
+        '
+        Me.lbEpisodes.AutoSize = True
+        Me.lbEpisodes.Location = New System.Drawing.Point(918, 146)
+        Me.lbEpisodes.Name = "lbEpisodes"
+        Me.lbEpisodes.Size = New System.Drawing.Size(56, 13)
+        Me.lbEpisodes.TabIndex = 65
+        Me.lbEpisodes.Text = "Episode(s)"
+        Me.lbEpisodes.Visible = False
+        '
+        'pnlMovies
+        '
+        Me.pnlMovies.Controls.Add(Me.lbVersion)
+        Me.pnlMovies.Controls.Add(Me.lbFreeSpace)
+        Me.pnlMovies.Controls.Add(Me.Label22)
+        Me.pnlMovies.Controls.Add(Me.CheckedListBox1)
+        Me.pnlMovies.Controls.Add(Me.btUploadToWeb)
+        Me.pnlMovies.Controls.Add(Me.btClearForm)
+        Me.pnlMovies.Controls.Add(Me.tbTtId)
+        Me.pnlMovies.Controls.Add(Me.lbImdbid)
+        Me.pnlMovies.Controls.Add(Me.Label9)
+        Me.pnlMovies.Controls.Add(Me.lbSeasons)
+        Me.pnlMovies.Controls.Add(Me.cbWatchedEver)
+        Me.pnlMovies.Controls.Add(Me.Label3)
+        Me.pnlMovies.Controls.Add(Me.cbSource)
+        Me.pnlMovies.Controls.Add(Me.tbEpsiodes)
+        Me.pnlMovies.Controls.Add(Me.Label21)
+        Me.pnlMovies.Controls.Add(Me.Label4)
+        Me.pnlMovies.Controls.Add(Me.tbQf)
+        Me.pnlMovies.Controls.Add(Me.tbSeasons)
+        Me.pnlMovies.Controls.Add(Me.Label20)
+        Me.pnlMovies.Controls.Add(Me.tbYear)
+        Me.pnlMovies.Controls.Add(Me.tbABitrate)
+        Me.pnlMovies.Controls.Add(Me.btViewAll)
+        Me.pnlMovies.Controls.Add(Me.Label19)
+        Me.pnlMovies.Controls.Add(Me.tbTitle)
+        Me.pnlMovies.Controls.Add(Me.tbVBitrate)
+        Me.pnlMovies.Controls.Add(Me.tbRuntime)
+        Me.pnlMovies.Controls.Add(Me.Label18)
+        Me.pnlMovies.Controls.Add(Me.tbGenre)
+        Me.pnlMovies.Controls.Add(Me.Label17)
+        Me.pnlMovies.Controls.Add(Me.Label5)
+        Me.pnlMovies.Controls.Add(Me.tbDimY)
+        Me.pnlMovies.Controls.Add(Me.Label6)
+        Me.pnlMovies.Controls.Add(Me.Label16)
+        Me.pnlMovies.Controls.Add(Me.tbDirector1)
+        Me.pnlMovies.Controls.Add(Me.tbDimX)
+        Me.pnlMovies.Controls.Add(Me.Label7)
+        Me.pnlMovies.Controls.Add(Me.Label15)
+        Me.pnlMovies.Controls.Add(Me.tbFilePath)
+        Me.pnlMovies.Controls.Add(Me.dtLastWatched)
+        Me.pnlMovies.Controls.Add(Me.tbMovieName)
+        Me.pnlMovies.Controls.Add(Me.cbFiletype)
+        Me.pnlMovies.Controls.Add(Me.cbType)
+        Me.pnlMovies.Controls.Add(Me.Label11)
+        Me.pnlMovies.Controls.Add(Me.btSearch)
+        Me.pnlMovies.Controls.Add(Me.Label8)
+        Me.pnlMovies.Controls.Add(Me.Label14)
+        Me.pnlMovies.Controls.Add(Me.tbFilesize)
+        Me.pnlMovies.Controls.Add(Me.Label1)
+        Me.pnlMovies.Controls.Add(Me.tbPlot)
+        Me.pnlMovies.Controls.Add(Me.cbWatched)
+        Me.pnlMovies.Controls.Add(Me.Label2)
+        Me.pnlMovies.Controls.Add(Me.pbPoster)
+        Me.pnlMovies.Controls.Add(Me.Label13)
+        Me.pnlMovies.Controls.Add(Me.btWriteXML)
+        Me.pnlMovies.Controls.Add(Me.Label12)
+        Me.pnlMovies.Controls.Add(Me.tbImagePath)
+        Me.pnlMovies.Controls.Add(Me.tbDiscName)
+        Me.pnlMovies.Controls.Add(Me.cbSubtitles)
+        Me.pnlMovies.Controls.Add(Me.lbWriters)
+        Me.pnlMovies.Controls.Add(Me.Label10)
+        Me.pnlMovies.Controls.Add(Me.lbActors)
+        Me.pnlMovies.Controls.Add(Me.wbOutput)
+        Me.pnlMovies.Location = New System.Drawing.Point(31, 12)
+        Me.pnlMovies.Name = "pnlMovies"
+        Me.pnlMovies.Size = New System.Drawing.Size(1130, 565)
+        Me.pnlMovies.TabIndex = 66
+        '
+        'lbFreeSpace
+        '
+        Me.lbFreeSpace.AutoSize = True
+        Me.lbFreeSpace.Location = New System.Drawing.Point(982, 66)
+        Me.lbFreeSpace.Name = "lbFreeSpace"
+        Me.lbFreeSpace.Size = New System.Drawing.Size(0, 13)
+        Me.lbFreeSpace.TabIndex = 69
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(989, 228)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(50, 13)
+        Me.Label22.TabIndex = 68
+        Me.Label22.Text = "Episodes"
+        '
+        'CheckedListBox1
+        '
+        Me.CheckedListBox1.FormattingEnabled = True
+        Me.CheckedListBox1.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"})
+        Me.CheckedListBox1.Location = New System.Drawing.Point(992, 246)
+        Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.Size = New System.Drawing.Size(46, 259)
+        Me.CheckedListBox1.TabIndex = 67
+        '
+        'btUploadToWeb
+        '
+        Me.btUploadToWeb.BackColor = System.Drawing.Color.DarkOrange
+        Me.btUploadToWeb.Location = New System.Drawing.Point(550, 67)
+        Me.btUploadToWeb.Name = "btUploadToWeb"
+        Me.btUploadToWeb.Size = New System.Drawing.Size(122, 39)
+        Me.btUploadToWeb.TabIndex = 66
+        Me.btUploadToWeb.Text = "Upload via FTP"
+        Me.btUploadToWeb.UseVisualStyleBackColor = False
+        '
+        'btClearForm
+        '
+        Me.btClearForm.Location = New System.Drawing.Point(684, 119)
+        Me.btClearForm.Name = "btClearForm"
+        Me.btClearForm.Size = New System.Drawing.Size(75, 23)
+        Me.btClearForm.TabIndex = 65
+        Me.btClearForm.Text = "Clear All"
+        Me.btClearForm.UseVisualStyleBackColor = True
+        '
+        'lbVersion
+        '
+        Me.lbVersion.AutoSize = True
+        Me.lbVersion.Location = New System.Drawing.Point(992, 537)
+        Me.lbVersion.Name = "lbVersion"
+        Me.lbVersion.Size = New System.Drawing.Size(45, 13)
+        Me.lbVersion.TabIndex = 70
+        Me.lbVersion.Text = "Label23"
         '
         'movieGUI
         '
+        Me.lbVersion.Text = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1173, 521)
-        Me.Controls.Add(Me.tbTest)
-        Me.Controls.Add(Me.cbWatchedEver)
-        Me.Controls.Add(Me.cbSource)
-        Me.Controls.Add(Me.Label21)
-        Me.Controls.Add(Me.tbQf)
-        Me.Controls.Add(Me.Label20)
-        Me.Controls.Add(Me.tbABitrate)
-        Me.Controls.Add(Me.Label19)
-        Me.Controls.Add(Me.tbVBitrate)
-        Me.Controls.Add(Me.Label18)
-        Me.Controls.Add(Me.Label17)
-        Me.Controls.Add(Me.tbDimY)
-        Me.Controls.Add(Me.Label16)
-        Me.Controls.Add(Me.tbDimX)
-        Me.Controls.Add(Me.Label15)
-        Me.Controls.Add(Me.dtLastWatched)
-        Me.Controls.Add(Me.cbType)
-        Me.Controls.Add(Me.Label14)
-        Me.Controls.Add(Me.cbWatched)
-        Me.Controls.Add(Me.Label13)
-        Me.Controls.Add(Me.Label12)
-        Me.Controls.Add(Me.tbDiscName)
-        Me.Controls.Add(Me.cbSubtitles)
-        Me.Controls.Add(Me.cbFiletype)
-        Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.tbFilesize)
-        Me.Controls.Add(Me.lbActors)
-        Me.Controls.Add(Me.btWriteXML)
-        Me.Controls.Add(Me.Label10)
-        Me.Controls.Add(Me.tbImagePath)
-        Me.Controls.Add(Me.tbPlot)
-        Me.Controls.Add(Me.Label9)
-        Me.Controls.Add(Me.pbPoster)
-        Me.Controls.Add(Me.lbWriters)
-        Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.tbDirector1)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.tbGenre)
-        Me.Controls.Add(Me.tbRuntime)
-        Me.Controls.Add(Me.tbTitle)
-        Me.Controls.Add(Me.tbYear)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.lbImdbid)
-        Me.Controls.Add(Me.tbTtId)
-        Me.Controls.Add(Me.wbOutput)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.tbFilePath)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.btSearch)
-        Me.Controls.Add(Me.tbMovieName)
+        Me.ClientSize = New System.Drawing.Size(1173, 596)
+        Me.Controls.Add(Me.pnlMovies)
+        Me.Controls.Add(Me.lbEpisodes)
         Me.Name = "movieGUI"
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlMovies.ResumeLayout(False)
+        Me.pnlMovies.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -650,6 +777,16 @@ Partial Class movieGUI
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents cbSource As System.Windows.Forms.ComboBox
     Friend WithEvents cbWatchedEver As System.Windows.Forms.CheckBox
-    Friend WithEvents tbTest As System.Windows.Forms.TextBox
-
+    Friend WithEvents btViewAll As System.Windows.Forms.Button
+    Friend WithEvents tbSeasons As System.Windows.Forms.TextBox
+    Friend WithEvents tbEpsiodes As System.Windows.Forms.TextBox
+    Friend WithEvents lbSeasons As System.Windows.Forms.Label
+    Friend WithEvents lbEpisodes As System.Windows.Forms.Label
+    Friend WithEvents pnlMovies As System.Windows.Forms.Panel
+    Friend WithEvents btClearForm As System.Windows.Forms.Button
+    Friend WithEvents btUploadToWeb As System.Windows.Forms.Button
+    Friend WithEvents CheckedListBox1 As CheckedListBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents lbFreeSpace As Label
+    Friend WithEvents lbVersion As Label
 End Class

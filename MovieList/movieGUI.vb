@@ -1,8 +1,6 @@
 ﻿
 Imports System.Xml
-Imports System.Text
 Imports Newtonsoft.Json
-Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.IO
 
@@ -10,7 +8,7 @@ Public Class movieGUI
 
     Dim mv As New Movie
     Dim newmv As MovieJS
-
+    Dim elDup As XElement
 
     ' An XML memory  object to hold the  xml file that we want to write eventually.
     Dim doc As XDocument
@@ -28,9 +26,9 @@ Public Class movieGUI
         ' Read the filePath fron the Settings object
         tbFilePath.Text = My.Settings.filePath
         Dim fi As New DirectoryInfo(tbFilePath.Text)
+        Dim testXML As String
         tbImagePath.Text = My.Settings.imagePath
         Dim ip As New DirectoryInfo(tbImagePath.Text)
-
         ' Determine if these paths are available - if not, exit, advising user how to fix
         If Not (fi.Exists) Then
             MsgBox(fi.ToString & " is not accessible - please update the app.config file, or make this path accessible")
@@ -48,11 +46,21 @@ Public Class movieGUI
         cbType.SelectedIndex = 0
         cbWatched.SelectedIndex = 0
 
-
-        'Start with assumption of a new movie
-        'newmv.update = False
         ' Display the filename in the Title Bar
         Me.Text = "We are working with " & My.Settings.fileName
+
+        'Check if the xml file is well-formed - if not, no point continuing
+        Dim objReader As New System.IO.StreamReader(tbFilePath.Text & "\" & My.Settings.fileName)
+
+        testXML = objReader.ReadToEnd
+
+        objReader.Close()
+
+        'Check if the XML file is well-formed before proceeding - this gives user a nicer error message
+        If (Not (IsValidXML(testXML))) Then
+            MsgBox(My.Settings.fileName & " is not well-formed - please correct and re-run this application")
+            End
+        End If
 
         ' Load the existing xml file to speed up later usage of it.  Originally it loaded at each 'Write' button-push
         doc = XDocument.Load(tbFilePath.Text & "\" & My.Settings.fileName)
@@ -60,35 +68,73 @@ Public Class movieGUI
     End Sub
     Public Sub btSearch_Click(sender As Object, e As EventArgs) Handles btSearch.Click
 
-        ' Return button text to 'write' setting, as ne search may be an addition
+        ' Return button text to 'write' setting, as new search may be an addition
         btWriteXML.Text = "Write to file"
         'Clear out current GUI
         resetGUI()
         wbOutput.Visible = True
         Dim strMovieName As String
+        Dim webcall As String
         strMovieName = tbMovieName.Text
-        Dim webClient As New System.Net.WebClient
+        webcall = "http://www.imdb.com/xml/find?xml=1&nr=1&tt=on&q=" & strMovieName
+        webcall = webcall & ""
+        Try
+            Dim webClient As New System.Net.WebClient
+            ' Create url for data call
 
-        ' This web query returns a valid xml string, but for display purposes we just treat it as a string
-        Dim result As String = webClient.DownloadString("http://www.imdb.com/xml/find?xml=1&nr=1&tt=on&q=" & strMovieName)
+            Dim result As String = webClient.DownloadString(webcall)
+            ' This web query returns a valid xml string, but for display purposes we just treat it as a string
 
-        wbOutput.DocumentText = mv.showPossibles(result)
+            wbOutput.DocumentText = mv.showPossibles(result)
+        Catch
+            MsgBox("Cannot access internet ... exiting")
+            End
+        End Try
+        'MsgBox(result)
     End Sub
+    ''' <summary>
+    '''  A function to check that the xml file used to store movie history is well-formed.
+    ''' </summary>
+    ''' <param name="value">This is the full path and filename of the xml file we wish to check the well-formedness of.</param>
+    ''' <returns>True if the xml file is well-formed</returns>
+    ''' <remarks>A hackish test - if you can load the file without erros, it must be valid. This function does not actually check every individual set of paired tages, or nesting etc.</remarks>
+    Private Function IsValidXML(value As String)
 
+        Try
+            'Check we actually have been passed a value
+            If (Not (String.IsNullOrEmpty(value))) Then
 
-    Private Sub wbOutput_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles wbOutput.DocumentCompleted
-        'Handle onhyperlinkclick
+                'Try to load the value into a document
+                Dim xmlDoc As New XmlDocument()
 
-    End Sub
+                xmlDoc.LoadXml(value)
 
+                'If we managed with no exception then this is valid XML!
+                Return True
+
+            Else
+
+                ' A blank value is not valid xml
+                Return False
+            End If
+        Catch e As System.Xml.XmlException
+
+        End Try
+
+        Return False
+    End Function
 
     Private Sub wbOutput_Navigated(sender As Object, e As WebBrowserNavigatedEventArgs) Handles wbOutput.Navigated
-
+        'Update free space on writing directory
+        Dim freeS As System.IO.DriveInfo
+        freeS = My.Computer.FileSystem.GetDriveInfo(tbFilePath.Text & "\")
+        lbFreeSpace.Text = "Free space: " & freeS.TotalFreeSpace.ToString("0,0", Globalization.CultureInfo.InvariantCulture)
         If Not (IsNothing(wbOutput.DocumentText)) Then
             ' A very hackish and childish way of determing if we have arrived at a JSON string 
             If (wbOutput.DocumentText.ToCharArray()(0) = "{") Then
                 newmv = readJson(wbOutput.DocumentText)
-                newmv.ttId = (wbOutput.Url.Query.Split("=")(1))
+                'MsgBox(newmv.ttId.ToString)
+                newmv.ttId = (wbOutput.Url.Query.Split("=")(1).Split("&")(0))
                 ' Display the returned string for DEBUG porpoises
                 ' MsgBox(wbOutput.DocumentText)
 
@@ -102,18 +148,24 @@ Public Class movieGUI
                 ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
 
 
+                wbOutput.Visible = False
                 For Each el As XElement In doc.<CATALOG>...<MEDIA>
                     'Debug.Print(el.<IMDBR>.Value)
                     If ((String.Compare(el.<TITLE>...<IMDBR>.Value, tbTtId.Text) = 0)) Then
-                        newmv.update = True
+                        ' MsgBox(el.<TITLE>...<IMDBR>.Value & vbCrLf & tbTtId.Text)
                         btWriteXML.Text = "Update movie file"
+                        Me.BackColor = Color.Azure
                         '   MsgBox("Already exists as " & el.<COUNTRY>...<NAME>.Value)
                         compare(el)
+                        elDup = el
                         '   tbTest.Text = el.Parent.ToString & newmv.ToString
+                        Exit For
+                    Else
+                        Me.BackColor = SystemColors.Control
+                        btWriteXML.Text = "Write to file"
 
                     End If
                 Next
-                wbOutput.Visible = False
             End If
         End If
 
@@ -236,10 +288,12 @@ Public Class movieGUI
             newActor.TabIndex = 9 + i
             ' Break up the comma separated names and strip leading and trailing spaces
             newActor.Text = mv.actors.Split(",")(i - 1).Trim(" ")
-            Me.Controls.Add(newActor)
+            Me.pnlMovies.Controls.Add(newActor)
         Next
         If i > 2 Then
             lbActors.Text = "Actors"
+        Else
+            lbActors.Text = "Actor"
         End If
 
     End Sub
@@ -255,8 +309,8 @@ Public Class movieGUI
     Private Sub splitWriters(mv As MovieJS)
 
         WritCnt = mv.writer.Split(",").Count
-        Dim tmpWriters() As String = {"", "", "", "", "", ""}
-        Dim tmpWritersRoles() As String = {"", "", "", "", "", ""}
+        Dim tmpWriters As String() = {"", "", "", "", "", "", "", "", "", "", "", "", ""}
+        Dim tmpWritersRoles As String() = {"", "", "", "", "", "", "", "", "", "", "", ""}
         Dim i As Integer
         'Just list first 8 Writers if there are many...
         If WritCnt > 8 Then
@@ -268,10 +322,10 @@ Public Class movieGUI
             Dim newctlRole As New System.Windows.Forms.TextBox
 
             ' Check for duplicated writers
-            If tmpWriters.Contains(mv.writer.Split(",")(i - 1).Trim(" ")) Then
-                WritCnt -= 1
-                Exit For
-            End If
+            '   If tmpWriters.Contains(mv.writer.Split(",")(i - 1).Trim(" ")) Then
+            'WritCnt -= 1
+            ' Exit For
+            ' End If
 
             ' CHeck for role
             tmpWriters(i - 1) = mv.writer.Split(",")(i - 1).Trim(" ")
@@ -294,11 +348,11 @@ Public Class movieGUI
                 newctlRole.Name = cntrName & "_" & i
                 newctlRole.Size = New System.Drawing.Size(65, 37)
                 newctlRole.Text = tmpWritersRoles(i - 1).ToString
-                Me.Controls.Add(newctlRole)
+                Me.pnlMovies.Controls.Add(newctlRole)
             End If
             ' Break up the comma separated names and strip leading and trailing spaces
             newctl.Text = tmpWriters(i - 1).ToString   'mv.writer.Split(",")(i - 1).Trim(" ")
-            Me.Controls.Add(newctl)
+            Me.pnlMovies.Controls.Add(newctl)
 
         Next
 
@@ -315,67 +369,85 @@ Public Class movieGUI
     '
     Private Sub resetGUI()
 
-        For Each ctrl As Control In Me.Controls
-            '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
-            If (TypeOf ctrl Is TextBox) Then
-                If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
-                    ctrl.Text = ""
-                End If
-                If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
-                    Me.Controls.Remove(ctrl)
+        'For Each ctrl As Control In Me.Controls
+        '    '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
+        '    If (TypeOf ctrl Is TextBox) Then
+        '        If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
+        '            ctrl.Text = ""
+        '        End If
+        '        If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
+        '            Me.Controls.Remove(ctrl)
 
-                End If
-            End If
-            pbPoster.Image = Nothing
-        Next
-        For Each ctrl As Control In Me.Controls
-            If (TypeOf ctrl Is TextBox) Then
-                If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
-                    ctrl.Text = ""
-                End If
-                If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
-                    Me.Controls.Remove(ctrl)
+        '        End If
+        '    End If
+        '    If Not ((pbPoster.Image) Is Nothing) Then
+        '        pbPoster.Image.Dispose()
+        '    End If
+        'Next
+        'For Each ctrl As Control In Me.Controls
+        '    If (TypeOf ctrl Is TextBox) Then
+        '        If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
+        '            ctrl.Text = ""
+        '        End If
+        '        If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
+        '            Me.Controls.Remove(ctrl)
 
-                End If
-            End If
-            pbPoster.Image = Nothing
+        '        End If
+        '    End If
 
-        Next
-        For Each ctrl As Control In Me.Controls
-            If (TypeOf ctrl Is TextBox) Then
-                If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
-                    ctrl.Text = ""
-                End If
-                If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
-                    Me.Controls.Remove(ctrl)
+        '    If Not ((pbPoster.Image) Is Nothing) Then
+        '        pbPoster.Image.Dispose()
+        '    End If
 
-                End If
-            End If
-            pbPoster.Image = Nothing
+        'Next
+        'For Each ctrl As Control In Me.Controls
+        '    If (TypeOf ctrl Is TextBox) Then
+        '        If Not ((ctrl.Name = "tbMovieName") Or (ctrl.Name = "tbFilePath") Or (ctrl.Name = "tbImagePath")) Then
+        '            ctrl.Text = ""
+        '        End If
+        '        If (ctrl.Name.Contains("tbActor") Or ctrl.Name.Contains("tbWriter")) Then
+        '            Me.Controls.Remove(ctrl)
 
-        Next
+        '        End If
+        '    End If
+        '    If Not ((pbPoster.Image) Is Nothing) Then
+        '        pbPoster.Image.Dispose()
+        '    End If
+        'Next
 
         ' Reset the label text
         lbActors.Text = "Actor"
         lbWriters.Text = "Writer"
+
+        cbWatchedEver.Checked = False
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btWriteXML.Click
-        'Add text to xml file from path. Determine if it's an update or new addition
-        '  If Not (newmv.update) Then
-        ' Create new node of new media
+    Private Sub writeXML(sender As Object, e As EventArgs) Handles btWriteXML.Click
+
+        ' Check there is space on drive to write new xml to:
+        Dim writeSpace As System.IO.DriveInfo
+        writeSpace = My.Computer.FileSystem.GetDriveInfo(tbFilePath.Text & "\")
+        If (writeSpace.TotalFreeSpace < 10000000) Then      '10MB.  As of Nov17 the xml file is 1.3MB
+            MsgBox("Total free space: " & CStr(writeSpace.TotalFreeSpace) & " is insufficient for the GetXmlNamespace file).")
+            Return
+        End If
         If (tbTitle.Text = "") Then
             MsgBox("Cannot add media with no title")
-            Exit Sub
+            Return
         End If
+
+        ' Create new node of new media
         Dim xmlToAdd As New XElement("MEDIA")
         Dim xmlTitle As New XElement("TITLE")
         xmlTitle.Add(New XElement("COUNTRY", New XText("AUS"), New XElement("NAME", tbTitle.Text)), New XElement("IMDBR", tbTtId.Text), New XElement("TYPE", cbType.SelectedItem), New XElement("YEAR", tbYear.Text), New XElement("RUNTIME", tbRuntime.Text))
-
+        ' Handle TV discs
+        If (cbType.SelectedIndex = 1) Then
+            xmlTitle.Add(New XElement("SEASONS", tbSeasons.Text, New XElement("EPISODES", tbEpsiodes.Text)))
+        End If
         'Handle Genres
         Dim xmlGenres As New XElement("GENRES")
-        For i = 1 To tbGenre.Text.Split(",").Count
-            xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(",")(i - 1).Replace(" ", "").ToUpper))
+        For i = 1 To tbGenre.Text.Split(", ").Count
+            xmlGenres.Add(New XElement("GENRE", tbGenre.Text.Split(", ")(i - 1).Replace(" ", "").ToUpper))
         Next
         xmlTitle.Add(xmlGenres)
         xmlTitle.Add(New XElement("PLOT", tbPlot.Text))
@@ -390,10 +462,10 @@ Public Class movieGUI
 
         For i = 1 To WritCnt
             ' See if there are any roles recorded
-            If (Me.Controls("tbWriter" & i & "_" & i) IsNot Nothing) Then
-                xmlWrit.Add(New XElement("WRITER", New XElement("ROLE", Me.Controls("tbWriter" & i & "_" & i).Text), Me.Controls("tbWriter" & i).Text))
-            ElseIf (Me.Controls("tbWriter" & i).Enabled) Then
-                xmlWrit.Add(New XElement("WRITER", Me.Controls("tbWriter" & i).Text))
+            If (Me.pnlMovies.Controls("tbWriter" & i & "_" & i) IsNot Nothing) Then
+                xmlWrit.Add(New XElement("WRITER", New XElement("ROLE", Me.pnlMovies.Controls("tbWriter" & i & "_" & i).Text), Me.pnlMovies.Controls("tbWriter" & i).Text))
+            ElseIf (Me.pnlMovies.Controls("tbWriter" & i).Enabled) Then
+                xmlWrit.Add(New XElement("WRITER", Me.pnlMovies.Controls("tbWriter" & i).Text))
             End If
 
         Next
@@ -402,8 +474,8 @@ Public Class movieGUI
         Dim xmlAct As New XElement("ACTORS")
 
         For i = 1 To ActCnt
-            If (Me.Controls("tbActor" & i).Text <> "") Then
-                xmlAct.Add(New XElement("ACTOR", Me.Controls("tbActor" & i).Text))
+            If (Me.pnlMovies.Controls("tbActor" & i).Text <> "") Then
+                xmlAct.Add(New XElement("ACTOR", Me.pnlMovies.Controls("tbActor" & i).Text))
             End If
 
         Next
@@ -413,7 +485,7 @@ Public Class movieGUI
         If (pbPoster.Image IsNot Nothing) Then
             imgFile = tbTitle.Text.ToLower.Replace(" ", "")
             imgFile = imgFile.Replace("?", "")
-            imgFile = imgFile.Replace(":", "")
+            imgFile = imgFile.Replace(":  ", "")
             imgFile = imgFile.Replace("/", "")
             imgFile = imgFile.Replace("'", "")
             imgFile = imgFile.Replace("\", "")
@@ -436,7 +508,6 @@ Public Class movieGUI
         xmlCopy.Add(New XElement("QF", tbQf.Text))
         xmlCopy.Add(New XElement("LASTWATCHED", dtLastWatched.Value.ToString("dd/MM/yyyy")))
         xmlCopy.Add(New XElement("WATCHEDCOUNT", cbWatched.SelectedItem))
-        xmlCopy.Add(New XElement("IMAGEFILENAME", imgFile))
         xmlCopy.Add(New XElement("DATEADDED"))
         xmlCopy.Add(New XElement("DATEENTERED", Now().ToString))
         If cbSubtitles.Checked Then
@@ -445,37 +516,60 @@ Public Class movieGUI
             xmlCopy.Add(New XElement("SUBTITLES", "N"))
         End If
         xmlToAdd.Add(New XElement("CREATORS", xmlDir, xmlWrit, xmlAct))
-        xmlToAdd.Add(xmlCopy)
-
-        ' MsgBox(xmlToAdd.ToString)
-        btWriteXML.BackColor = Color.AliceBlue
-        doc.Element("CATALOG").Add(New XElement(xmlToAdd))
-        doc.Save(tbFilePath.Text & "\" & My.Settings.fileName)
-        'Debug.Print(doc.ToString)
 
         ' Check that poster has an image
         If (pbPoster.Image IsNot Nothing) Then
-            pbPoster.Image.Save(tbImagePath.Text & "\" & imgFile & ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg)
+            ' Check if file already exists - different movies can have same names - e.g. Anna Karenina
+            Dim pstName As String
+            pstName = tbImagePath.Text & "\" & imgFile & ".jpg"
+            Dim wordy As String = imgFile.Replace(".", "").Replace("!", "").Replace(" ", "").Replace("'", "").Replace("?", "") _
+        .Replace(",", "").Replace("-", "").Replace(":", "").Replace("\", "")
+            If File.Exists(pstName) Then
+                pbPoster.Image.Save(tbImagePath.Text & "\" & wordy & "_" & tbTtId.Text & ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg)
+                xmlCopy.Add(New XElement("IMAGEFILENAME", wordy & "_" & tbTtId.Text))
+            Else
+                pbPoster.Image.Save(tbImagePath.Text & "\" & wordy & ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg)
+                xmlCopy.Add(New XElement("IMAGEFILENAME", wordy))
+            End If
+            '   Else
+            'update record
         End If
-        '   Else
-        'update record
-        '   End If
+
+        xmlToAdd.Add(xmlCopy)
+        ' We have created a full node for the media item
+
+        'Add text to xml file from path. Determine if it's an update or new addition
+        If (newmv.update) Then
+            elDup.ReplaceWith(xmlToAdd)
+        Else
+            doc.Element("CATALOG").Add(New XElement(xmlToAdd))
+        End If
+        doc.Save(tbFilePath.Text & "\" & My.Settings.fileName)
+
+        ' If all data was written successfully, change the button
+        btWriteXML.BackColor = Color.AliceBlue
+        Me.BackColor = SystemColors.Control
+        btWriteXML.Text = "Written"
 
     End Sub
 
-    Private Sub reWrite()
-        ' Dim nf As New XDocument(New XDeclaration("1.0","utf-8","yes"),
-        
-    End Sub
 
     ' Compares xmlNode from file to current movie values in GUI
     Private Sub compare(xn As XElement)
         If (String.Compare(tbTitle.Text, xn.<TITLE>...<COUNTRY>...<NAME>.Value) <> 0) Then
             tbTitle.BackColor = Color.Yellow
-
+            tbTitle.Text = ""
             tbTitle.Text += xn.<TITLE>...<COUNTRY>...<NAME>.Value
         End If
-        ' if (mv.title = xn.
+
+        ' Ask operator if they want to update or add record
+        Dim result As Integer = MessageBox.Show("Select Yes if you want to replace the existing record, press No if you wish to add a duplicate", "Update or add record", MessageBoxButtons.YesNo)
+        If result = DialogResult.No Then
+            btWriteXML.Text = "Write to file"
+            newmv.update = False
+        ElseIf result = DialogResult.Yes Then
+            newmv.update = True
+        End If
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs)
@@ -527,16 +621,53 @@ Public Class movieGUI
     End Sub
 
 
-
+    ''' <summary>
+    ''' If user hits Enter key, commence search
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub tbMovieName_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles tbMovieName.KeyPress
 
         If (Convert.ToInt32(e.KeyChar) = 13) Then
             btSearch_Click(sender, e)
-
-            '  Button1_Click_1(sender, e)
-            ' tbMovieName.Text = "You Entered: " + tbMovieName.Text
         End If
     End Sub
 
 
+
+    Private Sub cbType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbType.SelectedIndexChanged
+        ' Display furtehr options if TV selected
+        If (cbType.SelectedIndex = 1) Then
+            lbEpisodes.Visible = True
+            lbSeasons.Visible = True
+            tbEpsiodes.Visible = True
+            tbSeasons.Visible = True
+        Else
+            lbEpisodes.Visible = False
+            lbSeasons.Visible = False
+            tbEpsiodes.Visible = False
+            tbSeasons.Visible = False
+        End If
+    End Sub
+
+    Private Sub btClearForm_Click(sender As Object, e As EventArgs) Handles btClearForm.Click
+        pnlMovies.Controls.Clear()
+    End Sub
+
+    Private Sub pnlMovies_Paint(sender As Object, e As PaintEventArgs) Handles pnlMovies.Paint
+
+    End Sub
+
+    Private Sub Label22_Click(sender As Object, e As EventArgs) Handles Label22.Click
+
+    End Sub
+
+    Private Sub wbOutput_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles wbOutput.DocumentCompleted
+
+    End Sub
+
+    Private Sub movieGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

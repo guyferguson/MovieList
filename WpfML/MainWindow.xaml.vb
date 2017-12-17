@@ -11,8 +11,8 @@ Class MainWindow
 
         ' Add any initialization after the InitializeComponent() call.
         'Load XML file and set the DataGrid data context
-        Dim myMovies As XElement = XElement.Load("Z:\xml\movies\MovieListv2.xml")
-        dg1.DataContext = myMovies.Elements("MEDIA")
+        ' Dim myMovies As XElement = XElement.Load("Z:\xml\movies\MovieListv2.xml")
+        ' dg1.DataContext = myMovies.Elements("MEDIA")
 
     End Sub
 

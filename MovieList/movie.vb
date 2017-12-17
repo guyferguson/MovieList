@@ -1,11 +1,9 @@
 ﻿Imports System.Xml
 Imports System.Text
-'Imports System.Xml.XPath.Extensions
 Imports System.Text.RegularExpressions
-Imports System.IO
+'Imports System.IO
 
 Public Class Movie
-
 
     Private resultSet
 
@@ -30,12 +28,16 @@ Public Class Movie
         Dim output As String = ""
         Dim cntres As Integer = 0
 
+        Dim apiKey As String
+        Dim webcall As String
+        apiKey = "f8c6d0cf"
         'Loop through the xml node and find XTexts
         For Each s In doc.Nodes().OfType(Of XText)()
-
             Dim att As XAttribute = s.Parent.Attribute("id")
+            webcall = "http://www.omdbapi.com/?i=" & att.Value.ToString & "&apikey=" & apiKey
+            'MsgBox(webcall)
             'Redirect the hyperlink to the imdbapi site to retrieve data based upon IMDB tt
-            output += "<br><b><a href='http://www.imdbapi.com/?i=" & att.Value.ToString & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
+            output += "<br><b><a href='" & webcall & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
             cntres += 1
         Next
 
