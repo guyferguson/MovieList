@@ -44,12 +44,12 @@ Public Class Movie
         For Each s In doc.Descendants("result")
             Dim att As XAttribute = s.Attribute("imdbID")
             Dim titX As XAttribute = s.Attribute("title")
-            ' Dim plotX As XAttribute = s.Attribute("Plot")
+            Dim yearX As XAttribute = s.Attribute("year")
             outputX.Equals("")
             webcall = "http://www.omdbapi.com/?i=" & att.Value.ToString & "&apikey=" & apiKey
             '  MsgBox(webcall)
             'Redirect the hyperlink to the imdbapi site to retrieve data based upon IMDB tt
-            outputX.Append("<br><b><a href='" & webcall & "'> " & titX.Value.ToString & "</a></b>blah</br>")
+            outputX.Append("<br><b><a href='" & webcall & "'> " & titX.Value.ToString & "</a></b>" & yearX.Value.ToString & "</br>")
             cntres += 1
         Next
 
