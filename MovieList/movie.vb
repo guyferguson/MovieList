@@ -7,42 +7,54 @@ Public Class Movie
 
     Private resultSet
 
-    'from a supplied string of xsml text, return a list of movie titles 
+    'from a supplied string of xml text, return a list of movie titles 
     '
     ' PRE: Valid XML string
     ' POST: List of possible movie titles
 
     Public Function showPossibles(xmlText As String)
 
-        If (xmltext.Length = 0) Then
-            MsgBox("Supplied xmltext is null")
-            Return Nothing
+        If (xmlText.Length < 1) Then
+            System.Diagnostics.Debug.WriteLine("Supplied xmltext is null")
+            '  Return Nothing
+        Else
+            '    MsgBox(xmlText)
+            '  System.Diagnostics.Debug.WriteLine(xmlText)
+            ' Bring the xml  to just the nodes we want - the ImdbEntity nodes
+            Dim doc As XDocument
+            ' doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
+            doc = XDocument.Parse(xmlText)
+            System.Diagnostics.Debug.WriteLine(doc)
+            '  doc = findXtexts(doc)
+            ' MsgBox(findXtexts(doc))
+            Return findXtexts(doc)
         End If
-
-        ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
-        Dim doc = XDocument.Parse(xmlText).<IMDbResults>...<ImdbEntity>
-
-        Return findXtexts(doc)
+        Return Nothing
     End Function
-    Private Function findXtexts(doc As IEnumerable(Of System.Xml.Linq.XElement))
+    Private Function findXtexts(doc As XDocument)
         Dim output As String = ""
         Dim cntres As Integer = 0
 
         Dim apiKey As String
         Dim webcall As String
         apiKey = "f8c6d0cf"
+        System.Diagnostics.Debug.WriteLine(doc)
         'Loop through the xml node and find XTexts
-        For Each s In doc.Nodes().OfType(Of XText)()
-            Dim att As XAttribute = s.Parent.Attribute("id")
+        Dim outputX As New StringBuilder("")
+        For Each s In doc.Descendants("result")
+            Dim att As XAttribute = s.Attribute("imdbID")
+            Dim titX As XAttribute = s.Attribute("title")
+            ' Dim plotX As XAttribute = s.Attribute("Plot")
+            outputX.Equals("")
             webcall = "http://www.omdbapi.com/?i=" & att.Value.ToString & "&apikey=" & apiKey
-            'MsgBox(webcall)
+            '  MsgBox(webcall)
             'Redirect the hyperlink to the imdbapi site to retrieve data based upon IMDB tt
-            output += "<br><b><a href='" & webcall & "'> " & s.ToString & "</a></b>" & s.Parent...<Description>.Value & "</br>"
+            outputX.Append("<br><b><a href='" & webcall & "'> " & titX.Value.ToString & "</a></b>blah</br>")
             cntres += 1
         Next
 
         ' Add a prefix of count of results, and return string
-        Return "<p>Results :" & cntres & "</p>" & output.ToString
+        Return "<p>Results :" & cntres & "</p>" & outputX.ToString
     End Function
 
     Private Function CleanInput(strIn As String) As String

@@ -1,5 +1,4 @@
-﻿
-Imports System.Xml
+﻿Imports System.Xml
 Imports Newtonsoft.Json
 Imports System.Drawing.Drawing2D
 Imports System.IO
@@ -67,7 +66,6 @@ Public Class movieGUI
 
     End Sub
     Public Sub btSearch_Click(sender As Object, e As EventArgs) Handles btSearch.Click
-
         ' Return button text to 'write' setting, as new search may be an addition
         btWriteXML.Text = "Write to file"
         'Clear out current GUI
@@ -76,15 +74,16 @@ Public Class movieGUI
         Dim strMovieName As String
         Dim webcall As String
         strMovieName = tbMovieName.Text
-        webcall = "http://www.imdb.com/xml/find?xml=1&nr=1&tt=on&q=" & strMovieName
+        ' 271217...need to remove /xml  from url        webcall = http://www.imdb.com/find?xml=1&nr=1&tt=on&q=" & strMovieName
+        ' webcall = "http://www.imdb.com/find?xml=1&nr=1&tt=on&q=" & strMovieName
+        webcall = "http://www.omdbapi.com/?r=xml&s=" & strMovieName & "&apikey=f8c6d0cf"
+
         webcall = webcall & ""
         Try
             Dim webClient As New System.Net.WebClient
             ' Create url for data call
-
             Dim result As String = webClient.DownloadString(webcall)
             ' This web query returns a valid xml string, but for display purposes we just treat it as a string
-
             wbOutput.DocumentText = mv.showPossibles(result)
         Catch
             MsgBox("Cannot access internet ... exiting")
@@ -99,28 +98,20 @@ Public Class movieGUI
     ''' <returns>True if the xml file is well-formed</returns>
     ''' <remarks>A hackish test - if you can load the file without erros, it must be valid. This function does not actually check every individual set of paired tages, or nesting etc.</remarks>
     Private Function IsValidXML(value As String)
-
         Try
             'Check we actually have been passed a value
             If (Not (String.IsNullOrEmpty(value))) Then
-
                 'Try to load the value into a document
                 Dim xmlDoc As New XmlDocument()
-
                 xmlDoc.LoadXml(value)
-
                 'If we managed with no exception then this is valid XML!
                 Return True
-
             Else
-
                 ' A blank value is not valid xml
                 Return False
             End If
         Catch e As System.Xml.XmlException
-
         End Try
-
         Return False
     End Function
 
@@ -133,32 +124,20 @@ Public Class movieGUI
             ' A very hackish and childish way of determing if we have arrived at a JSON string 
             If (wbOutput.DocumentText.ToCharArray()(0) = "{") Then
                 newmv = readJson(wbOutput.DocumentText)
-                'MsgBox(newmv.ttId.ToString)
                 newmv.ttId = (wbOutput.Url.Query.Split("=")(1).Split("&")(0))
-                ' Display the returned string for DEBUG porpoises
-                ' MsgBox(wbOutput.DocumentText)
-
-
-                '   Console.WriteLine(el.@IMDBR & "doesn't match " & tbTtId.Text.ToString & " compare = " & String.Compare(el.@IMDBR.ToString, tbTtId.Text.ToString) & " equals? " & String.Equals(el.ToString, tbTtId.Text.ToString) & " lengtsh = " & Len(el.ToString) & " and " & Len(tbTtId.Text.ToString))
 
                 ' Then populate GUI
                 populateGUI(newmv)
                 ' Check for matches
                 ' Check first if file contains this movie
                 ' Bring the xml down to just the nodes we want - the ImdbEntity nodes
-
-
                 wbOutput.Visible = False
                 For Each el As XElement In doc.<CATALOG>...<MEDIA>
-                    'Debug.Print(el.<IMDBR>.Value)
                     If ((String.Compare(el.<TITLE>...<IMDBR>.Value, tbTtId.Text) = 0)) Then
-                        ' MsgBox(el.<TITLE>...<IMDBR>.Value & vbCrLf & tbTtId.Text)
                         btWriteXML.Text = "Update movie file"
                         Me.BackColor = Color.Azure
-                        '   MsgBox("Already exists as " & el.<COUNTRY>...<NAME>.Value)
                         compare(el)
                         elDup = el
-                        '   tbTest.Text = el.Parent.ToString & newmv.ToString
                         Exit For
                     Else
                         Me.BackColor = SystemColors.Control
@@ -184,7 +163,6 @@ Public Class movieGUI
         ' TO DO - COnvert IMDB Genres to mine. And do we allow multiple genres?
         tbGenre.Text = newmv.genre
         tbRuntime.Text = timeToMins(newmv)
-        ' tbDirector1.Text = newmv.director
         splitWriters(newmv)
         tbDirector1.Text = newmv.director
 
