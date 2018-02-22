@@ -114,9 +114,10 @@ Public Class movieGUI
         End Try
         Return False
     End Function
-
+    'This sub fires when a user selects a specific media item from the list of hyperlinked 
+    ' media items.
     Private Sub wbOutput_Navigated(sender As Object, e As WebBrowserNavigatedEventArgs) Handles wbOutput.Navigated
-        'Update free space on writing directory
+        'Check free space on writing directory
         Dim freeS As System.IO.DriveInfo
         freeS = My.Computer.FileSystem.GetDriveInfo(tbFilePath.Text & "\")
         lbFreeSpace.Text = "Free space: " & freeS.TotalFreeSpace.ToString("0,0", Globalization.CultureInfo.InvariantCulture)
@@ -134,6 +135,16 @@ Public Class movieGUI
                 wbOutput.Visible = False
                 For Each el As XElement In doc.<CATALOG>...<MEDIA>
                     If ((String.Compare(el.<TITLE>...<IMDBR>.Value, tbTtId.Text) = 0)) Then
+                        pnlExistingEp.Visible = True
+                        Dim newLb As New Label
+                        newLb.Name = "First"
+                        If el.<TITLE>...<TYPE>.Value = "TV" Then
+                            newLb.Text = el.<TITLE>...<SEASONS>...<SEASON>.Value
+                        Else
+                            newLb.Text = el.<COPY>...<IDENTIFIER>.Value
+                        End If
+                        lbExistingEp.Text = lbExistingEp.Text & el.<TITLE>...<COUNTRY>...<NAME>.Value
+                        pnlExistingEp.Controls.Add(newLb)
                         btWriteXML.Text = "Update movie file"
                         Me.BackColor = Color.Azure
                         compare(el)
@@ -347,6 +358,34 @@ Public Class movieGUI
     '
     Private Sub resetGUI()
 
+        pnlExistingEp.Controls.Clear()
+        tbTtId.Text = ""
+        tbTitle.Text = ""
+        tbYear.Text = ""
+        tbRuntime.Text = ""
+        tbGenre.Text = ""
+        tbDirector1.Text = ""
+        tbDiscName.Text = ""
+        tbFilesize.Text = ""
+        tbDimX.Text = ""
+        tbDimY.Text = ""
+        tbVBitrate.Text = ""
+        tbABitrate.Text = ""
+        tbQf.Text = ""
+
+        ' Clear drop down lists (Combo Box)
+        cbType.ResetText()
+        cbWatched.ResetText()
+        cbFiletype.ResetText()
+        cbSource.ResetText()
+
+        ' Clear checkboxes
+        cbSubtitles.Checked = False
+        cbWatchedEver.Checked = False
+
+        'If any Actor or Writer textboxes were added, clear and delete them
+
+
         'For Each ctrl As Control In Me.Controls
         '    '  MsgBox("Working with " & ctrl.Name & " Type = " & ctrl.GetType.ToString)
         '    If (TypeOf ctrl Is TextBox) Then
@@ -397,7 +436,6 @@ Public Class movieGUI
         lbActors.Text = "Actor"
         lbWriters.Text = "Writer"
 
-        cbWatchedEver.Checked = False
     End Sub
 
     Private Sub writeXML(sender As Object, e As EventArgs) Handles btWriteXML.Click
@@ -406,7 +444,7 @@ Public Class movieGUI
         Dim writeSpace As System.IO.DriveInfo
         writeSpace = My.Computer.FileSystem.GetDriveInfo(tbFilePath.Text & "\")
         If (writeSpace.TotalFreeSpace < 10000000) Then      '10MB.  As of Nov17 the xml file is 1.3MB
-            MsgBox("Total free space: " & CStr(writeSpace.TotalFreeSpace) & " is insufficient for the GetXmlNamespace file).")
+            MsgBox("Total free space: " & CStr(writeSpace.TotalFreeSpace) & " is insufficient for the GetXmlNamespace file (You have under 10MB).")
             Return
         End If
         If (tbTitle.Text = "") Then
@@ -420,7 +458,8 @@ Public Class movieGUI
         xmlTitle.Add(New XElement("COUNTRY", New XText("AUS"), New XElement("NAME", tbTitle.Text)), New XElement("IMDBR", tbTtId.Text), New XElement("TYPE", cbType.SelectedItem), New XElement("YEAR", tbYear.Text), New XElement("RUNTIME", tbRuntime.Text))
         ' Handle TV discs
         If (cbType.SelectedIndex = 1) Then
-            xmlTitle.Add(New XElement("SEASONS", tbSeasons.Text, New XElement("EPISODES", tbEpsiodes.Text)))
+            xmlTitle.Add(New XElement("SEASONS", New XElement("SEASON", tbSeasons.Text, New XElement("EPISODES", tbEpsiodes.Text, New XElement("DISK", tbDiscName.Text)))))
+            xmlTitle.Element("SEASONS").Add(New XElement("TotalEpisodes", tbTotalEpisodes.Text))
         End If
         'Handle Genres
         Dim xmlGenres As New XElement("GENRES")
@@ -615,37 +654,39 @@ Public Class movieGUI
 
 
     Private Sub cbType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbType.SelectedIndexChanged
-        ' Display furtehr options if TV selected
+        ' Display further options if TV selected
         If (cbType.SelectedIndex = 1) Then
             lbEpisodes.Visible = True
             lbSeasons.Visible = True
             tbEpsiodes.Visible = True
             tbSeasons.Visible = True
+            tbTotalEpisodes.Visible = True
+            lbTotalEp.Visible = True
         Else
             lbEpisodes.Visible = False
             lbSeasons.Visible = False
             tbEpsiodes.Visible = False
             tbSeasons.Visible = False
+            lbTotalEp.Visible = False
+            tbTotalEpisodes.Visible = False
         End If
     End Sub
 
     Private Sub btClearForm_Click(sender As Object, e As EventArgs) Handles btClearForm.Click
-        pnlMovies.Controls.Clear()
-    End Sub
+        ' pnlMovies.Controls.Clear()
+        resetGUI()
 
-    Private Sub pnlMovies_Paint(sender As Object, e As PaintEventArgs) Handles pnlMovies.Paint
-
-    End Sub
-
-    Private Sub Label22_Click(sender As Object, e As EventArgs) Handles Label22.Click
 
     End Sub
+    ''' <summary>
+    '''  A sub that loops through existing data for a film already written to xml
+    '''  and then shows which data matches that just retrieved from the IMDB API.
+    '''  User can choose whether to overwrite existing data or keep as is
+    ''' </summary>
+    Private Sub showMatches()
 
-    Private Sub wbOutput_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles wbOutput.DocumentCompleted
 
     End Sub
 
-    Private Sub movieGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-    End Sub
 End Class

@@ -81,14 +81,20 @@ Partial Class movieGUI
         Me.lbSeasons = New System.Windows.Forms.Label()
         Me.lbEpisodes = New System.Windows.Forms.Label()
         Me.pnlMovies = New System.Windows.Forms.Panel()
+        Me.lbTotalEp = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.tbTotalEpisodes = New System.Windows.Forms.TextBox()
+        Me.pnlExistingEp = New System.Windows.Forms.Panel()
+        Me.lbExistingEp = New System.Windows.Forms.Label()
+        Me.lbVersion = New System.Windows.Forms.Label()
         Me.lbFreeSpace = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.btUploadToWeb = New System.Windows.Forms.Button()
         Me.btClearForm = New System.Windows.Forms.Button()
-        Me.lbVersion = New System.Windows.Forms.Label()
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlMovies.SuspendLayout()
+        Me.pnlExistingEp.SuspendLayout()
         Me.SuspendLayout()
         '
         'tbMovieName
@@ -587,6 +593,10 @@ Partial Class movieGUI
         '
         'pnlMovies
         '
+        Me.pnlMovies.Controls.Add(Me.lbTotalEp)
+        Me.pnlMovies.Controls.Add(Me.Label23)
+        Me.pnlMovies.Controls.Add(Me.tbTotalEpisodes)
+        Me.pnlMovies.Controls.Add(Me.pnlExistingEp)
         Me.pnlMovies.Controls.Add(Me.lbVersion)
         Me.pnlMovies.Controls.Add(Me.lbFreeSpace)
         Me.pnlMovies.Controls.Add(Me.Label22)
@@ -654,10 +664,66 @@ Partial Class movieGUI
         Me.pnlMovies.Size = New System.Drawing.Size(1130, 565)
         Me.pnlMovies.TabIndex = 66
         '
+        'lbTotalEp
+        '
+        Me.lbTotalEp.AutoSize = True
+        Me.lbTotalEp.Location = New System.Drawing.Point(745, 165)
+        Me.lbTotalEp.Name = "lbTotalEp"
+        Me.lbTotalEp.Size = New System.Drawing.Size(104, 13)
+        Me.lbTotalEp.TabIndex = 74
+        Me.lbTotalEp.Text = "Episode(s) in season"
+        Me.lbTotalEp.Visible = False
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(737, 143)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(112, 13)
+        Me.Label23.TabIndex = 73
+        Me.Label23.Text = "Episode(s) on this disk"
+        Me.Label23.Visible = False
+        '
+        'tbTotalEpisodes
+        '
+        Me.tbTotalEpisodes.Location = New System.Drawing.Point(855, 162)
+        Me.tbTotalEpisodes.Name = "tbTotalEpisodes"
+        Me.tbTotalEpisodes.Size = New System.Drawing.Size(27, 20)
+        Me.tbTotalEpisodes.TabIndex = 72
+        Me.tbTotalEpisodes.Visible = False
+        '
+        'pnlExistingEp
+        '
+        Me.pnlExistingEp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.pnlExistingEp.Controls.Add(Me.lbExistingEp)
+        Me.pnlExistingEp.Location = New System.Drawing.Point(985, 104)
+        Me.pnlExistingEp.Name = "pnlExistingEp"
+        Me.pnlExistingEp.Size = New System.Drawing.Size(136, 149)
+        Me.pnlExistingEp.TabIndex = 71
+        Me.pnlExistingEp.Visible = False
+        '
+        'lbExistingEp
+        '
+        Me.lbExistingEp.AutoSize = True
+        Me.lbExistingEp.Location = New System.Drawing.Point(3, 11)
+        Me.lbExistingEp.Name = "lbExistingEp"
+        Me.lbExistingEp.Size = New System.Drawing.Size(64, 13)
+        Me.lbExistingEp.TabIndex = 0
+        Me.lbExistingEp.Text = "Pre-existing "
+        '
+        'lbVersion
+        '
+        Me.lbVersion.AutoSize = True
+        Me.lbVersion.Location = New System.Drawing.Point(992, 537)
+        Me.lbVersion.Name = "lbVersion"
+        Me.lbVersion.Size = New System.Drawing.Size(153, 13)
+        Me.lbVersion.TabIndex = 70
+        Me.lbVersion.Text = "14.0.23107.0 built by: D14REL"
+        '
         'lbFreeSpace
         '
         Me.lbFreeSpace.AutoSize = True
-        Me.lbFreeSpace.Location = New System.Drawing.Point(982, 66)
+        Me.lbFreeSpace.Location = New System.Drawing.Point(725, 43)
         Me.lbFreeSpace.Name = "lbFreeSpace"
         Me.lbFreeSpace.Size = New System.Drawing.Size(0, 13)
         Me.lbFreeSpace.TabIndex = 69
@@ -665,7 +731,7 @@ Partial Class movieGUI
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(989, 228)
+        Me.Label22.Location = New System.Drawing.Point(982, 256)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(50, 13)
         Me.Label22.TabIndex = 68
@@ -675,7 +741,7 @@ Partial Class movieGUI
         '
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"})
-        Me.CheckedListBox1.Location = New System.Drawing.Point(992, 246)
+        Me.CheckedListBox1.Location = New System.Drawing.Point(988, 272)
         Me.CheckedListBox1.Name = "CheckedListBox1"
         Me.CheckedListBox1.Size = New System.Drawing.Size(46, 259)
         Me.CheckedListBox1.TabIndex = 67
@@ -699,18 +765,8 @@ Partial Class movieGUI
         Me.btClearForm.Text = "Clear All"
         Me.btClearForm.UseVisualStyleBackColor = True
         '
-        'lbVersion
-        '
-        Me.lbVersion.AutoSize = True
-        Me.lbVersion.Location = New System.Drawing.Point(992, 537)
-        Me.lbVersion.Name = "lbVersion"
-        Me.lbVersion.Size = New System.Drawing.Size(45, 13)
-        Me.lbVersion.TabIndex = 70
-        Me.lbVersion.Text = "Label23"
-        '
         'movieGUI
         '
-        Me.lbVersion.Text = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1173, 596)
@@ -720,6 +776,8 @@ Partial Class movieGUI
         CType(Me.pbPoster, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlMovies.ResumeLayout(False)
         Me.pnlMovies.PerformLayout()
+        Me.pnlExistingEp.ResumeLayout(False)
+        Me.pnlExistingEp.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -789,4 +847,9 @@ Partial Class movieGUI
     Friend WithEvents Label22 As Label
     Friend WithEvents lbFreeSpace As Label
     Friend WithEvents lbVersion As Label
+    Friend WithEvents pnlExistingEp As Panel
+    Friend WithEvents lbExistingEp As Label
+    Friend WithEvents Label23 As Label
+    Friend WithEvents tbTotalEpisodes As TextBox
+    Friend WithEvents lbTotalEp As Label
 End Class
