@@ -12,6 +12,7 @@ Public Class Movie
     ' PRE: Valid XML string
     ' POST: List of possible movie titles
 
+
     Public Function showPossibles(xmlText As String)
 
         If (xmlText.Length < 1) Then
@@ -34,10 +35,10 @@ Public Class Movie
     Private Function findXtexts(doc As XDocument)
         Dim output As String = ""
         Dim cntres As Integer = 0
-
         Dim apiKey As String
+
         Dim webcall As String
-        apiKey = "f8c6d0cf"
+        apiKey = "15cbdfea"
         System.Diagnostics.Debug.WriteLine(doc)
         'Loop through the xml node and find XTexts
         Dim outputX As New StringBuilder("")

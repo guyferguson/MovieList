@@ -77,7 +77,7 @@ Partial Class movieGUI
         Me.cbWatchedEver = New System.Windows.Forms.CheckBox()
         Me.btViewAll = New System.Windows.Forms.Button()
         Me.tbSeasons = New System.Windows.Forms.TextBox()
-        Me.tbEpsiodes = New System.Windows.Forms.TextBox()
+        Me.tbEpisodes = New System.Windows.Forms.TextBox()
         Me.lbSeasons = New System.Windows.Forms.Label()
         Me.lbEpisodes = New System.Windows.Forms.Label()
         Me.pnlMovies = New System.Windows.Forms.Panel()
@@ -563,13 +563,13 @@ Partial Class movieGUI
         Me.tbSeasons.TabIndex = 62
         Me.tbSeasons.Visible = False
         '
-        'tbEpsiodes
+        'tbEpisodes
         '
-        Me.tbEpsiodes.Location = New System.Drawing.Point(855, 136)
-        Me.tbEpsiodes.Name = "tbEpsiodes"
-        Me.tbEpsiodes.Size = New System.Drawing.Size(116, 20)
-        Me.tbEpsiodes.TabIndex = 63
-        Me.tbEpsiodes.Visible = False
+        Me.tbEpisodes.Location = New System.Drawing.Point(855, 136)
+        Me.tbEpisodes.Name = "tbEpisodes"
+        Me.tbEpisodes.Size = New System.Drawing.Size(116, 20)
+        Me.tbEpisodes.TabIndex = 63
+        Me.tbEpisodes.Visible = False
         '
         'lbSeasons
         '
@@ -610,7 +610,7 @@ Partial Class movieGUI
         Me.pnlMovies.Controls.Add(Me.cbWatchedEver)
         Me.pnlMovies.Controls.Add(Me.Label3)
         Me.pnlMovies.Controls.Add(Me.cbSource)
-        Me.pnlMovies.Controls.Add(Me.tbEpsiodes)
+        Me.pnlMovies.Controls.Add(Me.tbEpisodes)
         Me.pnlMovies.Controls.Add(Me.Label21)
         Me.pnlMovies.Controls.Add(Me.Label4)
         Me.pnlMovies.Controls.Add(Me.tbQf)
@@ -837,7 +837,7 @@ Partial Class movieGUI
     Friend WithEvents cbWatchedEver As System.Windows.Forms.CheckBox
     Friend WithEvents btViewAll As System.Windows.Forms.Button
     Friend WithEvents tbSeasons As System.Windows.Forms.TextBox
-    Friend WithEvents tbEpsiodes As System.Windows.Forms.TextBox
+    Friend WithEvents tbEpisodes As System.Windows.Forms.TextBox
     Friend WithEvents lbSeasons As System.Windows.Forms.Label
     Friend WithEvents lbEpisodes As System.Windows.Forms.Label
     Friend WithEvents pnlMovies As System.Windows.Forms.Panel

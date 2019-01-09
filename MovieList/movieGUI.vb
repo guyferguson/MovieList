@@ -5,6 +5,9 @@ Imports System.IO
 
 Public Class movieGUI
 
+    '09012019 Release with updated API key, after Patreon cancelled, so I returned to free (1000 per day) OMDB API Key from Brian Fritz
+    '    Also, the .exe for this app had been lost along with much other data on a single HDD drive, E drive - it also had teh wwwroot for all my websites
+
     Dim mv As New Movie
     Dim newmv As MovieJS
     Dim elDup As XElement
@@ -76,7 +79,7 @@ Public Class movieGUI
         strMovieName = tbMovieName.Text
         ' 271217...need to remove /xml  from url        webcall = http://www.imdb.com/find?xml=1&nr=1&tt=on&q=" & strMovieName
         ' webcall = "http://www.imdb.com/find?xml=1&nr=1&tt=on&q=" & strMovieName
-        webcall = "http://www.omdbapi.com/?r=xml&s=" & strMovieName & "&apikey=f8c6d0cf"
+        webcall = "http://www.omdbapi.com/?r=xml&s=" & strMovieName & "&apikey=15cbdfea"     ' f8c6d0cf"
 
         webcall = webcall & ""
         Try
@@ -227,7 +230,7 @@ Public Class movieGUI
         Return (hours * 60) + min
     End Function
     ' Resize an image 
-    Private Function ResizeImage(ByVal image As Image, _
+    Private Function ResizeImage(ByVal image As Image,
   ByVal size As Size, Optional ByVal preserveAspectRatio As Boolean = True) As Image
         Dim newWidth As Integer
         Dim newHeight As Integer
@@ -457,9 +460,19 @@ Public Class movieGUI
         Dim xmlTitle As New XElement("TITLE")
         xmlTitle.Add(New XElement("COUNTRY", New XText("AUS"), New XElement("NAME", tbTitle.Text)), New XElement("IMDBR", tbTtId.Text), New XElement("TYPE", cbType.SelectedItem), New XElement("YEAR", tbYear.Text), New XElement("RUNTIME", tbRuntime.Text))
         ' Handle TV discs
+        ' If we are UPDATING (newmv.update = TRUE) then we need to read off all existing non-IMDB data
+        '  such as prior disks and what seasons etc exist, then add new data to it.
         If (cbType.SelectedIndex = 1) Then
-            xmlTitle.Add(New XElement("SEASONS", New XElement("SEASON", tbSeasons.Text, New XElement("EPISODES", tbEpsiodes.Text, New XElement("DISK", tbDiscName.Text)))))
-            xmlTitle.Element("SEASONS").Add(New XElement("TotalEpisodes", tbTotalEpisodes.Text))
+            xmlTitle.Add(New XElement("SEASONS", New XElement("SEASON", tbSeasons.Text, New XElement("TotalEpisodes", tbTotalEpisodes.Text), New XElement("DISK", tbDiscName.Text, New XElement("EPISODES", tbEpisodes.Text)))))
+            ' Find the specific season we're working with and add the number of seasons
+            Dim elementToChange =
+                From el In xmlTitle.<SEASONS>.<SEASON>
+                Where el.Value.ToString = tbSeasons.Text
+                Select el
+            ' MsgBox(elementToChange.ToString)
+            For Each el As XElement In elementToChange
+                el.Add(New XElement("TotalEpisodes", tbTotalEpisodes.Text))
+            Next
         End If
         'Handle Genres
         Dim xmlGenres As New XElement("GENRES")
@@ -514,7 +527,12 @@ Public Class movieGUI
         End If
 
         Dim xmlCopy As New XElement("COPY")
-        xmlCopy.Add(New XElement("IDENTIFIER", tbDiscName.Text))
+        ' Different ID for TV discs
+        If (cbType.SelectedIndex = 1) Then
+            xmlCopy.Add(New XElement("IDENTIFIER", "MULTIPLE"))
+        Else
+            xmlCopy.Add(New XElement("IDENTIFIER", tbDiscName.Text))
+        End If
         xmlCopy.Add(New XElement("COPYTYPE", cbSource.SelectedItem))
         xmlCopy.Add(New XElement("FILESIZE", tbFilesize.Text))
         xmlCopy.Add(New XElement("FILETYPE", cbFiletype.SelectedItem))
@@ -580,7 +598,7 @@ Public Class movieGUI
         End If
 
         ' Ask operator if they want to update or add record
-        Dim result As Integer = MessageBox.Show("Select Yes if you want to replace the existing record, press No if you wish to add a duplicate", "Update or add record", MessageBoxButtons.YesNo)
+        Dim result As Integer = MessageBox.Show("Select Yes if you want to update (add to) the existing record, press No if you wish to add a duplicate", "Update or add record", MessageBoxButtons.YesNo)
         If result = DialogResult.No Then
             btWriteXML.Text = "Write to file"
             newmv.update = False
@@ -658,14 +676,16 @@ Public Class movieGUI
         If (cbType.SelectedIndex = 1) Then
             lbEpisodes.Visible = True
             lbSeasons.Visible = True
-            tbEpsiodes.Visible = True
+            tbEpisodes.Visible = True
             tbSeasons.Visible = True
+            Label23.Visible = True
             tbTotalEpisodes.Visible = True
             lbTotalEp.Visible = True
         Else
             lbEpisodes.Visible = False
             lbSeasons.Visible = False
-            tbEpsiodes.Visible = False
+            Label23.Visible = False
+            tbEpisodes.Visible = False
             tbSeasons.Visible = False
             lbTotalEp.Visible = False
             tbTotalEpisodes.Visible = False
@@ -688,5 +708,7 @@ Public Class movieGUI
 
     End Sub
 
+    Private Sub lbSeasons_Click(sender As Object, e As EventArgs) Handles lbSeasons.Click
 
+    End Sub
 End Class
