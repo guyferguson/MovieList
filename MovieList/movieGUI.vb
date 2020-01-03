@@ -3,10 +3,24 @@ Imports Newtonsoft.Json
 Imports System.Drawing.Drawing2D
 Imports System.IO
 
+
+' Note - 5.10.19...app failed on clicking movie name hyperlink in GUI. Found i had to change local machien reg settings to allow json handling:
+'
+'Windows Registry Editor Version 5.00;
+'; Tell IE 7,8,9,10 to open JSON documents in the browser on Windows XP And later.
+'; 25336920-03F9-11cf-8FD0-00AA00686F13 Is the CLSID for the "Browse in place" .
+';
+'[HKEY_CLASSES_ROOT\MIME\Database\Content Type\application/json]
+'"CLSID"="{25336920-03F9-11cf-8FD0-00AA00686F13}"
+'"Encoding"=hex:08,00,00,00
+'
+'
+'  presumably Windows Updates will overwrite this from time to time, it'd be nicer to do the above programattically.
+
 Public Class movieGUI
 
     '09012019 Release with updated API key, after Patreon cancelled, so I returned to free (1000 per day) OMDB API Key from Brian Fritz
-    '    Also, the .exe for this app had been lost along with much other data on a single HDD drive, E drive - it also had teh wwwroot for all my websites
+    '    Also, the .exe for this app had been lost along with much other data on a single HDD drive, E drive - it also had the wwwroot for all my websites
 
     Dim mv As New Movie
     Dim newmv As MovieJS
@@ -708,7 +722,6 @@ Public Class movieGUI
 
     End Sub
 
-    Private Sub lbSeasons_Click(sender As Object, e As EventArgs) Handles lbSeasons.Click
 
-    End Sub
+
 End Class
