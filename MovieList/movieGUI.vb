@@ -22,12 +22,12 @@ Public Class movieGUI
     '09012019 Release with updated API key, after Patreon cancelled, so I returned to free (1000 per day) OMDB API Key from Brian Fritz
     '    Also, the .exe for this app had been lost along with much other data on a single HDD drive, E drive - it also had the wwwroot for all my websites
 
-    Dim mv As New Movie
+    ReadOnly mv As New Movie
     Dim newmv As MovieJS
     Dim elDup As XElement
 
     ' An XML memory  object to hold the  xml file that we want to write eventually.
-    Dim doc As XDocument
+    ReadOnly doc As XDocument
 
     ' An integer to count how many actors in an instance
     Dim ActCnt As Integer
@@ -95,7 +95,7 @@ Public Class movieGUI
         ' webcall = "http://www.imdb.com/find?xml=1&nr=1&tt=on&q=" & strMovieName
         webcall = "http://www.omdbapi.com/?r=xml&s=" & strMovieName & "&apikey=15cbdfea"     ' f8c6d0cf"
 
-        webcall = webcall & ""
+        webcall += ""
         Try
             Dim webClient As New System.Net.WebClient
             ' Create url for data call
@@ -153,8 +153,9 @@ Public Class movieGUI
                 For Each el As XElement In doc.<CATALOG>...<MEDIA>
                     If ((String.Compare(el.<TITLE>...<IMDBR>.Value, tbTtId.Text) = 0)) Then
                         pnlExistingEp.Visible = True
-                        Dim newLb As New Label
-                        newLb.Name = "First"
+                        Dim newLb As New Label With {
+                            .Name = "First"
+                        }
                         If el.<TITLE>...<TYPE>.Value = "TV" Then
                             newLb.Text = el.<TITLE>...<SEASONS>...<SEASON>.Value
                         Else
@@ -287,13 +288,14 @@ Public Class movieGUI
         End If
         For i = 1 To ActCnt
             Dim cntrName As String = "tbActor" & i
-            Dim newActor As New System.Windows.Forms.TextBox
-            newActor.Location = New System.Drawing.Point(474, 61 + (25 * i))
-            newActor.Name = cntrName
-            newActor.Size = New System.Drawing.Size(95, 20)
-            newActor.TabIndex = 9 + i
             ' Break up the comma separated names and strip leading and trailing spaces
-            newActor.Text = mv.actors.Split(",")(i - 1).Trim(" ")
+            Dim newActor As New System.Windows.Forms.TextBox With {
+                .Location = New System.Drawing.Point(474, 61 + (25 * i)),
+                .Name = cntrName,
+                .Size = New System.Drawing.Size(95, 20),
+                .TabIndex = 9 + i,
+                .Text = mv.actors.Split(",")(i - 1).Trim(" ")
+            }
             Me.pnlMovies.Controls.Add(newActor)
         Next
         If i > 2 Then

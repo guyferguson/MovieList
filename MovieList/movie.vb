@@ -5,8 +5,6 @@ Imports System.Text.RegularExpressions
 
 Public Class Movie
 
-    Private resultSet
-
     'from a supplied string of xml text, return a list of movie titles 
     '
     ' PRE: Valid XML string
@@ -33,7 +31,7 @@ Public Class Movie
         Return Nothing
     End Function
     Private Function findXtexts(doc As XDocument)
-        Dim output As String = ""
+        '    Dim output As String = ""
         Dim cntres As Integer = 0
         Dim apiKey As String
 
@@ -58,14 +56,4 @@ Public Class Movie
         Return "<p>Results :" & cntres & "</p>" & outputX.ToString
     End Function
 
-    Private Function CleanInput(strIn As String) As String
-        ' Replace invalid characters with empty strings. 
-        Try
-            Return Regex.Replace(strIn, "[^\w\.@<>-]\ ", "")
-            ' If we timeout when replacing invalid characters,  
-            ' we should return String.Empty. 
-        Catch e As RegexMatchTimeoutException
-            Return String.Empty
-        End Try
-    End Function
 End Class
